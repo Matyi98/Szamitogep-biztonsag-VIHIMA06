@@ -25,7 +25,7 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
 - Bizalmasság (confidentiality)
 
-  - ...
+  - A felhasználók adatait csak saját maguk, vagy az adminisztrátorok módosíthatják.
 
 - Integritás (integrity)
 
