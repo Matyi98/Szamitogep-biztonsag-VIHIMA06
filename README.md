@@ -68,22 +68,45 @@ TODO: make similar use-case for admin
 
 ### Threat Assessment
 
-A threat assessment részt két részre tagoljuk: az assetek azonosítása és assetekre leselkedő veszélyek (threat) azonosítása. Az assetek azonosításához iteratívan elemezzük a rendszer use casei-eit, figyelembe véve a biztonsági követelményeket. A veszélyek megállapításához a STRIDE keretrendszer segítségét vettük igénybe.
+A threat assessment részt két részre tagoljuk: az assetek azonosítása és assetekre leselkedő veszélyek (threat) azonosítása. Az assetek azonosításához iteratívan elemezzük a rendszer use case-eit, figyelembe véve a biztonsági követelményeket. A veszélyek megállapításához a STRIDE keretrendszer segítségét vettük igénybe.
 
 #### Assetek megállapítása
 
-A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta assethalmazt különítünk el: (TODO: ezt még ki kell egészíteni)
+A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta asset halmazt különítünk el: (TODO: ezt még ki kell egészíteni)
 
 - Fizikai assetek: gépek, amin a szerverek futnak
 - Emberi assetek: felhasználók, adminisztrátorok
-- Logikai assetek: adatok
+- Logikai assetek: adatok (CAFF fájlok)
 
+TODO: A következőt kell végig csinálni (Két use-case-el végig -> felhasználó és admin)
 
+- Megnézni, hogy egy use-case hogy bővül, ha belevisszük a biztonsági követelményeket és kell a bővített use-case diagram
+- Leírni milyen emberi asset van benne(triviális: felhasználó vagy admin)
+- Leírni, hogy milyen logikai assetek tartoztank egy use-case (ezek a különböző komponensek pl: Authentikációs komponens és hozzá az adatfolyam ábra)
+
+#### Támadó modell kidolgozása
+
+TODO
+
+Az asseteken végighaladva megnézhetjük, hogy milyen veszélyek fenyegethetik és ebből tudjuk levezetni a támadásokat, amik ezeket érhetik. Ezeket, hogy megállítsuk, szükségünk van többfajta védelemre.
 
 
 ## Architektúra tervek
 
-
+TODO
 
 ## Tesztelési terv
 
+TODO: Normális leírás, technológiák átbeszélése
+
+Statikus analízis cucc:
+
+- C++ parser: cppcheck? (open-source, könnyen használható)
+- Full stack rész(C#): Sonarqube szerintem itt
+
+Fuzzer:
+
+- C++ parser: afl fuzzer, valgrind bugok megtalálásához
+- Full stack rész(C#): elvileg van afl fork ehhez, de nem tudom, hogy szükséges-e
+
+Unit tesztek?
