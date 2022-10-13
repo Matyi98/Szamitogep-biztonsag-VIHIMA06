@@ -64,14 +64,26 @@ TODO
 
 ![use-case-2](/img/use-case-2.png)
 
+TODO: make similar use-case for admin
+
 ### Threat Assessment
 
 A threat assessment részt két részre tagoljuk: az assetek azonosítása és assetekre leselkedő veszélyek (threat) azonosítása. Az assetek azonosításához iteratívan elemezzük a rendszer use casei-eit, figyelembe véve a biztonsági követelményeket. A veszélyek megállapításához a STRIDE keretrendszer segítségét vettük igénybe.
 
 #### Assetek megállapítása
 
-A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezhzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta assethalmazt különítünk el: (TODO: ezt még ki kell egészíteni)
+A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta assethalmazt különítünk el: (TODO: ezt még ki kell egészíteni)
 
 - Fizikai assetek: gépek, amin a szerverek futnak
 - Emberi assetek: felhasználók, adminisztrátorok
 - Logikai assetek: adatok
+
+
+
+
+## Architektúra tervek
+
+
+
+## Tesztelési terv
+
