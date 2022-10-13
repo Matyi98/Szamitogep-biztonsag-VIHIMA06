@@ -12,13 +12,13 @@ Az alábbi lista tartalmazza a funkcionális követelményeket:
 - Felhasználóknak kell tudni CAFF fájlhoz megjegyzést hozzáfűzni
 - A rendszerben kell legyen adminisztrátor felhasználó, aki tud adatokat módosítani és törölni.
 
-![use-case](/img/use-case.drawio.png)
+![use-case](/img/use-case.png)
 
 ### Biztonsági követelmények és célok
 
 A funkcionális követelmények ismeretében nagy vonalakban fel tudjuk vázolni a rendszert és annak környezetét, ahogy azt a következő Data Flow ábra mutatja.
 
-![integrity](/img/integrity.drawio.png)
+![integrity](/img/integrity.png)
 
 A CAFF webáruházat az alapvető felhasználók és adminisztrátorok használhatják., velük kerülhet interakcióba a rendszer. Mivel a tőlük érkező kéréseket, a viselkedésüket nem tudjuk kontrollálni, ezért a velük történő interakció bizalmi kéréseket vet fel. Az előző ábrán ezt szaggatott piros vonallal jelezzük. A rendszer működtetéséhez szükség lesz a felhasználók és adminisztrátorok adatainak tárolására, a CAFF fájlok tárolására, illetve a fájlokhoz tartozó kommentek elmentésére. A tárolt adatok között kapcsolatot is kell létesíteni, a felhasználót össze kell kötni a saját feltöltött CAFF fájljaival, a hozzáadott kommentjeivel és azzal, hogy milyen CAFF fájlokat vásárolt meg.
 
@@ -62,7 +62,7 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
 TODO
 
-![use-case-2](TODO)
+![use-case-2](/img/use-case-2.png)
 
 ### Threat Assessment
 
