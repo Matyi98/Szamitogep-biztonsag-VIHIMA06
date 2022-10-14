@@ -113,7 +113,7 @@ TODO
 
 (Az asseteken végighaladva megnézhetjük, hogy milyen veszélyek fenyegethetik és ebből tudjuk levezetni a támadásokat, amik ezeket érhetik. Ezeket, hogy megállítsuk, szükségünk van többfajta védelemre.)
 
-## Szükséges biztonsági funkcionalitások
+### Szükséges biztonsági funkcionalitások
 
 TODO
 
