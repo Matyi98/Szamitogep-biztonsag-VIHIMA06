@@ -60,38 +60,72 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
   - A felhasználó és adminisztrátori tevékenységeket naplózni kell.
 
-TODO
-
-![use-case-2](/img/use-case-2.png)
-
-TODO: make similar use-case for admin
-
 ### Threat Assessment
+
+(TODO: KÖRÜLTEKINTŐ ÁTNÉZÉS, az adafolyam ábrát sokféleképpen lehet elképzelni és nem mentem bele nagyon részletekbe, illetve a parsert innen még kihagytam, mert talán csak az architektúra tervbe kell, de idk, talán ide is belelehet rakni. Illetve az idő részt sem tudom, hogy kellene-e valamihez.)
 
 A threat assessment részt két részre tagoljuk: az assetek azonosítása és assetekre leselkedő veszélyek (threat) azonosítása. Az assetek azonosításához iteratívan elemezzük a rendszer use case-eit, figyelembe véve a biztonsági követelményeket. A veszélyek megállapításához a STRIDE keretrendszer segítségét vettük igénybe.
 
 #### Assetek megállapítása
 
-A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta asset halmazt különítünk el: (TODO: ezt még ki kell egészíteni)
+A funkcionális és biztonsági követelmények ismeretében pontosítjuk a kezdeti adatfolyam diagramot és részletezzük a rendszer komponenseit. A Threat, Risk, Vulnerability Analysis során háromfajta asset halmazt különítünk el:
 
-- Fizikai assetek: gépek, amin a szerverek futnak
+- Fizikai assetek
+- Emberi assetek
+- Logikai assetek.
+
+A fizikai assetek meghatározása itt most triviális a use case-ek alapján. Szervergépek kellenek, amin a szoftverek fognak futni, illetve hálózati eszközök, amikkel az internetre csatlakoznak. Az emberi assetek csak kettő lesz, a felhasználó és az admin. A logikai assetek meghatározása nagyobb vizsgálatot igényel, ezzel foglalkozik a következő kettő alfejezet.
+
+##### Felhasználói use-case-ek vizsgálata
+
+A felhasználók többfajta use-case-ben is megjelennek, a biztonsági követelmények kielégítéséhez azonban újabb use case-eket kell felvenni. Az egyes tevékenységek között megkötéseket is felveszünk. A CAFF megtekintésén és a regisztráción kívül a többi folyamathoz belépés szükséges, illetve a belépést megelőzheti a regisztráció. A leírt dolgokat ábrázolja a következő use case diagram.
+
+![use-case-extended-with-securityreqs](/img/use-case-extended-with-securityreqs.png)
+
+A logikai assetek meghatározásához létrehozunk egy adatfolyamot, ami az előző use case megvalósításához szükséges. A megrendelő szeretne távoli elérést a rendszerhez, ezért úgy döntöttünk, hogy a rendszer felületét böngészőben fogjuk megjeleníteni a felhasználók számára. Mivel a legtöbb tevékenység bejelentkezéshez kötött, szükség van egy autentikációt megvalósító komponensre. Ennek a komponensnek szüksége van a felhasználó adataira, ezt egy adatbázisban fogjuk tárolni. A felhasználóknak biztosítani kell, hogy megnézhessék vagy módosíthassák a felhasználói adataikat.
+
+A felhasználók a webáruházban több dolgot is csinálhatnak a CAFF fájlokkal (megtekintés/feltöltés/letöltés/vásárlás). Ezt a CAFF-kezelő logikai asset fogja kezelni. A CAFF-kezelő összeköti a CAFF fájlokat a hozzátartozó megjegyzésekkel, felhasználókkal. Az elmentett CAFF fájlokat a CAFF adatbázisból fogja olvasni.
+
+A felhasználók tudnak a CAFF fájlokhoz megjegyzést hozzáadni/módosítani/sajátot törölni. Ezt a megjegyzés-kezelő asset kezeli. A megjegyzéseket a megjegyzés adatbázisból szedi ki, és összerendeli azokat a felhasználókkal.
+
+Mindegyik adatkezelő logikai asset felhasználja a hozzáférés-védelmi komponenst. Ez a tevékenységeket vagy engedi vagy tiltja attól függően, hogy a felhasználó be van-e jelentkezve, illetve van-e joga az adott művelethez (például: csak saját kommentet törölhet). Az asseteket összefoglaló adatfolyam ábra látható alább.
+
+> Megjegyzés: Az adatfolyam bonyolultsága miatt néhány adatfolyam nyíl számmal van ellátva. Ezek megmutatják, hogy melyik nyíl eleje, melyik nyíl véghez tartozik.
+
+![Data-flow-extended-with-users](/img/Data-flow-extended-with-users.png)
+
+##### Adminisztrátori use-case-ek vizsgálata
+
+Az adminisztrátorok itt most felhasználók, csak több joguk van ahhoz, hogy milyen adatot tudnak módosítani és törölni. A biztonsági követelmények ugyanúgy meghatározzák, hogy ehhez először be kell lépniük, ez a módosítás látható a fentebbi use case ábrán.
+Az adminisztrátori folyamatok nem sokat tesznek hozzá az adatfolyam diagramhoz. Az hogy milyen adatot törölhetnek, módosíthatnak, csak a szerepköröktől függ, amire a hozzáférés-védelmi komponens figyel. Ezért a végső ábra csak az adminisztrátor emberi assettel egészül ki.
+
+![data-flow-2](/img/data-flow-2.png)
+
+##### Végső assetek meghatározása
+
+- Fizikai assetek: szervergépek, hálózati eszközök
 - Emberi assetek: felhasználók, adminisztrátorok
-- Logikai assetek: adatok (CAFF fájlok)
-
-TODO: A következőt kell végig csinálni (Két use-case-el végig -> felhasználó és admin)
-
-- Megnézni, hogy egy use-case hogy bővül, ha belevisszük a biztonsági követelményeket és kell a bővített use-case diagram
-- Leírni milyen emberi asset van benne(triviális: felhasználó vagy admin)
-- Leírni, hogy milyen logikai assetek tartoztank egy use-case (ezek a különböző komponensek pl: Authentikációs komponens és hozzá az adatfolyam ábra)
+- Logikai assetek: Hozzáférés-védelmi komponens, webszerver, autentikációs komponens, CAFF-kezelő, Megjegyzés-kezelő, felhasználói adatkezelő, CAFF fájlok, hozzászólások, felhasználói adatok.
 
 #### Támadó modell kidolgozása
 
 TODO
 
-Az asseteken végighaladva megnézhetjük, hogy milyen veszélyek fenyegethetik és ebből tudjuk levezetni a támadásokat, amik ezeket érhetik. Ezeket, hogy megállítsuk, szükségünk van többfajta védelemre.
+(Az asseteken végighaladva megnézhetjük, hogy milyen veszélyek fenyegethetik és ebből tudjuk levezetni a támadásokat, amik ezeket érhetik. Ezeket, hogy megállítsuk, szükségünk van többfajta védelemre.)
 
+## Szükséges biztonsági funkcionalitások
 
-## Architektúra tervek
+TODO
+
+## Architektúra tervek (Ez majd nagy cím lesz később)
+
+TODO
+
+### Rendszer struktúrája
+
+TODO
+
+### A rendszer viselkedése
 
 TODO
 
