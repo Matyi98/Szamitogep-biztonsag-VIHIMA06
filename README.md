@@ -137,27 +137,45 @@ Hamisítással kapcsolatos veszélyekre kell felkészülnünk a belső folyamato
 
 TODO(átnézés)
 
-A biztonsági követelmények kielégítéséhez többféle biztonsági finkcionalitást kell megterveznünk, implementálnunk és tesztelnünk. A szükséges biztonsági funkcionalitások listáját a biztonsági követelmények és abuse case-ek elemzésével kaphatjuk meg.
+A biztonsági követelmények kielégítéséhez többféle biztonsági funkcionalitást kell megterveznünk, implementálnunk és tesztelnünk. A szükséges biztonsági funkcionalitások listáját a biztonsági követelmények és abuse case-ek elemzésével kaphatjuk meg.
 
 A webshop használatához(feltötlés, letöltés) autentikációt kell megvalósítanunk. Általánosságban az autentikáció lehet jelszó alapú, hardver token alapú vagy biometrikus azonosításra épülő autentikáció. Mivel a tervezett rendszerrel böngészőn keresztül léphetnek kapcsolatba a felhasználók, érdemes jelszó alapú autentikációt választani.
 
 A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó és adminisztrátor. Az egyes tevékenységek csak bizonyos szerepkörbe tartozó felhasználók számára elérhetőek, ezért a tevékenységek elvégzése előtt ellenőriznünk kell, hogy az adott felhasználó jogosult-e a tevékenységre. Ehhez szerep alapú autorizációs mechanizmust kell implementálnunk.
 
-Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölhetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
+Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
 
 A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). A felhasználói fiókok biztonságához jelszó policy-t dolgozhatunk ki (pl. hány és milyen típusú karakterből álljon a jelszó).
 
-## Architektúra tervek (Ez majd nagy cím lesz később)
+## Architektúra tervek
 
-TODO
+A követelmények ismeretében elkezdhetjük megtervezni a tanulmányi rendszert. A terveket többféle UML diagram segítségével vizualizálhatjuk, mi a rendszer a struktúráját komponens diagramon, viselkedését pedig szekvencia diagrammon keresztül szemléltetjük.
 
 ### Rendszer struktúrája
 
-TODO
+A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer összesen 9 interfészt nyújt a felhasználók számára.
+
+- Regisztráció: Ezen az interfészen keresztül tudnak a felhasználók felhasználói fiókot létrehozni saját maguknak.
+- Bejelentkezés: A felhasználók ezen az interfészen keresztül tudnak bejelentkezni a rendszerbe.
+- Felhasználói adat módosítása: A felhasználók ezen az interfészen keresztül tudják módosítani személyes adataikat és jelszavukat.
+- Felhasználói adat lekérdezése?: Ezen az interfészen keresztül lehet lekérni egy-egy felhasználó adatait.
+- CAFF keresése: Ezen az interfészen keresztül tudnak keresni CAFF-okat a felhasználók.
+- CAFF megvásárlása: Ezen az interfészen keresztül tudnak vásárolni CAFF-ot a felhasználók.
+- CAFF letöltése: Ezen az interfészen keresztül tudnak CAFF-ot letölteni a felhasználók.
+- CAFF feltöltése: Ezen az interfészen keresztül tudnak CAFF-ot feltölteni a felhasználók.
+- CAFF-hoz megjegyzés fűzése: Ezen az interfészen keresztül tudnak CAFF-hoz megjegyzést fűzni a felhasználók.
+- Megjegyzés módosítása? (vagy ez mehet a megjegyzés fűzéséhez)
+- Admin adat módosítás, törlés?
+
+A felhasználói és személyes adatokat a felhasználói adatbázisban tároljuk. Az adatok kezeléséhez egy különálló logikai komponenst fogunk megvalósítani. A CAFF-ok, megjegyzések tárolása és kezelése ugyanilyen séma szerint lesz implementálva.
+
+TODO: architektúra leírása a komponens diagram alapján folyt köv.
 
 ### A rendszer viselkedése
 
-TODO
+A rendszer viselkedésének tervezéséhez minden use-case-hez külön-külön szekvencia diagrammot készítünk az átláthatóság kedvéért.
+
+TODO: Szekvencia diagrammok
 
 ## Tesztelési terv
 
