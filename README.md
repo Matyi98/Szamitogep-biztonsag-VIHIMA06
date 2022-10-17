@@ -183,9 +183,14 @@ TODO: architektúra leírása a komponens diagram alapján folyt köv.
 
 ### A rendszer viselkedése
 
-A rendszer viselkedésének tervezéséhez minden use-case-hez külön-külön szekvencia diagrammot készítünk az átláthatóság kedvéért.
+A rendszer viselkedésének tervezéséhez minden use-case-hez külön-külön 
+diagrammot készítünk az átláthatóság kedvéért.
 
 TODO: Szekvencia diagrammok
+
+### Regisztráció
+
+![sequence-registration](/img/sequence-registration.png)
 
 ## Tesztelési terv
 
