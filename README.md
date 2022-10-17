@@ -131,7 +131,17 @@ Megszemélyesítéssel kapcsolatos veszélyek forrása lehet bármelyik külső 
 
 Megszemélyesítéssel a belső folyamatok között is számolni kell. Amennyiben az autentikációt külön fizikai szerveren valósítjuk meg, akkor hálózati kéréseket kell egymásnak küldenie a webszervernek és az autentikációs szervernek. Amennyiben a támadók hozzáférnek pl. a webszerver és az autentikációs szerver közötti hálózathoz, megpróbálhatják valamelyik komponenst megszemélyesíteni.
 
-Hamisítással kapcsolatos veszélyekre kell felkészülnünk a belső folyamatok, adattárak és adatfolyamok megvalósítása során. A belső folyamatokat sokféleképpen támadhatják, pl. implementációs sérülékenységek kihasználásával megváltoztathatják a támadók a komponensek viselkedését. Az adattárak kompromittálása során hamis adatokat helyezhetnek el az adatbázisokban, pl. jogtalanul megváltoztathatják az egyes felhasználók szerepköreit vagy meg nem vásárolt CAFF-okat rendelnek a felhasználókhoz.Az adatfolyamok esetében a komponensek közötti kérések és válaszok manipulációjáról beszélhetünk.
+Hamisítással kapcsolatos veszélyekre kell felkészülnünk a belső folyamatok, adattárak és adatfolyamok megvalósítása során. A belső folyamatokat sokféleképpen támadhatják, pl. implementációs sérülékenységek kihasználásával megváltoztathatják a támadók a komponensek viselkedését (példa: SQL injection?). Az adattárak kompromittálása során hamis adatokat helyezhetnek el az adatbázisokban, pl. jogtalanul megváltoztathatják az egyes felhasználók szerepköreit vagy meg nem vásárolt CAFF-okat rendelnek a felhasználókhoz.Az adatfolyamok esetében a komponensek közötti kérések és válaszok manipulációjáról beszélhetünk.
+
+TODO: jobb leírások
+
+Szolgáltatás-megtagadás: DOS támadás
+
+Információ szivárgás: veszélyeztethet belső folyamatokat, tárolt adatokat és adatfolyamokat. HTTPS használata?
+
+Tevékenységek letagadása: Nem megfelelő logolás, támadó letudja tagadni a tettét?
+
+Jogosultsági szint emelése: Saját magának beállítja, hogy admin
 
 ### Szükséges biztonsági funkcionalitások
 
