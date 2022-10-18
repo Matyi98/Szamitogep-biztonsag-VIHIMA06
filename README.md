@@ -14,11 +14,17 @@ Az alábbi lista tartalmazza a funkcionális követelményeket:
 
 ![use-case](/img/use-case.png)
 
+<p align = "center">
+1. ábra. A rednszer felhasználási szcenáriói</p>
+
 ### Biztonsági követelmények és célok
 
 A funkcionális követelmények ismeretében nagy vonalakban fel tudjuk vázolni a rendszert és annak környezetét, ahogy azt a következő Data Flow ábra mutatja.
 
 ![integrity](/img/integrity.png)
+
+<p align = "center">
+2. ábra. A CAFF webshop és környezete</p>
 
 A CAFF webáruházat az alapvető felhasználók és adminisztrátorok használhatják., velük kerülhet interakcióba a rendszer. Mivel a tőlük érkező kéréseket, a viselkedésüket nem tudjuk kontrollálni, ezért a velük történő interakció bizalmi kéréseket vet fel. Az előző ábrán ezt szaggatott piros vonallal jelezzük. A rendszer működtetéséhez szükség lesz a felhasználók és adminisztrátorok adatainak tárolására, a CAFF fájlok tárolására, illetve a fájlokhoz tartozó kommentek elmentésére. A tárolt adatok között kapcsolatot is kell létesíteni, a felhasználót össze kell kötni a saját feltöltött CAFF fájljaival, a hozzáadott kommentjeivel és azzal, hogy milyen CAFF fájlokat vásárolt meg.
 
@@ -82,6 +88,9 @@ A felhasználók többfajta use-case-ben is megjelennek, a biztonsági követelm
 
 ![use-case-extended-with-securityreqs](/img/use-case-extended-with-securityreqs.png)
 
+<p align = "center">
+X. ábra. A felhasználókhoz és adminisztrátorokhoz köthető use-case-ek kiegészítve</p>
+
 A logikai assetek meghatározásához létrehozunk egy adatfolyamot, ami az előző use case megvalósításához szükséges. A megrendelő szeretne távoli elérést a rendszerhez, ezért úgy döntöttünk, hogy a rendszer felületét böngészőben fogjuk megjeleníteni a felhasználók számára. Mivel a legtöbb tevékenység bejelentkezéshez kötött, szükség van egy autentikációt megvalósító komponensre. Ennek a komponensnek szüksége van a felhasználó adataira, ezt egy adatbázisban fogjuk tárolni. A felhasználóknak biztosítani kell, hogy megnézhessék vagy módosíthassák a felhasználói adataikat.
 
 A felhasználók a webáruházban több dolgot is csinálhatnak a CAFF fájlokkal (megtekintés/feltöltés/letöltés/vásárlás). Ezt a CAFF-kezelő logikai asset fogja kezelni. A CAFF-kezelő összeköti a CAFF fájlokat a hozzátartozó megjegyzésekkel, felhasználókkal. Az elmentett CAFF fájlokat a CAFF adatbázisból fogja olvasni.
@@ -94,12 +103,18 @@ Mindegyik adatkezelő logikai asset felhasználja a hozzáférés-védelmi kompo
 
 ![Data-flow-extended-with-users](/img/Data-flow-extended-with-users.png)
 
+<p align = "center">
+X. ábra. A rendszer adatfolyam ábrája a felhasználói interakciók elemzése után</p>
+
 ##### Adminisztrátori use-case-ek vizsgálata
 
 Az adminisztrátorok itt most felhasználók, csak több joguk van ahhoz, hogy milyen adatot tudnak módosítani és törölni. A biztonsági követelmények ugyanúgy meghatározzák, hogy ehhez először be kell lépniük, ez a módosítás látható a fentebbi use case ábrán.
 Az adminisztrátori folyamatok nem sokat tesznek hozzá az adatfolyam diagramhoz. Az hogy milyen adatot törölhetnek, módosíthatnak, csak a szerepköröktől függ, amire a hozzáférés-védelmi komponens figyel. Ezért a végső ábra csak az adminisztrátor emberi assettel egészül ki.
 
 ![data-flow-2](/img/data-flow-2.png)
+
+<p align = "center">
+X. ábra. A rendszer adatfolyam ábrája az adminisztrátori interakciók elemzése után</p>
 
 ##### Végső assetek meghatározása
 
@@ -177,6 +192,11 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 - Megjegyzés módosítása? (vagy ez mehet a megjegyzés fűzéséhez)
 - Admin adat módosítás, törlés?
 
+![Component-diagram](/img/Component-diagram.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
 A felhasználói és személyes adatokat a felhasználói adatbázisban tároljuk. Az adatok kezeléséhez egy különálló logikai komponenst fogunk megvalósítani. A CAFF-ok, megjegyzések tárolása és kezelése ugyanilyen séma szerint lesz implementálva.
 
 TODO: architektúra leírása a komponens diagram alapján folyt köv.
@@ -203,12 +223,12 @@ TODO: Szekvencia diagrammok
 
 ### Biztonsági tesztelés
 
-#### Kódolási szabványok: 
+#### Kódolási szabványok:
 
 - Ne legyen benne memory leak a C++ részben
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
 - Szálkezelés implementálására async-await-et használunk, ezzel leegyszerűsítve a szálkezelést.
 - HTML sanitizert használunk XSS és egyéb támadások ellen.
-- Alkalmazzuk a fontosabb OOJ elveket (pl. encapsulation)
+- Alkalmazzuk a fontosabb OOP elveket (pl. encapsulation)
 - Statikus ellenörzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
 - A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain, elmentve mikor crashel vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk ki.
