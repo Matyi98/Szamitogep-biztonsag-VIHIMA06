@@ -212,6 +212,10 @@ TODO: Szekvencia diagrammok
 
 ![sequence-registration](/img/sequence-registration.png)
 
+### Felhasználói adat módosítása
+
+![user-data-modification](/img/User_data_modification.png)
+
 ## Tesztelési terv
 
 ### Funkcionális tesztelés
