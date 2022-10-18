@@ -208,15 +208,19 @@ diagrammot készítünk az átláthatóság kedvéért.
 
 TODO: Szekvencia diagrammok
 
-### Regisztráció
+#### Regisztráció
 
 ![sequence-registration](/img/sequence-registration.png)
+
+#### CAFF feltöltése
+
+![seq-diagram-upload](/img/seq-diagram-upload.png)
 
 ## Tesztelési terv
 
 ### Funkcionális tesztelés
 
-- A fontosabb funkciókhoz unit teszeket készítünk (például a parserhez, CAFF kezelőhöz).
+- A fontosabb funkciókhoz unit teszteket készítünk (például a parserhez, CAFF kezelőhöz).
 - Integrációs tesztelést végzünk (például CAFF kezelőnél).
 - Az elkészült alkalmazáson manuális teszteléseket végzünk, az összes funkciót kipróbáljuk.
 - Ellenőrizzük, hogy az elkészült funkciók megvalósítják-e a követelményekben leírtakat (verifikáció).
