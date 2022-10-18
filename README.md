@@ -216,6 +216,10 @@ TODO: Szekvencia diagrammok
 
 ![user-data-modification](/img/User_data_modification.png)
 
+### Felhasználói adat lekérdezése
+
+![user-data_query](/img/User_data_query.png)
+
 ## Tesztelési terv
 
 ### Funkcionális tesztelés
