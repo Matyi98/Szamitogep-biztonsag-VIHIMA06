@@ -189,16 +189,26 @@ TODO: Szekvencia diagrammok
 
 ## Tesztelési terv
 
-TODO: Normális leírás, technológiák átbeszélése
+### Funkcionális tesztelés
 
-Statikus analízis cucc:
+TODO: Normális leírás, kiegészítések
 
-- C++ parser: cppcheck? (open-source, könnyen használható)
-- Full stack rész(C#): Sonarqube szerintem itt
+Unit tesztelés. (Parsernek egy-két unit tesztet, CAFF kezelőnek .Net-ben is lehet)
+Integrációs tesztelés. (CAFF-kezelőnek max)
+Manuális tesztelés. (Végig nyomkodni a weboldalt)
 
-Fuzzer:
+### Biztonsági tesztelés
 
-- C++ parser: afl fuzzer, valgrind bugok megtalálásához
-- Full stack rész(C#): elvileg van afl fork ehhez, de nem tudom, hogy szükséges-e
+Coding standard rész:
 
-Unit tesztek?
+- Ne legyen benne memory leak a C++ részben
+- Adatbázishoz nem kézzel nyúlunk, hanem entity framework-öt használunk
+- async-await
+- HTML sanitizer
+- Hasonlókat írni ide?
+
+Amit a statikus ellenőrzök megvizsgálnak a coding standard-ból, azokat mint betartjuk pl(enkapszuláció).
+
+A coding standard-ek betartázáshoz statikus elemzőt használunk szerveroldalon és a C++ parser-ben is. C++ oldalon a cppcheck nevü programot alkalmazzuk, ami egy könnyen használható open-source alkalmazás. Szerveroldalon sonarqube-ot/roslyn analyzer-t használunk.
+
+A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer programmal végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain és elmenti mikor crashelt vagy akadt meg a program. A talált hibákat a valgrind program segítségével detektáljuk és javítjuk ki.
