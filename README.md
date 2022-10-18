@@ -203,7 +203,7 @@ TODO: Szekvencia diagrammok
 
 ### Biztonsági tesztelés
 
-Coding standard rész:
+#### Kódolási szabványok: 
 
 - Ne legyen benne memory leak a C++ részben
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
