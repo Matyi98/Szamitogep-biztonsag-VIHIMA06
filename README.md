@@ -216,6 +216,14 @@ TODO: Szekvencia diagrammok
 
 ![seq-diagram-upload](/img/seq-diagram-upload.png)
 
+#### Felhasználói adat módosítása
+
+![user-data-modification](/img/User_data_modification.png)
+
+#### Felhasználói adat lekérdezése
+
+![user-data_query](/img/User_data_query.png)
+
 ## Tesztelési terv
 
 ### Funkcionális tesztelés
