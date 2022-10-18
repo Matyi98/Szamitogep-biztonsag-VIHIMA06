@@ -230,5 +230,5 @@ TODO: Szekvencia diagrammok
 - Szálkezelés implementálására async-await-et használunk, ezzel leegyszerűsítve a szálkezelést.
 - HTML sanitizert használunk XSS és egyéb támadások ellen.
 - Alkalmazzuk a fontosabb OOP elveket (pl. encapsulation)
-- Statikus ellenörzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
+- Statikus ellenőrzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
 - A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain, elmentve mikor crashel vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk ki.
