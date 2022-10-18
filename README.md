@@ -203,12 +203,12 @@ TODO: Szekvencia diagrammok
 
 ### Biztonsági tesztelés
 
-#### Kódolási szabványok: 
+#### Kódolási szabványok:
 
 - Ne legyen benne memory leak a C++ részben
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
 - Szálkezelés implementálására async-await-et használunk, ezzel leegyszerűsítve a szálkezelést.
 - HTML sanitizert használunk XSS és egyéb támadások ellen.
-- Alkalmazzuk a fontosabb OOJ elveket (pl. encapsulation)
-- Statikus ellenörzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
+- Alkalmazzuk a fontosabb OOP elveket (pl. encapsulation)
+- Statikus ellenőrzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
 - A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain, elmentve mikor crashel vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk ki.
