@@ -196,24 +196,19 @@ TODO: Szekvencia diagrammok
 
 ### Funkcionális tesztelés
 
-TODO: Normális leírás, kiegészítések
-
-Unit tesztelés. (Parsernek egy-két unit tesztet, CAFF kezelőnek .Net-ben is lehet)
-Integrációs tesztelés. (CAFF-kezelőnek max)
-Manuális tesztelés. (Végig nyomkodni a weboldalt)
+- A fontosabb funkciókhoz unit teszeket készítünk (például a parserhez, CAFF kezelőhöz).
+- Integrációs tesztelést végzünk (például CAFF kezelőnél).
+- Az elkészült alkalmazáson manuális teszteléseket végzünk, az összes funkciót kipróbáljuk.
+- Ellenőrizzük, hogy az elkészült funkciók megvalósítják-e a követelményekben leírtakat (verifikáció).
 
 ### Biztonsági tesztelés
 
 Coding standard rész:
 
 - Ne legyen benne memory leak a C++ részben
-- Adatbázishoz nem kézzel nyúlunk, hanem entity framework-öt használunk
-- async-await
-- HTML sanitizer
-- Hasonlókat írni ide?
-
-Amit a statikus ellenőrzök megvizsgálnak a coding standard-ból, azokat mint betartjuk pl(enkapszuláció).
-
-A coding standard-ek betartázáshoz statikus elemzőt használunk szerveroldalon és a C++ parser-ben is. C++ oldalon a cppcheck nevü programot alkalmazzuk, ami egy könnyen használható open-source alkalmazás. Szerveroldalon sonarqube-ot/roslyn analyzer-t használunk.
-
-A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer programmal végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain és elmenti mikor crashelt vagy akadt meg a program. A talált hibákat a valgrind program segítségével detektáljuk és javítjuk ki.
+- Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
+- Szálkezelés implementálására async-await-et használunk, ezzel leegyszerűsítve a szálkezelést.
+- HTML sanitizert használunk XSS és egyéb támadások ellen.
+- Alkalmazzuk a fontosabb OOJ elveket (pl. encapsulation)
+- Statikus ellenörzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube-ot, roslyn analyzer) szerveroldalon és C++ kódnál, a parserhez is.
+- A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain, elmentve mikor crashel vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk ki.
