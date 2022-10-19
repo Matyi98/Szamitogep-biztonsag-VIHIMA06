@@ -212,6 +212,10 @@ TODO: Szekvencia diagrammok
 
 ![sequence-registration](/img/sequence-registration.png)
 
+#### CAFF letöltése
+
+![seq-diagram-upload](/img/sequence-caffload.png)
+
 #### CAFF feltöltése
 
 ![seq-diagram-upload](/img/seq-diagram-upload.png)
