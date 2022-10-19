@@ -165,13 +165,13 @@ Abuse-case-ek kategorizálva a STRIDE szerint:
 
 - Szolgáltatás-megtagadás (denial of service)
 
-  - Kis szakmai tudású és kevés erőforrással rendelkező támadók ellen kívánunk védekezni. Lényegében néhány inkognító ablakból ne tudja egy támadó leterhelni a rendszert. Ez ellen úgy kívánunk védekezni, hogy be kelljen jelentkezni a feltöltéshez letöltéshez. Limitáljuk a feltöltési méretet és feltölthető CAFF-ok számát.
+  - Kis szakmai tudású és kevés erőforrással rendelkező támadók ellen kívánunk védekezni. Lényegében néhány inkognitó ablakból ne tudja egy támadó leterhelni a rendszert. Ez ellen úgy kívánunk védekezni, hogy be kelljen jelentkezni a feltöltéshez letöltéshez. Limitáljuk a feltöltési méretet és feltölthető CAFF-ok számát.
 
   - Sok erőforrással rendelkező összehangolt DDOS támadás ellen nem védekezünk. Egy ilyen kis jelentőségű rendszer esetén ez túl költséges lenne.
 
 - Jogosultsági szint emelése (elevation of privilege)
 
-  - Egy felhasználó megpróbál admin jogokat szerezni, pl kliens oldalon user id módosításával. Ez megfelelő jogosultságkezeléssel és szerver oldali ellenőrzéssel könnyedén kivédhető.
+  - Egy felhasználó megpróbál admin jogokat szerezni, pl. kliens oldalon user id módosításával. Ez megfelelő jogosultságkezeléssel és szerver oldali ellenőrzéssel könnyedén kivédhető.
 
 ### Szükséges biztonsági funkcionalitások
 
@@ -179,7 +179,7 @@ Jelszó alapú autentikációt fogunk megvalósítani. A választott keretrendsz
 
 A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó és adminisztrátor. Az egyes tevékenységek csak bizonyos szerepkörbe tartozó felhasználók számára elérhetőek, ezért a tevékenységek elvégzése előtt ellenőriznünk kell, hogy az adott felhasználó jogosult-e a tevékenységre. Ehhez szerep alapú autorizációs mechanizmust kell implementálnunk. Ezen kívül szükség lesz még egyedi autorizációs szabályokra, hiszen vannak olyan műveletek amiket mindenki el tud általánosan végezni, de csak a saját adatain. Minden jogosultság ellenőrzést szerver oldalon kell elvégezni.
 
-Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
+Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ők elszámoltathatóságához fontos a tevékenységek naplózása.
 
 A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
 
@@ -295,8 +295,6 @@ X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 ### Biztonsági tesztelés
 
 #### Coding standard
-
-A rendszerben követjük a C# és C++ széleskörben elfogadott kódolási konvencióit.
 
 - Ne legyen benne memory leak a C++ részben
 - Ne legyen out of bound memory read
