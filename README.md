@@ -208,7 +208,7 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 
 - Regisztráció: Ezen az interfészen keresztül tudnak a felhasználók felhasználói fiókot létrehozni saját maguknak.
 - Bejelentkezés: A felhasználók ezen az interfészen keresztül tudnak bejelentkezni a rendszerbe.
-- Felhasználói adat módosítása: A felhasználók ezen az interfészen keresztül tudják módosítani személyes adataikat és jelszavukat.
+- Felhasználói adat módosítása: A felhasználók ezen az interfészen keresztül tudják módosítani személyes adataikat és jelszavakat.
 - Felhasználói adat lekérdezése?: Ezen az interfészen keresztül lehet lekérni egy-egy felhasználó adatait.
 - CAFF keresése: Ezen az interfészen keresztül tudnak keresni CAFF-okat a felhasználók.
 - CAFF megvásárlása: Ezen az interfészen keresztül tudnak vásárolni CAFF-ot a felhasználók.
