@@ -206,7 +206,7 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 - Bejelentkezés: A felhasználók ezen az interfészen keresztül tudnak bejelentkezni a rendszerbe.
 - Felhasználói adat módosítása: A felhasználók ezen az interfészen keresztül tudják módosítani személyes adataikat és jelszavakat.
 - Felhasználói adat lekérdezése?: Ezen az interfészen keresztül lehet lekérni egy-egy felhasználó adatait.
-- Admin adat módosítás, törlés: Ezen az interfészen keresztül tudnak az adminisztrátorok adatot módosítani, törölni..
+- Admin adat módosítás, törlés: Ezen az interfészen keresztül tudnak az adminisztrátorok adatot módosítani, törölni.
 - CAFF letöltése: Ezen az interfészen keresztül tudnak CAFF-ot letölteni a felhasználók. (Ez egyben a vásárlás is)
 - CAFF feltöltése: Ezen az interfészen keresztül tudnak CAFF-ot feltölteni a felhasználók.
 - CAFF-hoz megjegyzés fűzése: Ezen az interfészen keresztül tudnak CAFF-hoz megjegyzést fűzni a felhasználók.
