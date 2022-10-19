@@ -301,7 +301,8 @@ X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 - HTML sanitizert használunk XSS és egyéb támadások ellen.
 - Alkalmazzuk a fontosabb OOP elveket (pl. encapsulation)
 
+A coding standard betartásához statikus ellenőrzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube, roslyn analyzer) a szerverkódhoz és a C++ kódhoz is.
+
 #### Parser dinamikus tesztelése
 
-- Statikus ellenőrzőket használunk (Pl. Visual Studio code analysis, cppcheck, sonarqube, roslyn analyzer) a szerverkódhoz és a C++ kódhoz is.
-- A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmehetünk a parser útvonalain, elmentve mikor crashel vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk majd ki.
+A natív C++ CAFF parser dinamikus tesztelését az afl fuzzer program segítségével végezzük el. Ezzel különböző bemenetekkel végigmegyünk a parser útvonalain, elmentve mikor fagy ki vagy akad el a program. A talált hibákat pedig a valgrind program segítségével detektáljuk és javítjuk majd ki.
