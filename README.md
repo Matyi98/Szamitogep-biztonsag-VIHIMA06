@@ -184,15 +184,21 @@ Abuse-case-ek kategorizálva:
 
 ### Szükséges biztonsági funkcionalitások
 
-TODO: kopipaszta hülyeség kivétele
-
 Jelszó alapú autentikációt fogunk megvalósítani. A választott keretrendszer támogat kétfaktoros autentikációt is, viszont ezt a házi feladatban nem fogjuk bekapcsolni.
 
 A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó és adminisztrátor. Az egyes tevékenységek csak bizonyos szerepkörbe tartozó felhasználók számára elérhetőek, ezért a tevékenységek elvégzése előtt ellenőriznünk kell, hogy az adott felhasználó jogosult-e a tevékenységre. Ehhez szerep alapú autorizációs mechanizmust kell implementálnunk. Ezen kívül szükség lesz még egyedi autorizációs szabályokra, hiszen vannak olyan műveletek amiket mindenki el tud általánosan végezni, de csak a saját adatain. Minden jogosultság ellenőrzést szerver oldalon kell elvégezni.
 
 Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
 
-A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.b
+A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
+
+A megjegyzések írása egy XSS támadási front. Itt HTML sanitizert fogunk alkalmazni.
+
+A CAFF fájlokat feltöltéskor validálni fogjuk. Minden feltöltött CAFF fájlt ellenőrzünk, hogy megfelel-e a szabványnak.
+
+Minden műveletet szerver oldalon ellenőrzünk.
+
+A session érvényességét szerver oldalon ellenőrizzük. Figyelünk, hogy ne lehessen meghamisítani, de a session lopás ellen nem tervezünk védekezni.
 
 ## Architektúra tervek
 
