@@ -184,23 +184,17 @@ Abuse-case-ek kategorizálva:
 
 ### Szükséges biztonsági funkcionalitások
 
-TODO(átnézés)
-
-A biztonsági követelmények kielégítéséhez többféle biztonsági funkcionalitást kell megterveznünk, implementálnunk és tesztelnünk. A szükséges biztonsági funkcionalitások listáját a biztonsági követelmények és abuse case-ek elemzésével kaphatjuk meg.
-
 TODO: kopipaszta hülyeség kivétele
 
-A webshop használatához(feltötlés, letöltés) autentikációt kell megvalósítanunk. Általánosságban az autentikáció lehet jelszó alapú, hardver token alapú vagy biometrikus azonosításra épülő autentikáció. Mivel a tervezett rendszerrel böngészőn keresztül léphetnek kapcsolatba a felhasználók, érdemes jelszó alapú autentikációt választani.
+Jelszó alapú autentikációt fogunk megvalósítani. A választott keretrendszer támogat kétfaktoros autentikációt is, viszont ezt a házi feladatban nem fogjuk bekapcsolni.
 
-A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó és adminisztrátor. Az egyes tevékenységek csak bizonyos szerepkörbe tartozó felhasználók számára elérhetőek, ezért a tevékenységek elvégzése előtt ellenőriznünk kell, hogy az adott felhasználó jogosult-e a tevékenységre. Ehhez szerep alapú autorizációs mechanizmust kell implementálnunk.
+A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó és adminisztrátor. Az egyes tevékenységek csak bizonyos szerepkörbe tartozó felhasználók számára elérhetőek, ezért a tevékenységek elvégzése előtt ellenőriznünk kell, hogy az adott felhasználó jogosult-e a tevékenységre. Ehhez szerep alapú autorizációs mechanizmust kell implementálnunk. Ezen kívül szükség lesz még egyedi autorizációs szabályokra, hiszen vannak olyan műveletek amiket mindenki el tud általánosan végezni, de csak a saját adatain. Minden jogosultság ellenőrzést szerver oldalon kell elvégezni.
 
 Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
 
-A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). A felhasználói fiókok biztonságához jelszó policy-t dolgozhatunk ki (pl. hány és milyen típusú karakterből álljon a jelszó).
+A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.b
 
 ## Architektúra tervek
-
-A követelmények ismeretében elkezdhetjük megtervezni a tanulmányi rendszert. A terveket többféle UML diagram segítségével vizualizálhatjuk, mi a rendszer a struktúráját komponens diagramon, viselkedését pedig szekvencia diagrammon keresztül szemléltetjük.
 
 ### Rendszer struktúrája
 
@@ -260,7 +254,7 @@ TODO: Szekvencia diagrammok
 
 ![user-data-modification](/img/User_data_modification.png)
 
-> Megjegyzés: Az admin adat módosítása is ugyanígy történik, ahhoz nem készült külön szekvencia diagram. 
+> Megjegyzés: Az admin adat módosítása is ugyanígy történik, ahhoz nem készült külön szekvencia diagram.
 
 #### Felhasználói adat lekérdezése
 
