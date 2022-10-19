@@ -224,6 +224,8 @@ TODO: Szekvencia diagrammok
 
 ![user-data-modification](/img/User_data_modification.png)
 
+Megjegyzés: Az admin adat módosítása is ugyanígy történik, ahhoz nem készült külön szekvencia diagram. 
+
 #### Felhasználói adat lekérdezése
 
 ![user-data_query](/img/User_data_query.png)
