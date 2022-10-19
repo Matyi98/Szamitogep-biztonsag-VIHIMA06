@@ -124,7 +124,7 @@ Potenciálisan sérülékeny assettek:
 
 - Emberi assettek:
   - A felhasználók esetén potenciális veszély a felhasználói fiók elvesztése, bejelentkezve maradás publikus gépen, megtippelhető jelszó választása. Ez információ jogosulatlan hozzáférést okozhat, ez ellen kellően erős jelszó megkövetelésével és lejáró bejelentkezéssel védekezünk.
-  - Adminok esetén is fent állnak ugyan ezek a problémák. A session token ellopása ellen védekezünk a lejárati idő beállításával. Az admin fiókot megfelelő jelszóval fogjuk védeni. A választott keretrendszer támogatja a kétfaktoros autentikációt is, de házi feladatban ezt nem fogjuk bekapcsolni.
+  - Adminok esetén is fent állnak ugyanezek a problémák. A session token ellopása ellen védekezünk a lejárati idő beállításával. Az admin fiókot megfelelő jelszóval fogjuk védeni. A választott keretrendszer támogatja a kétfaktoros autentikációt is, de házi feladatban ezt nem fogjuk bekapcsolni.
 
 - Szoftveres assettek:
   - CAFF kezelő: implementációs hiba esetén lehetséges, hogy a támadó olyan CAFF fájlt módosít, amihez nincs joga.
