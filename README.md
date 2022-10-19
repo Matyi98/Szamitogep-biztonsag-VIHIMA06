@@ -182,10 +182,6 @@ Abuse-case-ek kategorizálva:
 
   - Egy felhasználó megpróbál admin jogokat szerezni, pl kliens oldalon user id módosításával. Ez megfelelő jogosultságkezeléssel és szerver oldali ellenőrzéssel könnyedén kivédhető.
 
-Az egyes veszélyforrás kategóriák könnyen összerendelhetők az adatfolyam diagram egyes elemeivel, pl. információ szivárgás veszélyeztethet belső folyamatokat, tárolt adatokat és adatfolyamokat. A támadó modell összeállításához különböző támadási szcenáriókat, ún. abuse case-eket is fel kell sorolnunk.
-
-Hamisítással kapcsolatos veszélyekre kell felkészülnünk a belső folyamatok, adattárak és adatfolyamok megvalósítása során. A belső folyamatokat sokféleképpen támadhatják, pl. implementációs sérülékenységek kihasználásával megváltoztathatják a támadók a komponensek viselkedését (példa: SQL injection?). Az adattárak kompromittálása során hamis adatokat helyezhetnek el az adatbázisokban, pl. jogtalanul megváltoztathatják az egyes felhasználók szerepköreit vagy meg nem vásárolt CAFF-okat rendelnek a felhasználókhoz.Az adatfolyamok esetében a komponensek közötti kérések és válaszok manipulációjáról beszélhetünk.
-
 ### Szükséges biztonsági funkcionalitások
 
 TODO(átnézés)
