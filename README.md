@@ -33,8 +33,6 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
   - A felhasználók CAFF-ok alá tűzött kommentjeit mindenki láthatja.
 
-  - A felhasználók meg tudják nézni, hogy mely CAFF-okat vásárolták meg, de csak a sajátjukat. Az adminisztrátorok bárki megvásárolt CAFF-jait láthatják.
-
 - Integritás (integrity)
 
   - A felhasználók adatait csak saját maguk, vagy az adminisztrátorok módosíthatják.
