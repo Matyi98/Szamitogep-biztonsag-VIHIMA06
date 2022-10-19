@@ -23,7 +23,7 @@ Az alábbi lista tartalmazza a funkcionális követelményeket:
 <p align = "center">
 2. ábra. A CAFF webshop és környezete</p>
 
-A CAFF webáruházat az alapvető felhasználók és adminisztrátorok használhatják, velük kerülhet interakcióba a rendszer. Mivel a tőlük érkező kéréseket, a viselkedésüket nem tudjuk kontrollálni, ezért a velük történő interakciók bizalmi kérdéseket vetnek fel. Az előző ábrán ezt szaggatott piros vonallal jeleztük. A rendszer működtetéséhez szükség lesz a felhasználók és adminisztrátorok adatainak tárolására, a CAFF fájlok tárolására, illetve a fájlokhoz tartozó kommentek elmentésére. A tárolt adatok között kapcsolatot is kell létesíteni, a felhasználót össze kell kötni a saját feltöltött CAFF fájljaival, a hozzáadott kommentjeivel és azzal, hogy milyen CAFF fájlokat vásárolt meg.
+A CAFF webáruházat az alapvető felhasználók és adminisztrátorok használhatják, velük kerülhet interakcióba a rendszer. Mivel a tőlük érkező kéréseket, a viselkedésüket nem tudjuk kontrollálni, ezért a velük történő interakciók bizalmi kérdéseket vetnek fel. Az előző ábrán ezt szaggatott piros vonallal jeleztük. A rendszer működtetéséhez szükség lesz a felhasználók és adminisztrátorok adatainak tárolására, a CAFF fájlok tárolására, illetve a fájlokhoz tartozó kommentek elmentésére. A tárolt adatok között kapcsolatot is kell létesíteni, a felhasználót össze kell kötni a saját feltöltött CAFF fájljaival és a hozzáadott kommentjeivel.
 
 A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategóriába soroljuk: CIA és AAA. Az egyes kategóriákhoz az alábbi biztonsági követelményeket határozhatjuk meg:
 
@@ -39,7 +39,7 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
   - A felhasználók adatait csak saját maguk, vagy az adminisztrátorok módosíthatják.
 
-  - A felhasználók csak a saját megjegyzéseiket tudják törölni. Az adminisztrátorok bárki hozzászólását tudják törölni.
+  - A felhasználók csak a saját megjegyzéseiket tudják törölni és szerkeszteni. Az adminisztrátorok bárki hozzászólását tudják törölni.
 
 - Elérhetőség (availability)
 
@@ -181,7 +181,7 @@ A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó é
 
 Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ők elszámoltathatóságához fontos a tevékenységek naplózása.
 
-A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell az átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
+A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
 
 A megjegyzések írása egy XSS támadási front. Itt HTML sanitizert fogunk alkalmazni.
 
