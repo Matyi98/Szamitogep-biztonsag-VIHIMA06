@@ -126,43 +126,73 @@ X. ábra. A rendszer adatfolyam ábrája az adminisztrátori interakciók elemz�
 
 TODO(átnézés, további lehetséges támadások a többi veszélyforráshoz)
 
-(Az asseteken végighaladva megnézhetjük, hogy milyen veszélyek fenyegethetik és ebből tudjuk levezetni a támadásokat, amik ezeket érhetik. Ezeket, hogy megállítsuk, szükségünk van többfajta védelemre.)
+Potenciálisan sérülékeny assettek:
 
-A támadó modell kidolgozásához számba kell vennünk az egyes assetek potenciális gyengeségeit és az azokra leselkedő veszélyeket. A veszélyforrások rendszerezéséhez segítséget nyújt a STRIDE keretrendszer, melynek elemei a következők:
+- szervergép: A szervergépet jelszóval tervezzük védeni. Fizikai védelemre nem készülünk. Egy ilyen kis jelentőségű, nem kritikus rendszer esetén ez szükségtelen.
+
+- Emberi assettek:
+  - A felhasználók esetén potenciális veszély a felhasználói fiók elvesztése, bejelentkezve maradás publikus gépen, megtippelhető jelszó választása. Ez információ jogosulatlan hozzáférést okozhat, ez ellen kellően erős jelszó megkövetelésével és lejáró bejelentkezéssel védekezünk.
+  - Adminok esetén is fent állnak ugyan ezek a problémák. A session token ellopása ellen védekezünk a lejárati idő beállításával. Az admin fiókot megfelelő jelszóval fogjuk védeni. A választott keretrendszer támogatja a kétfaktoros autentikációt is, de házi feladatban ezt nem fogjuk bekapcsolni.
+
+- Szoftveres assettek:
+  - CAFF kezelő: implementációs hiba esetén lehetséges, hogy a támadó olyan CAFF fájlt módosít, amihez nincs joga.
+  - Megjegyzések: A megjegyzések egy potenciális XSS és SQL injection támadási front, hiszen felhasználói input fog adatbázisba íródni, majd a weboldalon újra betöltődni. Az XSS ellen HTML sanityzerrel fogunk védekezni az SQL injection ellen megfelelő keretrendszerrel és query paraméterekkel.
+  - CAFF kezelő: túl nagy és túl sok feltöltéssel DOS támadást lehet intézni
+
+
+Abuse-case-ek kategorizálva:
 
 - Megszemélyesítés (spoofing)
+
+  - Lehetséges támadások, amelyek helyes hozzáférés védelemmel könnyedén kivédhetőek:
+
+    - Egy felhasználó megpróbál hozzáférni egy másik felhasználó adataihoz, pedig ehhez csak az adott felhasználó és az adminisztrátorok férhetnek hozzá.
+
+    - Egy felhasználó megpróbál adatokat törölni vagy módosítani, pedig ezt csak az adminisztrátorok tehetnék meg.
+
+    - Egy felhasználó más nevében próbál meg felölteni CAFF-ot, ezzel például lejáratva az eredeti művészt.
+
+  - Szükséges megfelelő autentikáció, hogy ne lehessen mást hamisan megszemélyesíteni. Helyesen implementált autentikáció és autorizáció esetén az egyetlen megszemélyesítési támadási lehetőség a bejelentkezési adatok ellopása, vagy bejelentkezve maradt fiókhoz illetéktelen hozzáférés. Felhasználók esetén ez ellen oly szinten kívánunk védekezni, hogy megfelelő erősségű jelszót várunk el, lehetőséget biztosítunk a jelszó megváltoztatására automatikusan kijelentkeztetjük egy idő után. Ezen kívül a felhasználóknak maguknak kell figyelniük arra, hogy ne adják ki adataikat.
+
 - Hamisítás (tampering)
+
+  - A kliens és a webszerver között lehetséges ilyen támadás, de ezek ellen a HTTPS véd.
+
+  - A rendszer többi komponensére azt feltételezzük, hogy egy megbízható védett hálózaton helyezkednek el. A belső hálózatról feltételezzük, hogy nem férnek hozzá támadók.
+
 - Tevékenységek letagadása (repudiation)
+
+  - Egy admin fiókkal rosszindulatú módosítást hajtanak végre. Naplózni fogunk minden adatmódosítással járó eseményt.
+
 - Információ szivárgás (information disclosure)
+
+  - Valaki nyílt wifiről jelentkezik be és ezáltal kiszivároghat a jelszava. Ez ellen HTTPS-sel fogunk védekezni. Úgy fogjuk konfigurálni a webszervert, hogy mindig átirányít HTTPS-re.
+
+  - A szolgáltatás komponensei egy védett hálózaton fognak majd egymással kommunikálni.
+
+  - Egy admin fiók kompromitálódása esetén a támadó hozzáférhet a felhasználók adataihoz. A felhasználókról nem fogunk érzékeny adatokat tárolni. A jelszavakat megfelelően fogjuk tárolni: (salt + hash).
+
 - Szolgáltatás-megtagadás (denial of service)
+
+  - Kis szakmai tudású és kevés erőforrással rendelkező támadók ellen kívánunk védekezni. Lényegében néhány inkognító ablakból ne tudja egy támadó leterhelni a rendszert. Ez ellen úgy kívánunk védekezni, hogy be kelljen jelentkezni a feltöltéshez letöltéshez. Limitáljuk a feltöltési méretet és feltölthető CAFF-ok számát.
+
+  - Sok erőforrással rendelkező összehangolt DDOS támadás ellen nem védekezünk. Egy ilyen kis jelentőségű rendszer esetén ez túl költséges lenne.
+
 - Jogosultsági szint emelése (elevation of privilege)
+
+  - Egy felhasználó megpróbál admin jogokat szerezni, pl kliens oldalon user id módosításával. Ez megfelelő jogosultságkezeléssel és szerver oldali ellenőrzéssel könnyedén kivédhető.
 
 Az egyes veszélyforrás kategóriák könnyen összerendelhetők az adatfolyam diagram egyes elemeivel, pl. információ szivárgás veszélyeztethet belső folyamatokat, tárolt adatokat és adatfolyamokat. A támadó modell összeállításához különböző támadási szcenáriókat, ún. abuse case-eket is fel kell sorolnunk.
 
-Megszemélyesítéssel kapcsolatos veszélyek forrása lehet bármelyik külső szereplő, akivel interakcióba lépünk: elképzelhető, hogy a támadók felhasználónak vagy adminisztrátornak adják ki magukat és az ő nevükben próbálnak meg kéréseket intézni a rendszerhez. Néhány lehetséges támadás:
-
-- Egy felhasználó megpróbál hozzáférni egy másik felhasználó adataihoz, pedig ehhez csak az adott felhasználó és az adminisztrátorok férhetnek hozzá
-- Egy felhasználó megpróbál adatokat törölni vagy módosítani, pedig ezt csak az adminisztrátorok tehetnék meg
-
-Megszemélyesítéssel a belső folyamatok között is számolni kell. Amennyiben az autentikációt külön fizikai szerveren valósítjuk meg, akkor hálózati kéréseket kell egymásnak küldenie a webszervernek és az autentikációs szervernek. Amennyiben a támadók hozzáférnek pl. a webszerver és az autentikációs szerver közötti hálózathoz, megpróbálhatják valamelyik komponenst megszemélyesíteni.
-
 Hamisítással kapcsolatos veszélyekre kell felkészülnünk a belső folyamatok, adattárak és adatfolyamok megvalósítása során. A belső folyamatokat sokféleképpen támadhatják, pl. implementációs sérülékenységek kihasználásával megváltoztathatják a támadók a komponensek viselkedését (példa: SQL injection?). Az adattárak kompromittálása során hamis adatokat helyezhetnek el az adatbázisokban, pl. jogtalanul megváltoztathatják az egyes felhasználók szerepköreit vagy meg nem vásárolt CAFF-okat rendelnek a felhasználókhoz.Az adatfolyamok esetében a komponensek közötti kérések és válaszok manipulációjáról beszélhetünk.
-
-TODO: jobb leírások
-
-Szolgáltatás-megtagadás: DOS támadás
-
-Információ szivárgás: veszélyeztethet belső folyamatokat, tárolt adatokat és adatfolyamokat. HTTPS használata?
-
-Tevékenységek letagadása: Nem megfelelő logolás, támadó letudja tagadni a tettét?
-
-Jogosultsági szint emelése: Saját magának beállítja, hogy admin
 
 ### Szükséges biztonsági funkcionalitások
 
 TODO(átnézés)
 
 A biztonsági követelmények kielégítéséhez többféle biztonsági funkcionalitást kell megterveznünk, implementálnunk és tesztelnünk. A szükséges biztonsági funkcionalitások listáját a biztonsági követelmények és abuse case-ek elemzésével kaphatjuk meg.
+
+TODO: kopipaszta hülyeség kivétele
 
 A webshop használatához(feltötlés, letöltés) autentikációt kell megvalósítanunk. Általánosságban az autentikáció lehet jelszó alapú, hardver token alapú vagy biometrikus azonosításra épülő autentikáció. Mivel a tervezett rendszerrel böngészőn keresztül léphetnek kapcsolatba a felhasználók, érdemes jelszó alapú autentikációt választani.
 
