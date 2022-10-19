@@ -296,6 +296,8 @@ X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
 #### Coding standard
 
+A rendszerben követjük a C# és C++ széleskörben elfogadott kódolási konvencióit.
+
 - Ne legyen benne memory leak a C++ részben
 - Ne legyen out of bound memory read
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
