@@ -218,23 +218,26 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 - Megjegyzés módosítása? (vagy ez mehet a megjegyzés fűzéséhez)
 - Admin adat módosítás, törlés?
 
+A felhasználói és személyes adatokat a felhasználói adatbázisban tároljuk. Az adatok kezeléséhez egy különálló logikai komponenst fogunk megvalósítani. A CAFF-ok és a hozzátartozó megjegyzések ugyanilyen séma szerint lesz implementálva (CAFF adatkezelő, CAFF adatbázis). Mivel a CAFF fájlokhoz és a hozzátartozó megjegyzéseket lekérdezésnél össze kell rendelni a megfelelő felhasználóval, ezért létrehozunk egy azonosító lekérése nevű interfészt a két logikai komponens között. A CAFF fájlok és megjegyzésekért felelős CAFF adatkezelő komponensnek szerepkörhöz kötötten kell döntenie az egyes tevékenységek engedélyezéséről vagy tiltásáról. A felhasználók szerepkörét az erre dedikált interfészén keresztül kérdezhet le. Mindkét adatkezelő komponens naplózza az elvégzett tevékenységeket. A CAFF adatkezelőnek ezenkívül a CAFF fájl megjelenítéséhez és validációjához fel használja a natív CAFF parser komponenst. Ezt a parser által nyújtott dedikált interfészen keresztül éri el.
+
 ![Component-diagram](/img/Component-diagram.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
+A rendszer komponens diagramján az UMLsec segítségével jelenítünk meg biztonsági követelményeket, ahogy az a X. ábrán látható. A rendszer szempontjából kritikus fontosságú erőforrások az adatbázisok és a napló, ezért ezeket <<critical>> sztereotípiával látjuk el. A felhasználói adatbázis és a CAFF adatbázis esetében tagged value-kal jelezzük a kritikus fontosságú aspektusokat, ezek látszanak az ábrán a kommentes részekben.
+
+Az adatbázisokat és naplókat felhasználó komponensek dependenciákon keresztül mutatják függésüket az erőforrásoktól. Ezeken szintén sztereotípiákkal jelezzük a felhasználás során biztosítandó biztonsági követelményeket. A felhasználók számára elérhető interfészeken tagged value-k mutatják, hogy az azt megvalósító komponenseknek a rendszer milyen megvalósító komponenseknek a rendszer milyen aspektusait kell megvédeniük, ezek szintén látszanak az ábrán a komment szekciókban.
 
 ![Component-diagram-umlsec](/img/Component-diagram-umlsec.png)
 
 <p align = "center">
 X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
-A felhasználói és személyes adatokat a felhasználói adatbázisban tároljuk. Az adatok kezeléséhez egy különálló logikai komponenst fogunk megvalósítani. A CAFF-ok, megjegyzések tárolása és kezelése ugyanilyen séma szerint lesz implementálva.
-
-TODO: architektúra leírása a komponens diagram alapján folyt köv.
-
 ### A rendszer viselkedése
 
-A rendszer viselkedésének tervezéséhez minden use-case-hez külön-külön 
+A rendszer viselkedésének tervezéséhez minden use-case-hez külön-külön
 diagrammot készítünk az átláthatóság kedvéért.
-
-TODO: Szekvencia diagrammok
 
 #### Regisztráció
 
@@ -244,27 +247,45 @@ TODO: Szekvencia diagrammok
 
 ![login-squence-diagram](/img/login.png)
 
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
 #### CAFF letöltése
 
 ![seq-diagram-upload](/img/sequence-caffload.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
 #### CAFF feltöltése
 
 ![seq-diagram-upload](/img/seq-diagram-upload.png)
 
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
 #### CAFF keresés
 
 ![caff-search](/img/Caff_search.png)
 
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
 #### Felhasználói adat módosítása
 
 ![user-data-modification](/img/User_data_modification.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
 > Megjegyzés: Az admin adat módosítása is ugyanígy történik, ahhoz nem készült külön szekvencia diagram.
 
 #### Felhasználói adat lekérdezése
 
 ![user-data_query](/img/User_data_query.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
 ## Tesztelési terv
 
