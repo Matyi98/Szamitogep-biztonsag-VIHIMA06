@@ -91,13 +91,13 @@ X. ábra. A felhasználókhoz és adminisztrátorokhoz köthető use-case-ek kie
 
 A logikai assetek meghatározásához létrehozunk egy adatfolyamot, ami az előző use case megvalósításához szükséges. A megrendelő szeretne távoli elérést a rendszerhez, ezért úgy döntöttünk, hogy a rendszer felületét böngészőben fogjuk megjeleníteni a felhasználók számára. Mivel a legtöbb tevékenység bejelentkezéshez kötött, szükség van egy autentikációt megvalósító komponensre. Ennek a komponensnek szüksége van a felhasználó adataira, ezt egy adatbázisban fogjuk tárolni. A felhasználóknak biztosítani kell, hogy megnézhessék vagy módosíthassák a felhasználói adataikat.
 
-A felhasználók a webáruházban több dolgot is csinálhatnak a CAFF fájlokkal (megtekintés/feltöltés/letöltés/vásárlás). Ezt a CAFF-kezelő logikai asset fogja kezelni. A CAFF-kezelő összeköti a CAFF fájlokat a hozzátartozó megjegyzésekkel, felhasználókkal. Az elmentett CAFF fájlokat a CAFF adatbázisból fogja olvasni.
+A felhasználók a webáruházban több dolgot is csinálhatnak a CAFF fájlokkal (megtekintés/feltöltés/vásárlás). Ezt a CAFF-kezelő modul fogja kezelni. A CAFF-kezelő összeköti a CAFF fájlokat a hozzátartozó megjegyzésekkel, felhasználókkal. Az elmentett CAFF fájlokat a CAFF adatbázisból fogja olvasni.
 
 A felhasználók tudnak a CAFF fájlokhoz megjegyzést hozzáadni/módosítani/sajátot törölni. Ezt a megjegyzés-kezelő asset kezeli. A megjegyzéseket a megjegyzés adatbázisból szedi ki, és összerendeli azokat a felhasználókkal.
 
 Mindegyik adatkezelő logikai asset felhasználja a hozzáférés-védelmi komponenst. Ez a tevékenységeket vagy engedi vagy tiltja attól függően, hogy a felhasználó be van-e jelentkezve, illetve van-e joga az adott művelethez (például: csak saját kommentet törölhet). Az asseteket összefoglaló adatfolyam ábra látható alább.
 
-> Megjegyzés: Az adatfolyam bonyolultsága miatt néhány adatfolyam nyíl számmal van ellátva. Ezek megmutatják, hogy melyik nyíl eleje, melyik nyíl véghez tartozik.
+> Megjegyzés: Az adatfolyam bonyolultsága miatt néhány adatfolyam-nyíl számmal van ellátva. Ezek megmutatják, hogy melyik nyíl eleje, melyik nyíl véghez tartozik.
 
 ![Data-flow-extended-with-users](/img/Data-flow-extended-with-users.png)
 
@@ -106,7 +106,8 @@ X. ábra. A rendszer adatfolyam ábrája a felhasználói interakciók elemzése
 
 ##### Adminisztrátori use-case-ek vizsgálata
 
-Az adminisztrátorok itt most felhasználók, csak több joguk van ahhoz, hogy milyen adatot tudnak módosítani és törölni. A biztonsági követelmények ugyanúgy meghatározzák, hogy ehhez először be kell lépniük, ez a módosítás látható a fentebbi use case ábrán.
+Az adminisztrátorok itt most felhasználók, csak több joguk van ahhoz, hogy milyen adatot tudnak módosítani és törölni. A biztonsági követelmények ugyanúgy meghatározzák, hogy ehhez először be kell lépniük, ez a módosítás látható a fentebbi use case diagrammon.
+
 Az adminisztrátori folyamatok nem sokat tesznek hozzá az adatfolyam diagramhoz. Az hogy milyen adatot törölhetnek, módosíthatnak, csak a szerepköröktől függ, amire a hozzáférés-védelmi komponens figyel. Ezért a végső ábra csak az adminisztrátor emberi assettel egészül ki.
 
 ![data-flow-2](/img/data-flow-2.png)
@@ -122,8 +123,6 @@ X. ábra. A rendszer adatfolyam ábrája az adminisztrátori interakciók elemz�
 
 #### Támadó modell kidolgozása
 
-TODO(átnézés, további lehetséges támadások a többi veszélyforráshoz)
-
 Potenciálisan sérülékeny assettek:
 
 - szervergép: A szervergépet jelszóval tervezzük védeni. Fizikai védelemre nem készülünk. Egy ilyen kis jelentőségű, nem kritikus rendszer esetén ez szükségtelen.
@@ -136,7 +135,6 @@ Potenciálisan sérülékeny assettek:
   - CAFF kezelő: implementációs hiba esetén lehetséges, hogy a támadó olyan CAFF fájlt módosít, amihez nincs joga.
   - Megjegyzések: A megjegyzések egy potenciális XSS és SQL injection támadási front, hiszen felhasználói input fog adatbázisba íródni, majd a weboldalon újra betöltődni. Az XSS ellen HTML sanitizerrel fogunk védekezni az SQL injection ellen megfelelő keretrendszerrel és query paraméterekkel.
   - CAFF kezelő: túl nagy és túl sok feltöltéssel DOS támadást lehet intézni
-
 
 Abuse-case-ek kategorizálva:
 
