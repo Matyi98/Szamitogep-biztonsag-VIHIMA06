@@ -206,13 +206,11 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 - Bejelentkezés: A felhasználók ezen az interfészen keresztül tudnak bejelentkezni a rendszerbe.
 - Felhasználói adat módosítása: A felhasználók ezen az interfészen keresztül tudják módosítani személyes adataikat és jelszavakat.
 - Felhasználói adat lekérdezése?: Ezen az interfészen keresztül lehet lekérni egy-egy felhasználó adatait.
-- CAFF keresése: Ezen az interfészen keresztül tudnak keresni CAFF-okat a felhasználók.
-- CAFF megvásárlása: Ezen az interfészen keresztül tudnak vásárolni CAFF-ot a felhasználók.
-- CAFF letöltése: Ezen az interfészen keresztül tudnak CAFF-ot letölteni a felhasználók.
+- Admin adat módosítás, törlés: Ezen az interfészen keresztül tudnak az adminisztrátorok adatot módosítani, törölni..
+- CAFF letöltése: Ezen az interfészen keresztül tudnak CAFF-ot letölteni a felhasználók. (Ez egyben a vásárlás is)
 - CAFF feltöltése: Ezen az interfészen keresztül tudnak CAFF-ot feltölteni a felhasználók.
 - CAFF-hoz megjegyzés fűzése: Ezen az interfészen keresztül tudnak CAFF-hoz megjegyzést fűzni a felhasználók.
-- Megjegyzés módosítása? (vagy ez mehet a megjegyzés fűzéséhez)
-- Admin adat módosítás, törlés?
+- CAFF keresése: Ezen az interfészen keresztül tudnak keresni CAFF fájlokat a felhasználók.
 
 A felhasználói és személyes adatokat a felhasználói adatbázisban tároljuk. Az adatok kezeléséhez egy különálló logikai komponenst fogunk megvalósítani. A CAFF-ok és a hozzátartozó megjegyzések ugyanilyen séma szerint lesznek implementálva (CAFF adatkezelő, CAFF adatbázis). Mivel a CAFF fájlokhoz és a hozzátartozó megjegyzéseket lekérdezésnél össze kell rendelni a megfelelő felhasználóval, ezért létrehozunk egy azonosító lekérése nevű interfészt a két logikai komponens között. A CAFF fájlok és megjegyzésekért felelős CAFF adatkezelő komponensnek szerepkörhöz kötötten kell döntenie az egyes tevékenységek engedélyezéséről vagy tiltásáról. A felhasználók szerepkörét az erre dedikált interfészén keresztül kérdezheti le. Mindkét adatkezelő komponens naplózza az elvégzett tevékenységeket. A CAFF adatkezelő ezen kívül a CAFF fájl megjelenítéséhez és validációjához felhasználja a natív CAFF parser komponenst. Ezt a parser által nyújtott dedikált interfészen keresztül éri el.
 
