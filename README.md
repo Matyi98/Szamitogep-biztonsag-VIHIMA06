@@ -220,6 +220,10 @@ TODO: Szekvencia diagrammok
 
 ![seq-diagram-upload](/img/seq-diagram-upload.png)
 
+#### CAFF keresés
+
+![caff-search](/img/Caff_search.png)
+
 #### Felhasználói adat módosítása
 
 ![user-data-modification](/img/User_data_modification.png)
