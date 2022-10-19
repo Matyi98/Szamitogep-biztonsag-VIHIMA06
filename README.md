@@ -136,7 +136,7 @@ Potenciálisan sérülékeny assettek:
 
 - Szoftveres assettek:
   - CAFF kezelő: implementációs hiba esetén lehetséges, hogy a támadó olyan CAFF fájlt módosít, amihez nincs joga.
-  - Megjegyzések: A megjegyzések egy potenciális XSS és SQL injection támadási front, hiszen felhasználói input fog adatbázisba íródni, majd a weboldalon újra betöltődni. Az XSS ellen HTML sanityzerrel fogunk védekezni az SQL injection ellen megfelelő keretrendszerrel és query paraméterekkel.
+  - Megjegyzések: A megjegyzések egy potenciális XSS és SQL injection támadási front, hiszen felhasználói input fog adatbázisba íródni, majd a weboldalon újra betöltődni. Az XSS ellen HTML sanitizerrel fogunk védekezni az SQL injection ellen megfelelő keretrendszerrel és query paraméterekkel.
   - CAFF kezelő: túl nagy és túl sok feltöltéssel DOS támadást lehet intézni
 
 
@@ -276,8 +276,6 @@ TODO: Szekvencia diagrammok
 - Ellenőrizzük, hogy az elkészült funkciók megvalósítják-e a követelményekben leírtakat (verifikáció).
 
 ### Biztonsági tesztelés
-
-#### Kódolási szabványok
 
 - Ne legyen benne memory leak a C++ részben
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
