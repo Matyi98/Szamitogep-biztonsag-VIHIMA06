@@ -77,7 +77,7 @@ A fizikai assetek meghatározása itt most triviális a use case-ek alapján. Sz
 
 ##### Felhasználói use-case-ek vizsgálata
 
-A felhasználók többfajta use-case-ben is megjelennek, a biztonsági követelmények kielégítéséhez azonban újabb use case-eket kell felvenni. Az egyes tevékenységek között megkötéseket is felveszünk. A CAFF megtekintésén és a regisztráción kívül a többi folyamathoz belépés szükséges, illetve a belépést megelőzheti a regisztráció. A leírt dolgokat ábrázolja a következő use case diagram.
+A felhasználók többfajta use-case-ben is megjelennek, a biztonsági követelmények kielégítéséhez azonban újabb use case-eket kell felvenni. Az egyes tevékenységek között megkötéseket is felveszünk. A CAFF megtekintésén és a regisztráción kívül a többi folyamathoz belépés szükséges, illetve a belépést megelőzheti a regisztráció. A leírt dolgokat ábrázolja a következő use case diagram:
 
 ![use-case-extended-with-securityreqs](/img/use-case-extended-with-securityreqs.png)
 
