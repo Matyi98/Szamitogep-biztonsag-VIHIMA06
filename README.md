@@ -7,15 +7,14 @@
 Az alábbi lista tartalmazza a funkcionális követelményeket:
 
 - Felhasználóknak kell tudni regisztrálni és belépni.
-- Felhasználóknak kell tudni CAFF fájlt feltölteni, letölteni és keresni.
-- Más felhasználók CAFF fájl letöltéséhez meg kell vásárolni a fájlt, de az áruházban minden ingyen letölthető.
+- Felhasználóknak kell tudni CAFF fájlt feltölteni, letölteni (megvásárolni) és keresni.
 - Felhasználóknak kell tudni CAFF fájlhoz megjegyzést hozzáfűzni.
 - A rendszerben kell legyen adminisztrátor felhasználó, aki tud adatokat módosítani és törölni.
 
 ![use-case](/img/use-case.png)
 
 <p align = "center">
-1. ábra. A rednszer felhasználási szcenáriói</p>
+1. ábra. A rendszer felhasználási szcenáriói</p>
 
 ### Biztonsági követelmények és célok
 
@@ -65,10 +64,6 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
   - A felhasználó és adminisztrátori tevékenységeket naplózni kell.
 
 ### Threat Assessment
-
-(TODO: KÖRÜLTEKINTŐ ÁTNÉZÉS, az adafolyam ábrát sokféleképpen lehet elképzelni és nem mentem bele nagyon részletekbe, illetve a parsert innen még kihagytam, mert talán csak az architektúra tervbe kell, de idk, talán ide is belelehet rakni. Illetve az idő részt sem tudom, hogy kellene-e valamihez.)
-
-A threat assessment részt két részre tagoljuk: az assetek azonosítása és assetekre leselkedő veszélyek (threat) azonosítása. Az assetek azonosításához iteratívan elemezzük a rendszer use case-eit, figyelembe véve a biztonsági követelményeket. A veszélyek megállapításához a STRIDE keretrendszer segítségét vettük igénybe.
 
 #### Assetek megállapítása
 
