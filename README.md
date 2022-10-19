@@ -39,7 +39,7 @@ A CAFF webáruház, mint szoftver, biztonsági követelményeit hat nagy kategó
 
   - A felhasználók adatait csak saját maguk, vagy az adminisztrátorok módosíthatják.
 
-  - A felhasználók csak a saját megjegyzéseiket tudják törölni és szerkeszteni. Az adminisztrátorok bárki hozzászólását tudják törölni.
+  - A felhasználók csak a saját megjegyzéseiket tudják törölni. Az adminisztrátorok bárki hozzászólását tudják törölni.
 
 - Elérhetőség (availability)
 
@@ -181,7 +181,7 @@ A felhasználókhoz kétféle szerepkört tudunk meghatározni: felhasználó é
 
 Az adminisztrátorok tevékenységét nem igazán korlátozzák a biztonsági követelmények: hozzáférhetnek személyes adatokhoz, adatokat törölhetnek, módosíthatnak, CAFF-okat tölthetnek fel illetve le. Az ő elszámoltathatóságához fontos a tevékenységek naplózása.
 
-A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell tárolás és átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
+A felhasználók személyes adatait és az autentikációhoz szükséges jelszót védenünk kell szivárgás és illetéktelen hozzáférés ellen. Ezért a személyes adatokat titkosítanunk kell az átvitel során, a jelszavakat pedig biztonságosan kell tárolnunk (hashelés és salt-olás). Átvitel során HTTPS-sel titkosítunk. Tárolásnál pedig nem tárolunk érzékeny személyes adatot.
 
 A megjegyzések írása egy XSS támadási front. Itt HTML sanitizert fogunk alkalmazni.
 
