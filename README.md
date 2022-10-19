@@ -131,7 +131,7 @@ Potenciálisan sérülékeny assettek:
   - Megjegyzések: A megjegyzések egy potenciális XSS és SQL injection támadási front, hiszen felhasználói input fog adatbázisba íródni, majd a weboldalon újra betöltődni. Az XSS ellen HTML sanitizerrel fogunk védekezni az SQL injection ellen megfelelő keretrendszerrel és query paraméterekkel.
   - CAFF kezelő: túl nagy és túl sok feltöltéssel DOS támadást lehet intézni
 
-Abuse-case-ek kategorizálva:
+Abuse-case-ek kategorizálva a STRIDE szerint:
 
 - Megszemélyesítés (spoofing)
 
