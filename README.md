@@ -221,7 +221,7 @@ A felhasználói és személyes adatokat a felhasználói adatbázisban tárolju
 <p align = "center">
 X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
-A rendszer komponens diagramján az UMLsec segítségével jelenítünk meg biztonsági követelményeket, ahogy az a X. ábrán látható. A rendszer szempontjából kritikus fontosságú erőforrások az adatbázisok és a napló, ezért ezeket <<critical>> sztereotípiával látjuk el. A felhasználói adatbázis és a CAFF adatbázis esetében tagged value-kal jelezzük a kritikus fontosságú aspektusokat, ezek látszanak az ábrán a kommentes részekben.
+A rendszer komponens diagramján az UMLsec segítségével jelenítünk meg biztonsági követelményeket, ahogy az a X. ábrán látható. A rendszer szempontjából kritikus fontosságú erőforrások az adatbázisok és a napló, ezért ezeket <\<critical>> sztereotípiával látjuk el. A felhasználói adatbázis és a CAFF adatbázis esetében tagged value-kal jelezzük a kritikus fontosságú aspektusokat, ezek látszanak az ábrán a kommentes részekben.
 
 Az adatbázisokat és naplókat felhasználó komponensek dependenciákon keresztül mutatják függésüket az erőforrásoktól. Ezeken szintén sztereotípiákkal jelezzük a felhasználás során biztosítandó biztonsági követelményeket. A felhasználók számára elérhető interfészeken tagged value-k mutatják, hogy az azt megvalósító komponenseknek a rendszer milyen megvalósító komponenseknek a rendszer milyen aspektusait kell megvédeniük, ezek szintén látszanak az ábrán a komment szekciókban.
 
