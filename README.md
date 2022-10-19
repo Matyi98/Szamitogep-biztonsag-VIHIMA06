@@ -265,6 +265,13 @@ X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 <p align = "center">
 X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
+#### Megjegyzés hozzáadása
+
+![add-comment](/img/seq-diagram-add-comment.png)
+
+<p align = "center">
+X. ábra. A CAFF webshop rendszer komponens diagramja</p>
+
 #### Felhasználói adat módosítása
 
 ![user-data-modification](/img/User_data_modification.png)
