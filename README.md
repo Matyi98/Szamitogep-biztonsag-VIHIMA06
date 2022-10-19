@@ -194,6 +194,8 @@ A rendszer több komponensből áll, amiket a X. ábra szemléltet. A rendszer �
 
 ![Component-diagram](/img/Component-diagram.png)
 
+![Component-diagram-umlsec](/img/Component-diagram-umlsec.png)
+
 <p align = "center">
 X. ábra. A CAFF webshop rendszer komponens diagramja</p>
 
@@ -245,7 +247,7 @@ TODO: Szekvencia diagrammok
 
 ### Biztonsági tesztelés
 
-#### Kódolási szabványok:
+#### Kódolási szabványok
 
 - Ne legyen benne memory leak a C++ részben
 - Az adatbázis eléréséhez entity frameworkot használunk, ezzel számos potenciális biztonsági kockázatot elkerülve (pl. sql injection)
