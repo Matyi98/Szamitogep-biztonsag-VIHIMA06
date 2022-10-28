@@ -10,8 +10,10 @@ public static class CaffParser
 
 
     [DllImport("CaffParser.Native.dll")]
-    public static extern CaffCredits ParseMeta(byte[] raw);
+    private static extern CaffCredits ParseMeta(byte[] raw, long size);
+    public static CaffCredits ParseMeta(byte[] raw) => ParseMeta(raw, raw.LongLength);
 
     [DllImport("CaffParser.Native.dll")]
-    public static extern byte[] ParsePreview(byte[] raw);
+    private static extern byte[] ParsePreview(byte[] raw, long size);
+    public static byte[] ParsePreview(byte[] raw) => ParsePreview(raw, raw.LongLength);
 }

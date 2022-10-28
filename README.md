@@ -10,6 +10,8 @@ In the Src solution folder there are 3 projects. The cpp parser, the .NET wrappe
 
 Debugging with breakpoints even in the cpp code invoked from C# should work.
 
+In VS `rebuild solution` might help with errors.
+
 ## HappyParserPy
 
 HappyParserPy is a CAFF parser prototype written in python. It does not handle errors, nor validates the CAFF file. It is useful to view CAFF files, and to better understand the underspecified CAFF format. It can be used as a guide for the cpp implementation.

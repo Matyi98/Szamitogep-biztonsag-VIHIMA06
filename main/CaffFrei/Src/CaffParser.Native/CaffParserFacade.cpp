@@ -6,12 +6,14 @@ extern "C" __declspec(dllexport) int Add(int a, int b) {
 }
 
 
-CaffCredits ParseMeta(const UCHAR* raw)
+CaffCredits ParseMeta(const UCHAR* raw, LONG64 size)
 {
+	//TODO
 	return CaffCredits();
 }
 
-const UCHAR* ParsePreview(const UCHAR* raw)
+const UCHAR* ParsePreview(const UCHAR* raw, LONG64 size)
 {
+	//TODO
 	return nullptr;
 }
