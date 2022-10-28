@@ -1,0 +1,15 @@
+decide on preview solution
+implement c++ c# interface
+implement parser {
+    main functionality {
+        meta parser (validator)
+        preview parser
+    }
+    extra {
+        makefile
+        something to use it standalone
+    }
+}
+implement web app {
+    
+}

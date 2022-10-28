@@ -2,11 +2,13 @@
 
 ## Start work
 
-The source files for the project can be found at [main/CaffFrei](main/CaffFrei). Open the CaffFrei.sln solution with either VisualStudio 22 or JetBrains Rider. (Rider is basically an IntelliJ alternative for VS, it supports C# and C++ development)
+The source files for the project can be found at [main/CaffFrei](main/CaffFrei). Open the CaffFrei.sln solution with VisualStudio 22.
 
 In the solution there are 2 solution folders: `Src, Test`.
 
-In the Src solution folder there are 2 projects for now. The cpp parser and the .NET wrapper for it. The web project will be added later.
+In the Src solution folder there are 3 projects. The cpp parser, the .NET wrapper for it and the webapp.
+
+Debugging with breakpoints even in the cpp code invoked from C# should work.
 
 ## HappyParserPy
 
