@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaffParser", "Src\CaffParser\CaffParser.vcxproj", "{48D99FCE-A65C-47F1-B36A-1A6A9D828D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaffParserWrapper", "Src\CaffParserWrapper\CaffParserWrapper.csproj", "{83708941-F8D4-4E43-805B-D4D3D65082AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5E331653-5B08-4EFB-A86C-569775B06D66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{31E52AF4-77AE-4FA6-8F3C-E3CBBA24CAE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserTests", "Test\ParserTests\ParserTests.csproj", "{A4444587-1A5D-4136-9BAF-71F3BE25A1B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48D99FCE-A65C-47F1-B36A-1A6A9D828D16}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{48D99FCE-A65C-47F1-B36A-1A6A9D828D16}.Debug|Any CPU.Build.0 = Debug|Win32
+		{48D99FCE-A65C-47F1-B36A-1A6A9D828D16}.Release|Any CPU.ActiveCfg = Release|Win32
+		{48D99FCE-A65C-47F1-B36A-1A6A9D828D16}.Release|Any CPU.Build.0 = Release|Win32
+		{83708941-F8D4-4E43-805B-D4D3D65082AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83708941-F8D4-4E43-805B-D4D3D65082AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83708941-F8D4-4E43-805B-D4D3D65082AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83708941-F8D4-4E43-805B-D4D3D65082AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4444587-1A5D-4136-9BAF-71F3BE25A1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4444587-1A5D-4136-9BAF-71F3BE25A1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4444587-1A5D-4136-9BAF-71F3BE25A1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4444587-1A5D-4136-9BAF-71F3BE25A1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48D99FCE-A65C-47F1-B36A-1A6A9D828D16} = {31E52AF4-77AE-4FA6-8F3C-E3CBBA24CAE1}
+		{83708941-F8D4-4E43-805B-D4D3D65082AE} = {31E52AF4-77AE-4FA6-8F3C-E3CBBA24CAE1}
+		{A4444587-1A5D-4136-9BAF-71F3BE25A1B5} = {5E331653-5B08-4EFB-A86C-569775B06D66}
+	EndGlobalSection
+EndGlobal
