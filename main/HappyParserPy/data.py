@@ -10,7 +10,7 @@ class CaffCredits:
         self.m  = block_data[5]
         creator_length = int.from_bytes(block_data[6:14], 'little')
         # len creator must be == creator_length
-        self.creator = block_data[13:].decode('ASCII')
+        self.creator = block_data[14:].decode('ASCII')
 
 @dataclass
 class CaffFrame:
