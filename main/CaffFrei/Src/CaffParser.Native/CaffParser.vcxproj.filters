@@ -2,8 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="CaffParserFacade.cpp" />
+    <ClCompile Include="ParserCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CaffParserFacade.h" />
+    <ClInclude Include="ParserCore.h" />
+    <ClInclude Include="Caff.h" />
   </ItemGroup>
 </Project>
