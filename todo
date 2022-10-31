@@ -1,4 +1,4 @@
-implement main entrypoint { : 1 btieger
+implement main entrypoint { : 1 btieger ; branch: entrypoint
     argument -> file name -> file to memory {
         byte[] ; VARCHAR*
     }
@@ -13,7 +13,7 @@ implement main entrypoint { : 1 btieger
         makefile és doksi hogy hogyan indítsd el
     }
 }
-implement parser core { : 2-3 mpap, tlabancz, mkaposvari
+implement parser core { : 2-3 mpap, tlabancz, mkaposvari ; branch: core
     kitalálni hogy milyen tömbből lehet jól dolgozni (char*, byte*, const UCHAR*)
     python code átemelése + validáció
     c++ reprezentáiója a python data osztályoknak -> CAFF
@@ -21,11 +21,13 @@ implement parser core { : 2-3 mpap, tlabancz, mkaposvari
         def parse(byte*): CAFF;
     }
 }
-testing { : 1-2 bgrober
+testing { : 1-2 bgrober ; branch: testing
     code review : btieger
     static analizis 
     fuzzer
 }
+
+
 implement wrapper { : TBD
     transform data for c# (CAFF -> manifest) // return caff->credits , vagy ++ number of ciffs
     implement cross call
