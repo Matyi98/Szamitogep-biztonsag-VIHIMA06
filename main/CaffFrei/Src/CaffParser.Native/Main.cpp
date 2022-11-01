@@ -25,10 +25,11 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    UCHAR* file_contents = new UCHAR[sb.st_size];
-    fread(file_contents, sb.st_size, 1, in_file);
+    long size = sb.st_size;
+    UCHAR *file_contents = new UCHAR[size];
+    fread(file_contents, size, 1, in_file);
 
-    auto caff = parse(file_contents);
+    auto caff = parse(file_contents, size);
 
     delete[] file_contents;
     return 0;

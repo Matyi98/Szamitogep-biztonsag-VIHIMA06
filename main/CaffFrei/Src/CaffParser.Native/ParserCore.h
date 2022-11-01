@@ -2,9 +2,9 @@
 #define PARSER_CORE_H
 
 #include "Caff.h"
-#include <string>
+#include <iostream>
 #include "Common.h"
 
-CAFF parse(const UCHAR*);
+CAFF parse(const UCHAR*, long);
 
 #endif
