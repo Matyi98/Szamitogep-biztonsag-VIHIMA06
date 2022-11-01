@@ -1,6 +1,7 @@
 #include "ParserCore.h"
 
-CAFF parse(const UCHAR* raw, long size) {
+CAFF parse(const UCHAR *raw, LONG64 size)
+{
     for (int i = 0; i < size; ++i)
     {
         printf("%02X ", raw[i]);

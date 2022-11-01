@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    long size = sb.st_size;
+    LONG64 size = sb.st_size;
     UCHAR *file_contents = new UCHAR[size];
     fread(file_contents, size, 1, in_file);
 

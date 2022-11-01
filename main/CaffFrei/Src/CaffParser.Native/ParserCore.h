@@ -5,6 +5,6 @@
 #include <iostream>
 #include "Common.h"
 
-CAFF parse(const UCHAR*, long);
+CAFF parse(const UCHAR *, LONG64);
 
 #endif
