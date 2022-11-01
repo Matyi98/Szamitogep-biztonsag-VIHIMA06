@@ -3,10 +3,12 @@
   <ItemGroup>
     <ClCompile Include="CaffParserFacade.cpp" />
     <ClCompile Include="ParserCore.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CaffParserFacade.h" />
     <ClInclude Include="ParserCore.h" />
     <ClInclude Include="Caff.h" />
+    <ClInclude Include="Main.h" />
   </ItemGroup>
 </Project>
