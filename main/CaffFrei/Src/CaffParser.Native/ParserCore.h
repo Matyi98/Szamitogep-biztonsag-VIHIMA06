@@ -2,7 +2,7 @@
 
 #include "Caff.h"
 #include <string>
-#include <comdef.h>
+#include "Common.h"
 
 CAFF parse(const UCHAR*);
 

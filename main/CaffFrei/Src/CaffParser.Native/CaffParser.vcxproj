@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="Caff.h" />
     <ClInclude Include="CaffParserFacade.h" />
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="ParserCore.h" />
   </ItemGroup>
