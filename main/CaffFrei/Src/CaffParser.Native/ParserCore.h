@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PARSER_CORE_H
+#define PARSER_CORE_H
 
 #include "Caff.h"
 #include <string>
@@ -6,4 +7,4 @@
 
 CAFF parse(const UCHAR*);
 
-
+#endif
