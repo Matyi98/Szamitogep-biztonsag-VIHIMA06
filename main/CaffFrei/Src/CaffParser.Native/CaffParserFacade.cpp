@@ -9,7 +9,7 @@ extern "C" __declspec(dllexport) int Add(int a, int b) {
 // Upload CAFF
 CaffCredits ParseMeta(const UCHAR* raw, LONG64 size)
 {
-	auto ret = parse(raw);
+	auto ret = parse(raw, size);
 	// transform ret to get CaffCredits
 	return CaffCredits();
 }
