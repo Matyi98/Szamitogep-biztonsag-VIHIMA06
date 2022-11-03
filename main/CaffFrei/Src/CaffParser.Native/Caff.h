@@ -6,12 +6,27 @@
 struct CAFF {
 	CaffCredits credits;
 	std::vector<CaffFrame> frames;
+
+    CAFF(CaffCredits credits, std::vector<CaffFrame> frames)
+    {
+        this->credits = credits;
+        this->frames = frames;
+    }
 };
 
 struct CaffFrame
 {
     LONG64 duration;
     Ciff ciff;
+
+    CaffFrame(ByteReader block)
+    {
+        ByteSpan durationSpan = block.popAsSpan(8);
+        duration = durationSpan.readLittleEndian();
+
+        ciff = Ciff(block);
+        
+    }
 };
 
 struct Ciff
@@ -20,11 +35,67 @@ struct Ciff
     LONG64 height;
     std::string caption;
     std::vector<std::string> tags;
-    std::vector<UCHAR> content;
+    ByteReader content;
+
+    Ciff();
+
+    Ciff(ByteReader bytes)
+    {
+        ByteSpan magic = bytes.popAsSpan(4);
+        std::string magicString = getStringFromBytes(magic, 4);
+        std::string ciff("CIFF");
+
+        if (ciff.compare(magicString) != 0)
+            throw std::invalid_argument("CIFF ctor: Magic string is not CIFF!");
+    
+        ByteSpan headersizeSpan = bytes.popAsSpan(8);
+        LONG64 headersize = headersizeSpan.readLittleEndian();
+
+        ByteSpan contentsizeSpan = bytes.popAsSpan(8);
+        LONG64 contentsize = contentsizeSpan.readLittleEndian();
+
+        ByteSpan widthSpan = bytes.popAsSpan(8);
+        width = widthSpan.readLittleEndian();
+
+        ByteSpan heightSpan = bytes.popAsSpan(8);
+        height = heightSpan.readLittleEndian();
+
+        if (height * width * 3 != contentsize)
+            throw std::invalid_argument("CIFF ctor: Content size is invalid!");
+        
+        ByteSpan capTagsSpan = bytes.popAsSpan(headersize);
+
+        std::string capTags = getStringFromBytes(capTagsSpan, headersize);
+
+        //TODO: CHECK THIS
+        std::string delimEnter = "\n";
+        std::string delimZero = "\0";
+        auto start = 0U;
+        auto end = capTags.find(delimEnter);
+        bool isTags = false;
+        while (end != std::string::npos)
+        {
+            if (!isTags)
+            {
+                caption = capTags.substr(start, end - start);
+                isTags = true;
+                start = end + delimEnter.length();
+                end = capTags.find(delimZero, start);
+            }
+            else
+            {
+                tags.push_back(capTags.substr(start, end - start));
+                start = end + delimZero.length();
+                end = capTags.find(delimZero, start);
+            }
+        }
+
+        //TODO: Check if contentsize is the same as content's size
+        content = bytes.popAsByteReader(contentsize);
+
+    }
 };
 
-
-//TODO: Constructor
 struct CaffCredits
 {
     short YY;
@@ -33,6 +104,41 @@ struct CaffCredits
     char h;
     char m;
     std::string Creator;
+
+    CaffCredits();
+
+    CaffCredits(ByteReader block)
+    {
+        ByteSpan YYSpan = block.popAsSpan(2);
+        YY = (short) YYSpan.readLittleEndian();
+
+        ByteSpan dateSpan = block.popAsSpan(4);
+        M = dateSpan.next();
+        D = dateSpan.next();
+        h = dateSpan.next();
+        m = dateSpan.next();
+
+        ByteSpan creatorLengthSpan = block.popAsSpan(8);
+        LONG64 creatorLength = creatorLengthSpan.readLittleEndian();
+
+        ByteSpan creatorSpan = block.popAsSpan(creatorLength);
+
+        Creator = getStringFromBytes(creatorSpan, creatorLength);
+
+        if(Creator.size() != creatorLength)
+            throw std::invalid_argument("CaffCredits ctor: Creator length is invalid!");
+    }
+
+    // Copy constructor
+    CaffCredits(const CaffCredits& c)
+    {
+        YY = c.YY;
+        M = c.M;
+        D = c.D;
+        h = c.h;
+        m = c.m;
+        Creator = c.Creator;
+    }
 };
 
 struct Block
@@ -135,18 +241,18 @@ public:
         return span;
     }
 
-    ByteReader popAndGetBytes(LONG64 spanSize)
+    ByteReader popAsByteReader(LONG64 spanSize)
     {
         if (data + offset + spanSize >= data + size)
             throw std::out_of_range("Read: No more bytes");
 
         ByteReader reader = ByteReader(data, spanSize);
-        pop(spanSize);
+        popAsSpan(spanSize); // We don't need a return value
         return reader;
     }
 
     // Moves the pointer in the ByteReader
-    ByteSpan pop(LONG64 spanSize)
+    ByteSpan popAsSpan(LONG64 spanSize)
     {
         if (data + offset + spanSize >= data + size)
             throw std::out_of_range("Pop: No more bytes");
