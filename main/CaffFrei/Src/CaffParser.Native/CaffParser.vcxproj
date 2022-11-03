@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CaffParserFacade.cpp" />
+    <ClCompile Include="Caff.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParserCore.cpp" />
   </ItemGroup>
