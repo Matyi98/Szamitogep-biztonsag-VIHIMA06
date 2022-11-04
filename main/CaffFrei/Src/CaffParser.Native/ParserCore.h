@@ -7,7 +7,7 @@
 
 CAFF parse(const UCHAR *, LONG64);
 
-Block readBlock(ByteReader byteReader);
+Block readBlock(ByteReader* byteReader);
 
 LONG64 parseHeader(ByteReader block);
 

@@ -10,16 +10,13 @@ CAFF parse(const UCHAR *raw, LONG64 size)
 
     while (!byteReader.isFileEnd())
     {
-        // TODO: Unfortunately, when calling readblock with byteReader, it calls the byteReaders
-        // Copy ctor. We have to fix every single call where we input a custom made class, to input
-        // the class pointer, not the actual values.
-        Block block = readBlock(byteReader);
+        Block block = readBlock(&byteReader);
 
         if (block.id == 1)
             numAnim = parseHeader(block.data);
 
         else if (block.id == 2)
-            CaffCredits credits = CaffCredits(block.data);
+            credits = CaffCredits(block.data);
 
         else if (block.id == 3)
             frames.push_back(CaffFrame(block.data));
@@ -30,14 +27,14 @@ CAFF parse(const UCHAR *raw, LONG64 size)
     return CAFF(credits, frames);
 }
 
-Block readBlock(ByteReader byteReader)
+Block readBlock(ByteReader* byteReader)
 {
-    char id = (char) byteReader.popAsSpan(1).next();
+    char id = (char) byteReader->popAsSpan(1).next();
 
-    ByteSpan span = byteReader.popAsSpan(8);
+    ByteSpan span = byteReader->popAsSpan(8);
     LONG64 length = span.readLittleEndian();
 
-    ByteReader blockReader = byteReader.popAsByteReader(length);
+    ByteReader blockReader = byteReader->popAsByteReader(length);
     return Block(id, length, blockReader);
 }
 

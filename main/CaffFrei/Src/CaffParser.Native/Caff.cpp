@@ -24,42 +24,43 @@ CaffFrame::CaffFrame(ByteReader block)
     ByteSpan durationSpan = block.popAsSpan(8);
     duration = durationSpan.readLittleEndian();
 
-    ciff = Ciff(block);
+    ciff = Ciff(&block);
 }
 
 Ciff::Ciff() {}
 
-Ciff::Ciff(ByteReader bytes)
+Ciff::Ciff(ByteReader* bytes)
 {
-    ByteSpan magic = bytes.popAsSpan(4);
+    ByteSpan magic = bytes->popAsSpan(4);
     std::string magicString = getStringFromBytes(magic, 4);
     std::string ciff("CIFF");
 
     if (ciff.compare(magicString) != 0)
         throw std::invalid_argument("CIFF ctor: Magic string is not CIFF!");
 
-    ByteSpan headersizeSpan = bytes.popAsSpan(8);
+    ByteSpan headersizeSpan = bytes->popAsSpan(8);
     LONG64 headersize = headersizeSpan.readLittleEndian();
 
-    ByteSpan contentsizeSpan = bytes.popAsSpan(8);
+    ByteSpan contentsizeSpan = bytes->popAsSpan(8);
     LONG64 contentsize = contentsizeSpan.readLittleEndian();
 
-    ByteSpan widthSpan = bytes.popAsSpan(8);
+    ByteSpan widthSpan = bytes->popAsSpan(8);
     width = widthSpan.readLittleEndian();
 
-    ByteSpan heightSpan = bytes.popAsSpan(8);
+    ByteSpan heightSpan = bytes->popAsSpan(8);
     height = heightSpan.readLittleEndian();
 
     if (height * width * 3 != contentsize)
         throw std::invalid_argument("CIFF ctor: Content size is invalid!");
 
-    ByteSpan capTagsSpan = bytes.popAsSpan(headersize);
-
+    ByteSpan capTagsSpan = bytes->popAsSpan(headersize);
+    //TODO: getStringFromByte somehow doesn't get the \0 characters, so it only gets one tag.
     std::string capTags = getStringFromBytes(capTagsSpan, headersize);
 
     //TODO: CHECK THIS
     std::string delimEnter = "\n";
-    std::string delimZero = "\0";
+    char zero[] = {'\0'};
+    std::string delimZero(zero);
     size_t start = 0U;
     auto end = capTags.find(delimEnter);
     bool isTags = false;
@@ -81,7 +82,7 @@ Ciff::Ciff(ByteReader bytes)
     }
 
     //TODO: Check if contentsize is the same as content's size
-    content = bytes.popAsByteReader(contentsize);
+    content = bytes->popAsByteReader(contentsize);
 
 }
 

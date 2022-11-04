@@ -68,7 +68,7 @@ struct Ciff
 
     Ciff();
 
-    Ciff(ByteReader bytes);
+    Ciff(ByteReader* bytes);
 };
 
 struct CaffFrame
