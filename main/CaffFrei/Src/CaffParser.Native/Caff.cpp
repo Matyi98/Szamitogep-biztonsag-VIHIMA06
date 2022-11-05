@@ -3,14 +3,29 @@
 
 std::string getStringFromBytes(ByteSpan bytes, const LONG64 length)
 {
+    /*
+    std::vector<UCHAR> byteVector;
+
+    for (int i = 0; i < length; i++)
+        byteVector.push_back(bytes.next());
+        */
+
+    std::string byteString;
+
+    for (int i = 0; i < length; i++)
+        byteString.push_back((char)bytes.next());
+
+    return byteString;
+}
+
+std::vector<UCHAR> getVectorString(ByteSpan bytes, const LONG64 length)
+{  
     std::vector<UCHAR> byteVector;
 
     for (int i = 0; i < length; i++)
         byteVector.push_back(bytes.next());
 
-    //byteVector.push_back('\0');
-
-    return std::string(byteVector.begin(), byteVector.end());
+    return byteVector;
 }
 
 CAFF::CAFF(CaffCredits credits, std::vector<CaffFrame> frames)
@@ -53,32 +68,28 @@ Ciff::Ciff(ByteReader* bytes)
     if (height * width * 3 != contentsize)
         throw std::invalid_argument("CIFF ctor: Content size is invalid!");
 
-    ByteSpan capTagsSpan = bytes->popAsSpan(headersize);
-    //TODO: getStringFromByte somehow doesn't get the \0 characters, so it only gets one tag.
-    std::string capTags = getStringFromBytes(capTagsSpan, headersize);
+    LONG64 onlyCapTagsSize = headersize - 36;
+    ByteSpan capTagsSpan = bytes->popAsSpan(onlyCapTagsSize);
+    std::vector<UCHAR> capTags = getVectorString(capTagsSpan, onlyCapTagsSize);
 
-    //TODO: CHECK THIS
-    std::string delimEnter = "\n";
-    char zero[] = {'\0'};
-    std::string delimZero(zero);
-    size_t start = 0U;
-    auto end = capTags.find(delimEnter);
-    bool isTags = false;
-    while (end != std::string::npos)
+    std::vector<int> delimIndexes;
+    std::vector<std::string> strings;
+    int startIndex = 0;
+    for (int i = 0; i < capTags.size(); i++)
     {
-        if (!isTags)
+        if (capTags.at(i) == '\n' || capTags.at(i) == '\0')
         {
-            caption = capTags.substr(start, end - start);
-            isTags = true;
-            start = end + delimEnter.length();
-            end = capTags.find(delimZero, start);
+            strings.push_back(std::string(capTags.begin() + startIndex, capTags.begin() + i));
+            startIndex = i + 1;
         }
+    }
+
+    for (int i = 0; i < strings.size(); i++)
+    {
+        if (i == 0)
+            caption = strings.at(i);
         else
-        {
-            tags.push_back(capTags.substr(start, end - start));
-            start = end + delimZero.length();
-            end = capTags.find(delimZero, start);
-        }
+            tags.push_back(strings.at(i));
     }
 
     //TODO: Check if contentsize is the same as content's size
@@ -230,4 +241,14 @@ ByteSpan ByteReader::popAsSpan(LONG64 spanSize)
 bool ByteReader::isFileEnd()
 {
     return data + offset >= data + size;
+}
+
+const UCHAR* ByteReader::getData()
+{
+    return data;
+}
+
+LONG64 ByteReader::getSize()
+{
+    return size;
 }

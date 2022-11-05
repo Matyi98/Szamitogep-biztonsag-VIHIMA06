@@ -1,3 +1,4 @@
+#include <fstream>
 #include "ParserCore.h"
 
 CAFF parse(const UCHAR *raw, LONG64 size)
@@ -23,6 +24,13 @@ CAFF parse(const UCHAR *raw, LONG64 size)
     }
     if (numAnim != frames.size())
         throw std::invalid_argument("Parse: Animation size is invalid!");
+
+    /*
+    * With this test code, you can write a binary file to CaffFrei.Web folder with the first frame in it.
+    auto myfile = std::fstream("file.binary", std::ios::out | std::ios::binary);
+    myfile.write((char*)&frames.at(0).ciff.content.getData()[0], frames.at(0).ciff.content.getSize());
+    myfile.close();
+    */
 
     return CAFF(credits, frames);
 }

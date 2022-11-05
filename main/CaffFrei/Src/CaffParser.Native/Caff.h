@@ -50,6 +50,10 @@ public:
 
     bool isFileEnd();
 
+    const UCHAR* getData();
+
+    LONG64 getSize();
+
     /*
     const UCHAR* getCurrentPointer()
     {
@@ -113,5 +117,6 @@ struct Block
 };
 
 std::string getStringFromBytes(ByteSpan bytes, const LONG64 length);
+std::vector<UCHAR> getVectorString(ByteSpan bytes, const LONG64 length);
 
 #endif
