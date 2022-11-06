@@ -266,17 +266,6 @@ const LONG64 ByteReader::getRemainingSize()
     return size - offset;
 }
 
-void CAFF::persist_text(const char* fname) {
-    std::ofstream outfile;
-
-    outfile.open(fname, std::ios::out | std::ios::trunc);
-    outfile << "Creator: " << this->credits.Creator << std::endl;
-    outfile << "Creation date: " << +this->credits.YY << "." << +this->credits.M << "." << +this->credits.D << " " << +this->credits.h << ":" << +this->credits.m << std::endl;
-    outfile << "Number of frames: " << this->frames.size() << std::endl;
-
-    outfile.close();
-}
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -291,13 +280,27 @@ void CAFF::persist_all(const char* base) {
         mkdir(folder.c_str(), 0700);
     }
 
+    std::ofstream outfile;
     auto manifest = folder + "/manifest";
-    persist_text(manifest.c_str());
+    outfile.open(manifest, std::ios::out | std::ios::trunc);
+    outfile << "Creator: " << this->credits.Creator << std::endl;
+    outfile << "Creation date: " << +this->credits.YY << "." << +this->credits.M << "." << +this->credits.D << " " << +this->credits.h << ":" << +this->credits.m << std::endl;
+    outfile << "Number of frames: " << this->frames.size() << std::endl;
+
     for (size_t i = 0; i < this->frames.size(); i++)
     {
+        outfile << "frame_" << i << std::endl;
+        outfile << "\tDuration: " << this->frames[i].duration << std::endl;
+        outfile << "\tCaption: " << this->frames[i].ciff.caption << std::endl;
+        outfile << "\tTags: ";
+        for (size_t i = 0; i < this->frames[i].ciff.tags.size(); i++)
+            outfile << this->frames[i].ciff.tags[i] << "; ";
+        outfile << std::endl;
+        outfile << "\tSize (width*height): " << this->frames[i].ciff.width << "*" << this->frames[i].ciff.height << std::endl;
         auto ciff_name = folder + "/frame_" + std::to_string(i);
         auto &ciff_content = this->frames[i].ciff.content;
         this->writeToBinary(ciff_name.c_str(), ciff_content);
     }
+    outfile.close();
 }
 

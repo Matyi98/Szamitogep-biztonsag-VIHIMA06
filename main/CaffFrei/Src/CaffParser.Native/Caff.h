@@ -107,7 +107,6 @@ struct CAFF {
 
     void writeToBinary(const char* filename, ByteReader content);
 
-    void persist_text(const char*);
     void persist_all(const char*);
 };
 
