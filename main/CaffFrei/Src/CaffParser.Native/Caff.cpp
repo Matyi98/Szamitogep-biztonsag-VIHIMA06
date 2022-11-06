@@ -42,7 +42,11 @@ CaffFrame::CaffFrame(ByteReader block)
     ciff = Ciff(&block);
 }
 
-Ciff::Ciff() {}
+Ciff::Ciff() 
+{
+    height = 0;
+    width = 0;
+}
 
 Ciff::Ciff(ByteReader* bytes)
 {
@@ -97,12 +101,20 @@ Ciff::Ciff(ByteReader* bytes)
 
 }
 
-CaffCredits::CaffCredits() {}
+CaffCredits::CaffCredits() 
+{
+    YY = 0;
+    M = 0;
+    D = 0;
+    h = 0;
+    m = 0;
+    Creator = "";
+}
 
 CaffCredits::CaffCredits(ByteReader block)
 {
     ByteSpan YYSpan = block.popAsSpan(2);
-    YY = (short)YYSpan.readLittleEndian();
+    YY = (short)YYSpan.readLittleEndianTwoBytes();
 
     ByteSpan dateSpan = block.popAsSpan(4);
     M = dateSpan.next();
@@ -189,6 +201,14 @@ LONG64 ByteSpan::readLittleEndian()
     return result;
 }
 
+short ByteSpan::readLittleEndianTwoBytes()
+{
+    short result = 0;
+    result |= pStart[1]; result <<= 8;
+    result |= pStart[0];
+    return result;
+}
+
 ByteReader::ByteReader(const UCHAR* data, LONG64 size)
 {
     this->data = data;
@@ -196,7 +216,12 @@ ByteReader::ByteReader(const UCHAR* data, LONG64 size)
     offset = 0;
 }
 
-ByteReader::ByteReader() {}
+ByteReader::ByteReader() 
+{
+    data = 0;
+    offset = 0;
+    size = 0;
+}
 
 // Copy constructor
 ByteReader::ByteReader(const ByteReader& b)

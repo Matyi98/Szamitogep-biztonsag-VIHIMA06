@@ -21,6 +21,8 @@ public:
     //TODO: This needs to be tested
     LONG64 readLittleEndian();
 
+    short readLittleEndianTwoBytes();
+
 };
 
 // ByteReader can track an array of bytes
@@ -29,7 +31,7 @@ class ByteReader
 {
     const UCHAR* data;
     LONG64 size;
-    int offset;
+    LONG64 offset;
 
 public:
     ByteReader(const UCHAR* data, LONG64 size);
