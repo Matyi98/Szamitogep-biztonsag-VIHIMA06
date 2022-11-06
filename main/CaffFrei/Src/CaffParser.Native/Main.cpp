@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     auto caff = parse(file_contents, size);
 
     std::cout << "Creator: " << caff.credits.Creator << std::endl;
-    std::cout << "Creation date: " << caff.credits.YY << "." << caff.credits.M << "." << caff.credits.D << " " << caff.credits.h << ":" << caff.credits.m << std::endl;
+    std::cout << "Creation date: " << caff.credits.YY << "." << +caff.credits.M << "." << +caff.credits.D << " " << +caff.credits.h << ":" << +caff.credits.m << std::endl;
     std::cout << "Number of frames: " << caff.frames.size() << std::endl;    
     for (int i = 0; i < caff.frames.size(); i++)
     {
