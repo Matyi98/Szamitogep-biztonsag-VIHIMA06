@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="12782259060821717339">
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;Creator&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;Creator&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp" line="131" column="5"/>
+            <symbol>Creator</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="75" column="5"/>
+            <symbol>Ciff</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="83" column="5"/>
+            <symbol>CaffFrame</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="97" column="5"/>
+            <symbol>CaffCredits</symbol>
+        </error>
+        <error id="passedByValue" severity="performance" msg="Function parameter &apos;credits&apos; should be passed by const reference." verbose="Parameter &apos;credits&apos; is passed by value. It could be passed as a const reference which is usually faster and recommended in C++." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp" line="31" column="24"/>
+            <symbol>credits</symbol>
+        </error>
+        <error id="passedByValue" severity="performance" msg="Function parameter &apos;frames&apos; should be passed by const reference." verbose="Parameter &apos;frames&apos; is passed by value. It could be passed as a const reference which is usually faster and recommended in C++." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp" line="31" column="56"/>
+            <symbol>frames</symbol>
+        </error>
+        <error id="passedByValue" severity="performance" msg="Function parameter &apos;data&apos; should be passed by const reference." verbose="Parameter &apos;data&apos; is passed by value. It could be passed as a const reference which is usually faster and recommended in C++." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp" line="134" column="49"/>
+            <symbol>data</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: delimIndexes" verbose="Unused variable: delimIndexes" cwe="563" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp" line="75" column="22"/>
+            <symbol>delimIndexes</symbol>
+        </error>
+  <FileInfo check="ctu">
+<function-call call-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:75:5" call-funcname="Ciff" call-argnr="1" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp" line="42" col="16" call-argexpr="&amp;block" call-argvaluetype="7" call-argvalue="0"/>  </FileInfo>
+  <FileInfo check="Class">
+<class name="ByteSpan" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="10" col="1" hash="6698927239381638039"/>
+<class name="ByteReader" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="28" col="1" hash="3479329887148721647"/>
+<class name="Ciff" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="65" col="1" hash="17152237599830139595"/>
+<class name="CaffFrame" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="78" col="1" hash="11720624165593886530"/>
+<class name="CaffCredits" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="86" col="1" hash="1966066662673889827"/>
+<class name="CAFF" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="103" col="1" hash="1462896904677949180"/>
+<class name="Block" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h" line="110" col="1" hash="11562232102251621989"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:75:5" my-argnr="1" my-argname="bytes" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp" line="49" col="22" value="0"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:75:5" my-argnr="1" my-argname="bytes" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp" line="49" col="22" value="0"/>
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:100:5" my-argnr="1" my-argname="c" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp" line="126" col="10" value="0"/>
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:40:5" my-argnr="1" my-argname="b" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.cpp" line="204" col="12" value="0"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="getStringFromBytes" lineNumber="4"/>
+    <functiondecl functionName="getVectorString" lineNumber="21"/>
+    <functiondecl functionName="next" lineNumber="148"/>
+    <functiondecl functionName="readLittleEndian" lineNumber="161"/>
+    <functiondecl functionName="read" lineNumber="211"/>
+    <functiondecl functionName="popAsByteReader" lineNumber="220"/>
+    <functiondecl functionName="popAsSpan" lineNumber="231"/>
+    <functiondecl functionName="isFileEnd" lineNumber="241"/>
+    <functiondecl functionName="getData" lineNumber="246"/>
+    <functiondecl functionName="getSize" lineNumber="251"/>
+    <functioncall functionName="Block"/>
+    <functioncall functionName="ByteReader"/>
+    <functioncall functionName="ByteSpan"/>
+    <functioncall functionName="CAFF"/>
+    <functioncall functionName="CaffCredits"/>
+    <functioncall functionName="CaffFrame"/>
+    <functioncall functionName="Ciff"/>
+    <functioncall functionName="Creator"/>
+    <functioncall functionName="D"/>
+    <functioncall functionName="M"/>
+    <functioncall functionName="YY"/>
+    <functioncall functionName="at"/>
+    <functioncall functionName="begin"/>
+    <functioncall functionName="block"/>
+    <functioncall functionName="bytes"/>
+    <functioncall functionName="capTagsSpan"/>
+    <functioncall functionName="char"/>
+    <functioncall functionName="ciff"/>
+    <functioncall functionName="compare"/>
+    <functioncall functionName="contentsize"/>
+    <functioncall functionName="creatorLength"/>
+    <functioncall functionName="creatorSpan"/>
+    <functioncall functionName="credits"/>
+    <functioncall functionName="data"/>
+    <functioncall functionName="for"/>
+    <functioncall functionName="frames"/>
+    <functioncall functionName="getStringFromBytes"/>
+    <functioncall functionName="getVectorString"/>
+    <functioncall functionName="h"/>
+    <functioncall functionName="i"/>
+    <functioncall functionName="id"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="invalid_argument"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="m"/>
+    <functioncall functionName="magic"/>
+    <functioncall functionName="magicString"/>
+    <functioncall functionName="next"/>
+    <functioncall functionName="offset"/>
+    <functioncall functionName="onlyCapTagsSize"/>
+    <functioncall functionName="out_of_range"/>
+    <functioncall functionName="popAsByteReader"/>
+    <functioncall functionName="popAsSpan"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="readLittleEndian"/>
+    <functioncall functionName="short"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="spanSize"/>
+    <functioncall functionName="startIndex"/>
+    <functioncall functionName="string"/>
+  </FileInfo>
+</analyzerinfo>

@@ -1,0 +1,7 @@
+[06.11.2022]
+1667736863381
+cppcheck-error:1
+cppcheck-warning:0
+cppcheck-style:5
+cppcheck-performance:3
+cppcheck-portability:0
