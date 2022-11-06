@@ -280,7 +280,7 @@ void CAFF::persist_text(const char* fname) {
 void CAFF::persist_all(const char* base) {
     auto folder = std::string(base);
     if (mkdir(folder.c_str()) == -1) {
-        throw std::exception("Cant create folder")
+        throw std::exception("Cant create folder");
     }
     auto manifest = folder + "/manifest";
     persist_text(manifest.c_str());
@@ -297,7 +297,7 @@ void CAFF::persist_all(const char* base) {
         std::cout << "\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
         auto ciff_name = folder + "frame_" + std::to_string(i);
         auto &ciff_content = frame.ciff.content;
-        // call binary save here
+        this->writeToBinary(ciff_name.c_str(), ciff_content);
     }
 }
 
