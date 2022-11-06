@@ -35,6 +35,37 @@ int main(int argc, char* argv[])
 
     auto caff = parse(file_contents, size);
 
+    std::cout << "Creator: " << caff.credits.Creator << std::endl;
+    std::cout << "Creation date: " << caff.credits.YY << "." << caff.credits.M << "." << caff.credits.D << " " << caff.credits.h << ":" << caff.credits.m << std::endl;
+    std::cout << "Number of frames: " << caff.frames.size() << std::endl;    
+    for (int i = 0; i < caff.frames.size(); i++)
+    {
+        auto frame = caff.frames[i];
+        std::cout << "Frame " << i << ":" << std::endl;
+        std::cout << "\tDuration: " << frame.duration << std::endl;
+        std::cout << "\tCiff: " << std::endl;
+        std::cout << "\t\tCaption: " << frame.ciff.caption << std::endl;
+        std::cout << "\t\tTags: ";
+        for (int i = 0; i < frame.ciff.tags.size(); i++)
+            std::cout << frame.ciff.tags[i] << "; ";
+        std::cout << std::endl;
+        std::cout << "\t\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
+/*
+        auto content = frame.ciff.content;
+        auto size = content.getSize();
+        auto raw = content.getData();
+        std::cout << "\t\t";
+        for (int i = 0; i < size; ++i)
+        {
+            printf("%02X ", raw[i]);
+            if (i % 10 == 0 && i != 0)
+            {
+                std::cout << std::endl
+                          << "\t\t";
+            }
+        }*/
+    }
+
     delete[] file_contents;
     return 0;
 }
