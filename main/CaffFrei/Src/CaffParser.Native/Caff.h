@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <fstream>
 #include "Common.h"
+#include<direct.h>
 #ifndef CAFF_H
 #define CAFF_H
 
@@ -106,6 +107,9 @@ struct CAFF {
     CAFF(CaffCredits credits, std::vector<CaffFrame> frames);
 
     void writeToBinary(const char* filename, ByteReader content);
+
+    void persist_text(const char*);
+    void persist_all(const char*);
 };
 
 struct Block

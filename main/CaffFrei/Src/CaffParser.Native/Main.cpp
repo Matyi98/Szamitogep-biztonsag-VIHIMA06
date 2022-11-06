@@ -6,11 +6,11 @@
 
 int main(int argc, char* argv[])
 {
-    if (argc != 2) {
-        std::cerr << "No argument provided! Usage: caffparser <caff_file_name>" << std::endl;
+    if (!(argc == 2 || argc == 3)) {
+        std::cerr << "No argument provided! Usage: caffparser <caff_file_name> <OPTIONAL output_folder>" << std::endl;
         return 1;
     }
-        
+    
     const char* filename = argv[1];
 
     auto in_file = fopen(filename, "rb");
@@ -50,20 +50,12 @@ int main(int argc, char* argv[])
             std::cout << frame.ciff.tags[i] << "; ";
         std::cout << std::endl;
         std::cout << "\t\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
-/*
-        auto content = frame.ciff.content;
-        auto size = content.getSize();
-        auto raw = content.getData();
-        std::cout << "\t\t";
-        for (int i = 0; i < size; ++i)
-        {
-            printf("%02X ", raw[i]);
-            if (i % 10 == 0 && i != 0)
-            {
-                std::cout << std::endl
-                          << "\t\t";
-            }
-        }*/
+
+        if (argc == 3) {
+            const char* output_dir = argv[2];
+            caff.persist_all(output_dir);
+        }
+
     }
 
     delete[] file_contents;
