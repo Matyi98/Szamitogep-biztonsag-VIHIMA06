@@ -270,9 +270,9 @@ void CAFF::persist_text(const char* fname) {
     std::ofstream outfile;
 
     outfile.open(fname, std::ios::out | std::ios::trunc);
-    std::cout << "Creator: " << this->credits.Creator << std::endl;
-    std::cout << "Creation date: " << +this->credits.YY << "." << +this->credits.M << "." << +this->credits.D << " " << +this->credits.h << ":" << +this->credits.m << std::endl;
-    std::cout << "Number of frames: " << this->frames.size() << std::endl;
+    outfile << "Creator: " << this->credits.Creator << std::endl;
+    outfile << "Creation date: " << +this->credits.YY << "." << +this->credits.M << "." << +this->credits.D << " " << +this->credits.h << ":" << +this->credits.m << std::endl;
+    outfile << "Number of frames: " << this->frames.size() << std::endl;
 
     outfile.close();
 }
@@ -295,17 +295,8 @@ void CAFF::persist_all(const char* base) {
     persist_text(manifest.c_str());
     for (size_t i = 0; i < this->frames.size(); i++)
     {
-        auto frame = this->frames[i];
-        std::cout << "frame_" << i << ":" << std::endl;
-        std::cout << "\tDuration: " << frame.duration << std::endl;
-        std::cout << "\tCaption: " << frame.ciff.caption << std::endl;
-        std::cout << "\tTags: ";
-        for (size_t i = 0; i < frame.ciff.tags.size(); i++)
-            std::cout << frame.ciff.tags[i] << "; ";
-        std::cout << std::endl;
-        std::cout << "\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
-        auto ciff_name = folder + "frame_" + std::to_string(i);
-        auto &ciff_content = frame.ciff.content;
+        auto ciff_name = folder + "/frame_" + std::to_string(i);
+        auto &ciff_content = this->frames[i].ciff.content;
         this->writeToBinary(ciff_name.c_str(), ciff_content);
     }
 }
