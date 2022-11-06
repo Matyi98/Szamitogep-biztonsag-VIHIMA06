@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <fstream>
 #include "Common.h"
-#include<direct.h>
 #ifndef CAFF_H
 #define CAFF_H
 

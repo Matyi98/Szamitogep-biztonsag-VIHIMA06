@@ -28,7 +28,7 @@ CAFF::CAFF(CaffCredits credits, std::vector<CaffFrame> frames)
     this->frames = frames;
 }
 
-void writeToBinary(const char* filename, ByteReader content)
+void CAFF::writeToBinary(const char* filename, ByteReader content)
 {
     auto myfile = std::fstream(filename, std::ios::out | std::ios::binary);
     myfile.write((char*)&content.getData()[0], content.getSize());
@@ -277,11 +277,20 @@ void CAFF::persist_text(const char* fname) {
     outfile.close();
 }
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 void CAFF::persist_all(const char* base) {
     auto folder = std::string(base);
-    if (mkdir(folder.c_str()) == -1) {
-        throw std::exception("Cant create folder");
+
+    struct stat st = {0};
+
+    if (stat(folder.c_str(), &st) == -1)
+    {
+        mkdir(folder.c_str(), 0700);
     }
+
     auto manifest = folder + "/manifest";
     persist_text(manifest.c_str());
     for (size_t i = 0; i < this->frames.size(); i++)
