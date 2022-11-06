@@ -3,13 +3,6 @@
 
 std::string getStringFromBytes(ByteSpan bytes, const LONG64 length)
 {
-    /*
-    std::vector<UCHAR> byteVector;
-
-    for (int i = 0; i < length; i++)
-        byteVector.push_back(bytes.next());
-        */
-
     std::string byteString;
 
     for (int i = 0; i < length; i++)
@@ -76,7 +69,6 @@ Ciff::Ciff(ByteReader* bytes)
     ByteSpan capTagsSpan = bytes->popAsSpan(onlyCapTagsSize);
     std::vector<UCHAR> capTags = getVectorString(capTagsSpan, onlyCapTagsSize);
 
-    std::vector<int> delimIndexes;
     std::vector<std::string> strings;
     int startIndex = 0;
     for (int i = 0; i < capTags.size(); i++)
@@ -96,8 +88,10 @@ Ciff::Ciff(ByteReader* bytes)
             tags.push_back(strings.at(i));
     }
 
-    //TODO: Check if contentsize is the same as content's size
     content = bytes->popAsByteReader(contentsize);
+
+    if (bytes->getRemainingSize() != 0)
+        throw std::invalid_argument("Ciff ctor: Contentsize doesn't match the byte size!");
 
 }
 
@@ -114,7 +108,7 @@ CaffCredits::CaffCredits()
 CaffCredits::CaffCredits(ByteReader block)
 {
     ByteSpan YYSpan = block.popAsSpan(2);
-    YY = (short)YYSpan.readLittleEndianTwoBytes();
+    YY = YYSpan.readLittleEndianTwoBytes();
 
     ByteSpan dateSpan = block.popAsSpan(4);
     M = dateSpan.next();
@@ -172,23 +166,6 @@ UCHAR ByteSpan::next()
 
 LONG64 ByteSpan::readLittleEndian()
 {
-    //LONG64 length = 0;
-    /*
-    for (int i = 0; i < 8; i++)
-    {
-        length |= (LONG64)raw[i] << (i * 8);
-    }
-    */
-
-    /*
-    for (int i = 7; i >= 0; i--)
-    {
-        length = length | pStart[i];
-        length = length << 8;
-    }
-    */
-
-    //TODO: refactor this to for loop
     LONG64 result = 0;
     result |= pStart[7]; result <<= 8;
     result |= pStart[6]; result <<= 8;
@@ -231,8 +208,6 @@ ByteReader::ByteReader(const ByteReader& b)
     offset = 0;
 }
 
-// Doesn't move the pointer in the ByteReader
-//TODO: Maybe fix code redundacy here
 ByteSpan ByteReader::read(LONG64 spanSize)
 {
     if ((data + offset + spanSize) - 1 >= data + size)
@@ -276,4 +251,9 @@ const UCHAR* ByteReader::getData()
 LONG64 ByteReader::getSize()
 {
     return size;
+}
+
+const LONG64 ByteReader::getRemainingSize()
+{
+    return size - offset;
 }

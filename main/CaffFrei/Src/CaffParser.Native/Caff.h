@@ -55,13 +55,9 @@ public:
     const UCHAR* getData();
 
     LONG64 getSize();
-
-    /*
-    const UCHAR* getCurrentPointer()
-    {
-        return data + offset;
-    }
-    */
+    
+    const LONG64 getRemainingSize();
+    
 };
 
 struct Ciff
