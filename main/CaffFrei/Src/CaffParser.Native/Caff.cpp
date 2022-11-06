@@ -27,6 +27,13 @@ CAFF::CAFF(CaffCredits credits, std::vector<CaffFrame> frames)
     this->frames = frames;
 }
 
+void writeToBinary(const char* filename, ByteReader content)
+{
+    auto myfile = std::fstream(filename, std::ios::out | std::ios::binary);
+    myfile.write((char*)&content.getData()[0], content.getSize());
+    myfile.close();
+}
+
 CaffFrame::CaffFrame(ByteReader block)
 {
     ByteSpan durationSpan = block.popAsSpan(8);
