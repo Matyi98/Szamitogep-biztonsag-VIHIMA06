@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     std::cout << "Creator: " << caff.credits.Creator << std::endl;
     std::cout << "Creation date: " << caff.credits.YY << "." << +caff.credits.M << "." << +caff.credits.D << " " << +caff.credits.h << ":" << +caff.credits.m << std::endl;
     std::cout << "Number of frames: " << caff.frames.size() << std::endl;    
-    for (int i = 0; i < caff.frames.size(); i++)
+    for (size_t i = 0; i < caff.frames.size(); i++)
     {
         auto frame = caff.frames[i];
         std::cout << "Frame " << i << ":" << std::endl;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
         std::cout << "\tCiff: " << std::endl;
         std::cout << "\t\tCaption: " << frame.ciff.caption << std::endl;
         std::cout << "\t\tTags: ";
-        for (int i = 0; i < frame.ciff.tags.size(); i++)
+        for (size_t i = 0; i < frame.ciff.tags.size(); i++)
             std::cout << frame.ciff.tags[i] << "; ";
         std::cout << std::endl;
         std::cout << "\t\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;

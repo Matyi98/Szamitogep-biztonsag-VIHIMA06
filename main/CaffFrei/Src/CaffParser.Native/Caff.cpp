@@ -79,7 +79,7 @@ Ciff::Ciff(ByteReader* bytes)
 
     std::vector<std::string> strings;
     int startIndex = 0;
-    for (int i = 0; i < capTags.size(); i++)
+    for (size_t i = 0; i < capTags.size(); i++)
     {
         if (capTags.at(i) == '\n' || capTags.at(i) == '\0')
         {
@@ -88,7 +88,7 @@ Ciff::Ciff(ByteReader* bytes)
         }
     }
 
-    for (int i = 0; i < strings.size(); i++)
+    for (size_t i = 0; i < strings.size(); i++)
     {
         if (i == 0)
             caption = strings.at(i);
@@ -284,14 +284,14 @@ void CAFF::persist_all(const char* base) {
     }
     auto manifest = folder + "/manifest";
     persist_text(manifest.c_str());
-    for (int i = 0; i < this->frames.size(); i++)
+    for (size_t i = 0; i < this->frames.size(); i++)
     {
         auto frame = this->frames[i];
         std::cout << "frame_" << i << ":" << std::endl;
         std::cout << "\tDuration: " << frame.duration << std::endl;
         std::cout << "\tCaption: " << frame.ciff.caption << std::endl;
         std::cout << "\tTags: ";
-        for (int i = 0; i < frame.ciff.tags.size(); i++)
+        for (size_t i = 0; i < frame.ciff.tags.size(); i++)
             std::cout << frame.ciff.tags[i] << "; ";
         std::cout << std::endl;
         std::cout << "\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
