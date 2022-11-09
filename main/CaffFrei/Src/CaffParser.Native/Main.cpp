@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
         std::cerr << "No argument provided! Usage: caffparser <caff_file_name> <OPTIONAL output_folder>" << std::endl;
         return 1;
     }
-    
+
     const char* filename = argv[1];
 
     auto in_file = fopen(filename, "rb");
@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
     if (!in_file)
     {
         std::cerr << "Can't open file" << std::endl;
+        fclose(in_file);
         return 1;
     }
 
@@ -26,18 +27,21 @@ int main(int argc, char* argv[])
     if (stat(filename, &sb) == -1)
     {
         std::cerr << "Can't read file stat" << std::endl;
+        fclose(in_file);
         return 1;
     }
 
     LONG64 size = sb.st_size;
     UCHAR *file_contents = new UCHAR[size];
+
     fread(file_contents, size, 1, in_file);
+    fclose(in_file);
 
     auto caff = parse(file_contents, size);
 
     std::cout << "Creator: " << caff.credits.Creator << std::endl;
     std::cout << "Creation date: " << caff.credits.YY << "." << +caff.credits.M << "." << +caff.credits.D << " " << +caff.credits.h << ":" << +caff.credits.m << std::endl;
-    std::cout << "Number of frames: " << caff.frames.size() << std::endl;    
+    std::cout << "Number of frames: " << caff.frames.size() << std::endl;
     for (size_t i = 0; i < caff.frames.size(); i++)
     {
         auto frame = caff.frames[i];
