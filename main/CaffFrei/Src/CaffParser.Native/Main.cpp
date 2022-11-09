@@ -36,31 +36,36 @@ int main(int argc, char* argv[])
     fread(file_contents, size, 1, in_file);
     fclose(in_file);
 
-    auto caff = parse(file_contents, size);
+    try {
+        auto caff = parse(file_contents, size);
+        std::cout << "Creator: " << caff.credits.Creator << std::endl;
+        std::cout << "Creation date: " << caff.credits.YY << "." << +caff.credits.M << "." << +caff.credits.D << " " << +caff.credits.h << ":" << +caff.credits.m << std::endl;
+        std::cout << "Number of frames: " << caff.frames.size() << std::endl;
+        for (size_t i = 0; i < caff.frames.size(); i++)
+        {
+            auto frame = caff.frames[i];
+            std::cout << "Frame " << i << ":" << std::endl;
+            std::cout << "\tDuration: " << frame.duration << std::endl;
+            std::cout << "\tCiff: " << std::endl;
+            std::cout << "\t\tCaption: " << frame.ciff.caption << std::endl;
+            std::cout << "\t\tTags: ";
+            for (size_t i = 0; i < frame.ciff.tags.size(); i++)
+                std::cout << frame.ciff.tags[i] << "; ";
+            std::cout << std::endl;
+            std::cout << "\t\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
 
-    std::cout << "Creator: " << caff.credits.Creator << std::endl;
-    std::cout << "Creation date: " << caff.credits.YY << "." << +caff.credits.M << "." << +caff.credits.D << " " << +caff.credits.h << ":" << +caff.credits.m << std::endl;
-    std::cout << "Number of frames: " << caff.frames.size() << std::endl;
-    for (size_t i = 0; i < caff.frames.size(); i++)
-    {
-        auto frame = caff.frames[i];
-        std::cout << "Frame " << i << ":" << std::endl;
-        std::cout << "\tDuration: " << frame.duration << std::endl;
-        std::cout << "\tCiff: " << std::endl;
-        std::cout << "\t\tCaption: " << frame.ciff.caption << std::endl;
-        std::cout << "\t\tTags: ";
-        for (size_t i = 0; i < frame.ciff.tags.size(); i++)
-            std::cout << frame.ciff.tags[i] << "; ";
-        std::cout << std::endl;
-        std::cout << "\t\tSize (width*height): " << frame.ciff.width << "*" << frame.ciff.height << std::endl;
+            if (argc == 3) {
+                const char* output_dir = argv[2];
+                caff.persist_all(output_dir);
+            }
 
-        if (argc == 3) {
-            const char* output_dir = argv[2];
-            caff.persist_all(output_dir);
         }
 
+        delete[] file_contents;
+        return 0;
     }
-
-    delete[] file_contents;
-    return 0;
+    catch (std::exception) {
+        std::cout << "Error occured, can't parse caff" << std::endl;
+        return 1;
+    }
 }
