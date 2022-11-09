@@ -1,5 +1,16 @@
 # Szamitogep-biztonsag-VIHIMA06
 
+## Compile and test native parser
+
+> Works only on Linux! Tested with Ubuntu 20.04
+
+```bash
+cd main/CaffFrei/Src/CaffParser.Native
+make
+# Test parser
+target/CaffParser ../../../HappyParserPy/samples/2.caff $(pwd)/target/testrun
+```
+
 ## Start work
 
 The source files for the project can be found at [main/CaffFrei](main/CaffFrei). Open the CaffFrei.sln solution with VisualStudio 22.
