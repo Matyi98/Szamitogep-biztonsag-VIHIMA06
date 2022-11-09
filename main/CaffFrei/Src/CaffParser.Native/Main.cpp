@@ -18,7 +18,6 @@ int main(int argc, char* argv[])
     if (!in_file)
     {
         std::cerr << "Can't open file" << std::endl;
-        fclose(in_file);
         return 1;
     }
 
