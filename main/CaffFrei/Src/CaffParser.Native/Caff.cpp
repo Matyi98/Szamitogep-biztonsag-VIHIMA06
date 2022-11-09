@@ -293,8 +293,8 @@ void CAFF::persist_all(const char* base) {
         outfile << "\tDuration: " << this->frames[i].duration << std::endl;
         outfile << "\tCaption: " << this->frames[i].ciff.caption << std::endl;
         outfile << "\tTags: ";
-        for (size_t i = 0; i < this->frames[i].ciff.tags.size(); i++)
-            outfile << this->frames[i].ciff.tags[i] << "; ";
+        for (size_t j = 0; j < this->frames[i].ciff.tags.size(); j++)
+            outfile << this->frames[i].ciff.tags[j] << "; ";
         outfile << std::endl;
         outfile << "\tSize (width*height): " << this->frames[i].ciff.width << "*" << this->frames[i].ciff.height << std::endl;
         auto ciff_name = folder + "/frame_" + std::to_string(i);
