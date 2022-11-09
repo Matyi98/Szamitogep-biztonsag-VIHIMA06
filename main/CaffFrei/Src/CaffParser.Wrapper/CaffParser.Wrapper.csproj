@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CaffParser\CaffParser.vcxproj" />
+      <ProjectReference Include="..\CaffParser.Native\CaffParser.vcxproj" />
     </ItemGroup>
 
 </Project>

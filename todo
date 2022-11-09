@@ -1,3 +1,55 @@
+implement main entrypoint { : 1 btieger ; branch: entrypoint
+    argument -> file name -> file to memory {
+        byte[] ; VARCHAR*
+    }
+    fv hívás a parser core -ra {
+
+    }
+    logolás {
+        olvassa a CAFF -ot a parser core válaszából
+        kiír egy két dolgot
+    }
+    packaging {
+        makefile és doksi hogy hogyan indítsd el
+    }
+}
+implement parser core { : 2-3 mpap, tlabancz, mkaposvari ; branch: core
+    kitalálni hogy milyen tömbből lehet jól dolgozni (char*, byte*, const UCHAR*)
+    python code átemelése + validáció
+    c++ reprezentáiója a python data osztályoknak -> CAFF
+    egy fv fog keletkezni: {
+        def parse(byte*): CAFF;
+    }
+}
+testing { : 1-2 bgrober ; branch: testing
+    code review : btieger
+    static analizis 
+    fuzzer
+}
+
+
+implement wrapper { : TBD
+    transform data for c# (CAFF -> manifest) // return caff->credits , vagy ++ number of ciffs
+    implement cross call
+}
+
+
+misc { : TBD
+    test cross call exception {
+        c++ throw Error()
+        c# ???
+    }
+
+}
+
+
+
+
+
+
+
+
+
 decide on preview solution
 implement c++ c# interface
 implement parser {
