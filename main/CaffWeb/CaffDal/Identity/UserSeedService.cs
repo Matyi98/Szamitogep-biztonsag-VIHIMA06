@@ -18,7 +18,7 @@ namespace CaffDal.Identity
                 return;
 
             var user = new User {
-                Email = "admin@admin.com",
+                Email = "tboy.ultak@ciff.caff",
                 UserName = "admin",
                 CustomName = "Tigris",
                 SecurityStamp = Guid.NewGuid().ToString(),
