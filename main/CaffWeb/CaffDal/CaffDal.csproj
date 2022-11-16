@@ -17,6 +17,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Migrations\" />
+	  <Folder Include="Domain\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>
