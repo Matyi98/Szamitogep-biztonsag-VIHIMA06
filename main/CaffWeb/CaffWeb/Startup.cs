@@ -1,16 +1,11 @@
 ﻿using CaffDal;
 using CaffDal.Entities;
 using CaffDal.Identity;
+using CaffDal.ParserWrapper;
 using CaffWeb.Email;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace CaffWeb
 {
@@ -53,6 +48,8 @@ namespace CaffWeb
                 options.LoginPath = "/Identity/Account/Login";
                 options.LogoutPath = "/Identity/Account/Logout";
             });
+
+            services.Configure<CaffParserConfig>(Configuration.GetSection("CaffParserConfig"));
 
             services.Configure<MailSettings>(
                Configuration.GetSection("MailSettings"));

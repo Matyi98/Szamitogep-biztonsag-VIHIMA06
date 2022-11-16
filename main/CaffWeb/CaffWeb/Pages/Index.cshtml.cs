@@ -20,7 +20,7 @@ namespace CaffWeb.Pages
         public async Task<IActionResult> OnPost() {
             using var memoryStream = new MemoryStream();
             await UploadaedCaff.CopyToAsync(memoryStream);
-            var raw = memoryStream.ToArray();
+            byte[] raw = memoryStream.ToArray();
 
             //TODO
 

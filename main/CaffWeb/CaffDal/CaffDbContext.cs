@@ -16,6 +16,9 @@ namespace CaffDal
 
         protected CaffDbContext() { }
 
+        public virtual DbSet<Caff> Caffs { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
