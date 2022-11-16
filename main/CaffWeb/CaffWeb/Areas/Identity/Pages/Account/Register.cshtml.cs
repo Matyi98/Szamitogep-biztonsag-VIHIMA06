@@ -97,8 +97,8 @@ namespace CaffWeb.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(
                         Input.Email,
-                        "FolkPorta e-mail visszaigazolás",
-                        $"Sikeres FolkPorta regisztráció. \r\nKattints <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ide</a>, hogy aktiváld a fiókodat.");
+                        "CaffFrei e-mail visszaigazolás",
+                        $"Sikeres CaffFrei regisztráció. \r\nKattints <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ide</a>, hogy aktiváld a fiókodat.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

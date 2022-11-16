@@ -134,8 +134,8 @@ namespace CaffWeb.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "FolkPorta e-mail visszaigazolás",
-                $"Sikeres FolkPorta regisztráció. \r\nKattints <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ide</a>, hogy aktiváld a fiókodat.");
+                "CaffFrei e-mail visszaigazolás",
+                $"Sikeres CaffFrei regisztráció. \r\nKattints <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>ide</a>, hogy aktiváld a fiókodat.");
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
