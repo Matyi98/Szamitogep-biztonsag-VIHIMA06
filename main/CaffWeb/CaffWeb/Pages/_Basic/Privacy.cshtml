@@ -1,0 +1,24 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Adatkezelési irányelvek";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    A felhasználókról tárolt személyes adatok: email-cím, megadott név, a jelszavak biztonságosan kerülnek tárolása.
+</p>
+
+@if (User.Identity.IsAuthenticated) {
+    <p>
+        Adataidat bármikor törölheted a <a href="/Identity/Account/Manage/PersonalData">profilod</a> oldalán.
+    </p>
+} else {
+    <p>
+        Adataidat bármikor törölheted a profilod oldalán.
+    </p>
+}
+
+<p>
+    Az oldal sütiket használ a lapok közti navigációhoz és a bejelentkeztetéshez. A sütiket semmiféle adatgyűjtésre sem használja.
+</p>

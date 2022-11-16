@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner) {
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+        Az oldal sütiket használ. <a class="small" asp-page="/_Basic/Privacy">Adatvédelmi irányelvek</a>
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Bezárás" data-cookie-string="@cookieString">
+            <span aria-hidden="true">Tudomásul veszem.</span>
+        </button>
+    </div>
+    <script>
+        (function () {
+            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            button.addEventListener("click", function (event) {
+                document.cookie = button.dataset.cookieString;
+            }, false);
+        })();
+    </script>
+}
