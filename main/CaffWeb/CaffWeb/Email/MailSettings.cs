@@ -1,4 +1,4 @@
-﻿namespace CaffWeb.Settings
+﻿namespace CaffWeb.Email
 {
     public class MailSettings
     {

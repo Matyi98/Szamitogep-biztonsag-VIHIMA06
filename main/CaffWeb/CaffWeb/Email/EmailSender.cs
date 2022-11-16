@@ -1,24 +1,21 @@
 ﻿using System.Threading.Tasks;
-using CaffWeb.Settings;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace CaffWeb.Services
+namespace CaffWeb.Email
 {
     public class EmailSender : IEmailSender
     {
         private readonly MailSettings mailSettings;
 
-        public EmailSender(IOptions<MailSettings> options)
-        {
+        public EmailSender(IOptions<MailSettings> options) {
             mailSettings = options.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
-        {
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage) {
             var emailMessage = new MimeMessage {
                 Sender = MailboxAddress.Parse(mailSettings.Mail),
                 Subject = subject
@@ -31,7 +28,7 @@ namespace CaffWeb.Services
             };
             emailMessage.Body = builder.ToMessageBody();
 
-            using(var smtp = new SmtpClient()) {
+            using (var smtp = new SmtpClient()) {
                 smtp.Connect(mailSettings.Host, mailSettings.Port, SecureSocketOptions.StartTls);
                 smtp.Authenticate(mailSettings.Mail, mailSettings.Password);
 

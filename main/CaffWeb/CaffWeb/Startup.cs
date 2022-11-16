@@ -1,8 +1,7 @@
 ﻿using CaffDal;
 using CaffDal.Entities;
 using CaffDal.Identity;
-using CaffWeb.Services;
-using CaffWeb.Settings;
+using CaffWeb.Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
