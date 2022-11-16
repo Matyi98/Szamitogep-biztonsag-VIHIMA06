@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CaffShop.Web.Pages
+namespace CaffWeb.Pages
 {
     public class PrivacyModel : PageModel
     {

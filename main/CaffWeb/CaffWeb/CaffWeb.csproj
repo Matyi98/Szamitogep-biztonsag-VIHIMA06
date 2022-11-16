@@ -4,18 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>4f715355-4cdd-4d83-96a1-0f34c24a4faf</UserSecretsId>
+    <UserSecretsId>ab1f30f0-e807-4fff-9380-155955ded7b5</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	<BaseOutputPath>$(SolutionDir)Build</BaseOutputPath>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CaffParser.Wrapper\CaffParser.Wrapper.csproj" />
   </ItemGroup>
 
 </Project>

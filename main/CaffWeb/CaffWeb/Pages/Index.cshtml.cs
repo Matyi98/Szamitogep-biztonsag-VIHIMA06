@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CaffShop.Web.Pages
+namespace CaffWeb.Pages
 {
     public class IndexModel : PageModel
     {
@@ -11,10 +11,8 @@ namespace CaffShop.Web.Pages
             _logger = logger;
         }
 
-        public int AddResult { get; set; }
-
         public void OnGet() {
-            AddResult = CaffParserWrapper.CaffParser.Add(1, 2);
+            
         }
 
         [BindProperty]
@@ -23,7 +21,9 @@ namespace CaffShop.Web.Pages
             using var memoryStream = new MemoryStream();
             await UploadaedCaff.CopyToAsync(memoryStream);
             var raw = memoryStream.ToArray();
-            var metadata = CaffParserWrapper.CaffParser.ParseMeta(raw);
+
+            //TODO
+
             return Page();
         }
 
