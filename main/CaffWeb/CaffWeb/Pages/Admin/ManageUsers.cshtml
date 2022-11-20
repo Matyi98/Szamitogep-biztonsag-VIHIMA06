@@ -1,0 +1,31 @@
+﻿@page
+@model CaffWeb.Pages.Admin.ManageUsersModel
+@{
+    ViewBag.Title = "Admin";
+}
+
+@foreach (var user in Model.AllUsers) {
+    <form method="post" role="form">
+        <input type="hidden" asp-for="EditedId" value="@user.Id" />
+        <div class="row">
+            <div class="form-row">
+                <div class="form-group col-1">
+                    <input disabled class="form-control text-center py-0" asp-for="@user.Id" />
+                </div>
+                <div class="form-group col-3">
+                    <input disabled class="form-control one-row" asp-for="@user.Name" />
+                </div>
+                <div class="form-group col-3">
+                    <input disabled class="form-control one-row" asp-for="@user.Email" />
+                </div>
+                <div class="form-group col-2">
+                    <input disabled class="form-control one-row" asp-for="@user.Roles" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-danger" type="submit">Mod</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+

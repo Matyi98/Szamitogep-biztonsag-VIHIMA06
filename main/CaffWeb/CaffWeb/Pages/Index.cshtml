@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="UploadaedCaff"></label>
+        <span asp-validation-for="UploadaedCaff"></span><br/>
+        <input asp-for="UploadaedCaff" />
+    </div>
+    <br/>
+    <div class="form-group">
+        <input type="submit" name="save" class="btn btn-primary" value="Upload" />
+    </div>
+</form>

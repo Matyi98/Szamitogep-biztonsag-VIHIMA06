@@ -1,0 +1,16 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Regisztráció visszaigazolása";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    Kaptál egy e-mailt a(z) <span class="myHighlight">@Model.Email</span> címedre, amiben arra kérlek, hogy erősítsd meg a regisztrációdat.
+</p>
+<p>
+    Csak az e-mail címed aktiválása után tudsz bejelentkezni az oldalra.
+</p>
+<p>
+    Ha nem találod az e-mailt, akkor ellenőrizd a <span class="myHighlight">spam kukában</span> is.
+</p>

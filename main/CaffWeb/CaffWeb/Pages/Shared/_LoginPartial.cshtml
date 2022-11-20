@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CaffDal.Entities
+@using CaffWeb
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User)) {
+        <li class="nav-link text-dark">
+            Szervusz, @UserManager.GetUserName(User)!
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                Profilom
+            </a>
+            <form class="dropdown-menu" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                <a class="dropdown-item">@UserManager.GetUserName(User) - Id: @User.GetUserId()</a>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    Szerkesztés
+                </a>
+                <a href="#" onclick="this.parentNode.submit();" class="dropdown-item" >
+                    Kijelentkezés
+                </a>
+            </form>
+        </li>
+
+    } else {
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Regisztráció</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Bejelentkezés</a>
+        </li>
+    }
+</ul>
