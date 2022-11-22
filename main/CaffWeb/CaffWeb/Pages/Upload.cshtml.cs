@@ -7,9 +7,9 @@ namespace CaffWeb.Pages
 {
     public class UploadModel : PageModel
     {
-        private readonly CaffFacade caffFacade;
+        private readonly ICaffFacade caffFacade;
 
-        public UploadModel(CaffFacade caffFacade) {
+        public UploadModel(ICaffFacade caffFacade) {
             this.caffFacade = caffFacade;
         }
 

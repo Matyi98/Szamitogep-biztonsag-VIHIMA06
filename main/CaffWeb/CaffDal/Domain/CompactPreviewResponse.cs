@@ -12,6 +12,6 @@ namespace CaffDal.Domain
         public string Name { get; set; }
         public string Creator { get; set; }
         public DateTime CreationDate { get; set; }
-        public byte[] Image { get; set; }
+        public int ImageId { get; set; }
     }
 }

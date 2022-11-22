@@ -4,7 +4,7 @@ using CaffDal.Services;
 
 namespace CaffWeb.Mock
 {
-    public class FacadeMockImpl : CaffFacade
+    public class FacadeMockImpl : ICaffFacade
     {
 
         class Comment {
@@ -57,7 +57,20 @@ namespace CaffWeb.Mock
                 CreatorID = data.OwnerId,
                 CreatorDate = DateTime.Now,
                 Creator = "data.OwnerId",
-                Image = new byte[1024],
+                ImageMetas = new List<ImageMetaResponse> {
+                    new ImageMetaResponse {
+                        Delay = 1,
+                        Id = 0                    
+                    },
+                    new ImageMetaResponse {
+                        Delay = 4,
+                        Id = 1
+                    },
+                    new ImageMetaResponse {
+                        Delay = 1,
+                        Id = 2
+                    },
+                }
             };
         }
 
@@ -75,28 +88,28 @@ namespace CaffWeb.Mock
                         Id = 0,
                         CreationDate = DateTime.Now,
                         Creator = "aLMA",
-                        Image = null,
+                        ImageId = 0,
                         Name = "CAffDummy1"
                     },
                     new CompactPreviewResponse {
                         Id = 1,
                         CreationDate = DateTime.Now,
                         Creator = "aLMA",
-                        Image = null,
+                        ImageId = 0,
                         Name = "CAffDummy1"
                     },
                     new CompactPreviewResponse {
                         Id = 2,
                         CreationDate = DateTime.Now,
                         Creator = "aLMA",
-                        Image = null,
+                        ImageId = 0,
                         Name = "CAffDummy1"
                     },
                     new CompactPreviewResponse {
                         Id = 3,
                         CreationDate = DateTime.Now,
                         Creator = "aLMA",
-                        Image = null,
+                        ImageId = 0,
                         Name = "CAffDummy1"
                     },
                 }
@@ -127,6 +140,10 @@ namespace CaffWeb.Mock
                 Text = x.comment,
                 CreationDate = DateTime.Now,
             };
+        }
+
+        public Task<byte[]> GetImage(int imageId) {
+            return null;
         }
     }
 }

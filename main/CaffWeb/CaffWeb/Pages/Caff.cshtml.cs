@@ -9,9 +9,9 @@ namespace CaffWeb.Pages
 {
     public class CaffModel : PageModel
     {
-        private readonly CaffFacade caffFacade;
+        private readonly ICaffFacade caffFacade;
 
-        public CaffModel(CaffFacade caffFacade) {
+        public CaffModel(ICaffFacade caffFacade) {
             this.caffFacade = caffFacade;
         }
 

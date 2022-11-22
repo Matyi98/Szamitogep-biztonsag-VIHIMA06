@@ -13,9 +13,9 @@ namespace CaffWeb.Pages
 
         public PagedResult<CompactPreviewResponse> Caffs { get; set; }
 
-        private readonly CaffFacade caffFacade;
+        private readonly ICaffFacade caffFacade;
 
-        public CaffShopModel(CaffFacade caffFacade) {
+        public CaffShopModel(ICaffFacade caffFacade) {
             this.caffFacade = caffFacade;
         }
 
