@@ -1,0 +1,25 @@
+﻿@model ICollection<CaffDal.Domain.CompactPreviewResponse>
+
+@if (Model.Count > 0) {
+    <div class="row">
+        @foreach (var caff in Model) {
+            <div class="col-sm-12 col-lg-6 d-flex mb-3">
+
+                <div class="card w-100">
+                    <div class="card-header">
+                        <a class="one-row font-weight-bold" asp-page="Caff" asp-route-id="@caff.Id">@caff.Name</a>
+                    </div>
+                    <div class="card-body">
+                        <h2>CAFF PREVIEW</h2>
+                        <p>Creator: @caff.Creator</p>
+                        <p>UploadDate: @caff.CreationDate</p>
+                    </div>                    
+                </div>
+
+            </div>
+        }
+    </div>
+} else {
+    <p class="text-center myWarning">Nincs találat</p>
+    <p class="text-center">Lehet, hogy túl specifikus a szűrő, vagy még nincs feltöltve a kategóriához egy elem sem.</p>
+}

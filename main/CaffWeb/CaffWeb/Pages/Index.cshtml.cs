@@ -15,17 +15,7 @@ namespace CaffWeb.Pages
             
         }
 
-        [BindProperty]
-        public IFormFile UploadaedCaff { get; set; }
-        public async Task<IActionResult> OnPost() {
-            using var memoryStream = new MemoryStream();
-            await UploadaedCaff.CopyToAsync(memoryStream);
-            byte[] raw = memoryStream.ToArray();
 
-            //TODO
-
-            return Page();
-        }
 
     }
 }

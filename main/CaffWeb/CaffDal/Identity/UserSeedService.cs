@@ -27,9 +27,8 @@ namespace CaffDal.Identity
 
             var createResult = await userManager.CreateAsync(user, "$Alma123");
             var roleResult = await userManager.AddToRoleAsync(user, Roles.Admin);
-            var roleResult2 = await userManager.AddToRoleAsync(user, Roles.Moderator);
 
-            if (!createResult.Succeeded || !roleResult.Succeeded || !roleResult2.Succeeded) {
+            if (!createResult.Succeeded || !roleResult.Succeeded) {
                 throw new ApplicationException("Admin account clould not be created:" +
                         String.Join(", ", createResult.Errors.Concat(roleResult.Errors).Select(e => e.Description)));
             }

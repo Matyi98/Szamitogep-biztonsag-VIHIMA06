@@ -1,0 +1,66 @@
+﻿@page "{id:int}"
+@using CaffDal.Identity
+@model CaffWeb.Pages.CaffModel
+@{
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="">
+            <h2>TODO caff animation here</h2>
+            <form method="post" id="deleteCaffForm">
+                <button asp-page-handler="Purchase" class="btn btn-primary">Purchase Caff for 0.00$</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Caff Meta
+            </div>
+            <div class="card-body">
+                <p>Name: @Model.Caff.Name</p>
+                <p>Creator: @Model.Caff.Creator</p>
+                <p>Upload Date: @Model.Caff.CreatorDate</p>
+                @if (User.IsInRole(Roles.Admin) || User.GetUserId() == Model.Caff.CreatorID) {
+                    <form method="post" id="deleteCaffForm">
+                        <button asp-page-handler="DeleteCaff" class="btn btn-danger">Delete CAFF</button>
+                    </form>
+                }
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Kommentek
+            </div>
+            <div class="card-body">
+                @foreach(var x in Model.Comments) {
+                    <div>@if (x.CommenterId == User.GetUserId() || User.IsInRole(Roles.Admin)) {
+                        <a asp-page="/CommentsEditor" asp-route-CaffId="@Model.Id"
+                        asp-route-Id="@x.Id"><i class="fas fa-pencil-alt"></i></a>
+                    }@x.Commenter: @x.Text</div>
+                }
+            </div>
+            @if(User.Identity.IsAuthenticated) {
+            <form method="post" id="commentForm">                            
+                <div class="form-group">
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                    <label asp-for="Comment">Write comment</label>
+                    <input class="form-control" asp-for="Comment" />
+                </div>                
+                <div>
+                    <button asp-page-handler="WriteComment" class="btn btn-primary" id="load">Send</button>
+                    <span id="spinner" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                </div>                
+            </form>
+            } else {
+                <p>Log in to write comment</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />  
+}

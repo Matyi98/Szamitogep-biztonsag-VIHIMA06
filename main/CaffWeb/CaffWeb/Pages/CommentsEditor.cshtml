@@ -1,0 +1,24 @@
+﻿@page "{caffId:int}/{id:int}"
+@model CaffWeb.Pages.CommentsEditorModel
+@{
+}
+
+<form method="post" id="commentForm">                            
+    <div class="form-group">
+        <span asp-validation-for="Edited" class="text-danger"></span>
+        <label asp-for="Edited">Edit comment</label>
+        <input class="form-control" asp-for="Edited" />
+    </div>
+    <div>
+        <button asp-page-handler="Edit" class="btn btn-primary" id="load">Update</button>
+    </div>
+    <div>
+        <button asp-page-handler="Delete" class="btn btn-primary" id="load">Delete</button>
+    </div>   
+</form>
+
+
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />  
+}
