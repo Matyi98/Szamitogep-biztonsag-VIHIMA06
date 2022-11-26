@@ -1,0 +1,119 @@
+﻿@page "{id:int}"
+@using CaffDal.Identity
+@model CaffWeb.Pages.CaffModel
+@{
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="">
+            <div id="animation" data-frames="@Model.Caff.ImageMetas.Count" >
+                @foreach(var item in Model.Caff.ImageMetas) {
+                    <img id="frame_@item.Id" src="@Url.Action("GetImageAsync", "ImageController", new { id = item.Id })" 
+                    alt="ID: @item.Id" data-delay="@item.Delay" style="display:none;" />                
+                }
+            </div>
+            <form method="post" id="deleteCaffForm">
+                <button asp-page-handler="Purchase" class="btn btn-primary">Purchase Caff for 0.00$</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Caff Meta
+            </div>
+            <div class="card-body">
+                <p>Name: @Model.Caff.Name</p>
+                <p>Creator: @Model.Caff.Creator</p>
+                <p>Upload Date: @Model.Caff.CreatorDate</p>
+                @if (User.IsInRole(Roles.Admin) || User.GetUserId() == Model.Caff.CreatorID) {
+                    <form method="post" id="deleteCaffForm">
+                        <button asp-page-handler="DeleteCaff" class="btn btn-danger">Delete CAFF</button>
+                    </form>
+                }
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Kommentek
+            </div>
+            <div class="card-body">
+                @foreach(var x in Model.Comments) {
+                    <div>@if (x.CommenterId == User.GetUserId() || User.IsInRole(Roles.Admin)) {
+                        <a asp-page="/CommentsEditor" asp-route-CaffId="@Model.Id"
+                        asp-route-Id="@x.Id"><i class="fas fa-pencil-alt"></i></a>
+                    }@x.Commenter: @x.Text</div>
+                }
+            </div>
+            @if(User.Identity.IsAuthenticated) {
+            <form method="post" id="commentForm">                            
+                <div class="form-group">
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                    <label asp-for="Comment">Write comment</label>
+                    <input class="form-control" asp-for="Comment" />
+                </div>                
+                <div>
+                    <button asp-page-handler="WriteComment" class="btn btn-primary" id="load">Send</button>
+                    <span id="spinner" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                </div>                
+            </form>
+            } else {
+                <p>Log in to write comment</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />  
+
+    <script>
+        const animation = document.querySelector("#animation");
+        const frame_count = parseInt(animation.dataset.frames);
+        visible_frame_id = 0
+        get_frame().style.display = "block";
+
+        function incr_frame() {
+            visible_frame_id += 1;
+            visible_frame_id %= frame_count;
+        }
+
+        function get_frame() {
+            return animation.querySelector("#frame_"+visible_frame_id)
+        }
+
+        function get_delay(x) {
+            return parseInt(x.dataset.delay)*1000
+        }
+
+        function switch_frame_now() {
+            get_frame().style.display = "none";
+            incr_frame();
+            get_frame().style.display = "block";
+        }
+
+        const delay = (delayInms) => {
+            return new Promise(resolve => setTimeout(resolve, delayInms));
+        }
+
+        const switch_delayed = async () => {
+            let x = get_frame();
+            let d = get_delay(x);
+            await delay(d);
+            switch_frame_now();
+        }        
+
+        const start = async function() {
+            while (true) {
+                let x = get_frame();
+                let d = get_delay(x);
+                await delay(d);
+                switch_frame_now();
+            }
+        }
+
+        start();
+    </script>
+}

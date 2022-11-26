@@ -1,0 +1,54 @@
+﻿@model CaffWeb.ViewComponents.PagerViewComponent.PagerSpecification
+
+@{
+    Dictionary<string, string> allRouteData = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+    allRouteData.TryAdd("pageNumber", String.Empty);
+}
+
+@if (Model.TotalPages > 1) {
+    <nav>
+        <ul class="pagination justify-content-center mb-0">
+
+            @if (Model.PageNumber > 1) {
+                allRouteData["pageNumber"] = "1";
+
+                <li class="page-item">
+
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+            }
+
+
+            @for (var pageNumber = Math.Max(1, Model.PageNumber - Model.PagesToShow);
+                 pageNumber <= Math.Min(Model.TotalPages, Model.PageNumber + Model.PagesToShow);
+                 pageNumber++) {
+                if (Model.PageNumber == pageNumber) {
+                    <li class="page-item active">
+                        <a class="page-link">
+                            @pageNumber
+                        </a>
+                    </li>
+                } else {
+                    allRouteData["pageNumber"] = pageNumber.ToString();
+                    <li class="page-item">
+                        <a asp-all-route-data="@allRouteData" class="page-link">
+                            @pageNumber
+                        </a>
+                    </li>
+                }
+            }
+
+            @if (Model.PageNumber < Model.TotalPages) {
+                allRouteData["pageNumber"] = Model.TotalPages.ToString();
+                <li class="page-item">
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+

@@ -1,0 +1,26 @@
+﻿@page
+@model CaffWeb.Pages.UploadModel
+@{
+}
+
+
+<form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="UploadaedCaff"></label>
+        <span asp-validation-for="UploadaedCaff" class="text-danger"></span><br/>
+        <input asp-for="UploadaedCaff" />
+    </div>
+    <br/>
+    <label asp-for="FileName">Caff name</label>
+    <input id="FileName" asp-for="FileName" />
+    <span asp-validation-for="FileName" class="text-danger"></span>
+    <br/>
+    <div class="form-group">
+        <input type="submit" name="save" class="btn btn-primary" />
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />  
+}

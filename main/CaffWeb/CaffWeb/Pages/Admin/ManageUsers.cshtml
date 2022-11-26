@@ -4,6 +4,10 @@
     ViewBag.Title = "Admin";
 }
 
+<p>
+    Kijelentkezés és újra bejelentkezés után lesz csak érvényes.
+</p>
+
 @foreach (var user in Model.AllUsers) {
     <form method="post" role="form">
         <input type="hidden" asp-for="EditedId" value="@user.Id" />
@@ -22,7 +26,10 @@
                     <input disabled class="form-control one-row" asp-for="@user.Roles" />
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-outline-danger" type="submit">Mod</button>
+                    <button asp-page-handler="Promote" class="btn btn-outline-danger" type="submit">Promote</button>
+                </div>
+                <div class="form-group">
+                    <button asp-page-handler="Delete" class="btn btn-outline-danger" type="submit">Delete</button>
                 </div>
             </div>
         </div>

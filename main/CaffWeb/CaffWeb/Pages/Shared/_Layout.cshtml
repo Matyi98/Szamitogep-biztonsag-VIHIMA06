@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CaffWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
 </head>
 <body>
     <header>
@@ -19,16 +20,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">TODO</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">TODO</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/CaffShop">CaffShop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">TODO</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Upload">Upload</a>
                         </li>
                         @if (User.IsInRole(Roles.Admin)) {
                         <li class="nav-item dropdown">
@@ -43,6 +43,7 @@
                         </li>
                     }
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
 
             </div>

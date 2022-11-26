@@ -2,7 +2,9 @@
 using CaffDal.Entities;
 using CaffDal.Identity;
 using CaffDal.ParserWrapper;
+using CaffDal.Services;
 using CaffWeb.Email;
+using CaffWeb.Mock;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +37,6 @@ namespace CaffWeb
 
             services.AddAuthorization(options => {
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(Roles.Admin));
-                options.AddPolicy("RequireModeratorRole", policy => policy.RequireRole(Roles.Moderator));
                 options.AddPolicy("RequireAuthenticated", policy => policy.RequireAuthenticatedUser());
             });
 
@@ -58,11 +59,12 @@ namespace CaffWeb
             services.AddScoped<RoleSeedService>()
                     .AddScoped<UserSeedService>();
 
+            services.AddScoped<ICaffFacade, FacadeMockImpl>();
+
             services.AddControllers();
             services.AddRazorPages(options => {
                 options.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
-                options.Conventions.AuthorizeFolder("/Mod", "RequireModeratorRole");
-                options.Conventions.AuthorizeFolder("/Upload", "RequireAuthenticated");
+                options.Conventions.AuthorizePage("/Upload", "RequireAuthenticated");
             });
         }
 

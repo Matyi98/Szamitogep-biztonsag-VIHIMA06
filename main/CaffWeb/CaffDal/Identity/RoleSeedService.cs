@@ -17,9 +17,6 @@ namespace CaffDal.Identity
             if (!await roleManager.RoleExistsAsync(Roles.Admin)) {
                 await roleManager.CreateAsync(new IdentityRole<int> { Name = Roles.Admin });
             }
-            if (!await roleManager.RoleExistsAsync(Roles.Moderator)) {
-                await roleManager.CreateAsync(new IdentityRole<int> { Name = Roles.Moderator });
-            }
         }
 
     }
