@@ -17,8 +17,14 @@ namespace CaffDal.Entities
 
         [Required]
         public int CaffId { get; set; }
+        public Caff Caff { get; set; } = null!;
 
         public byte[] Preview { get; set; }
+
+        public Image(byte[] preview)
+        {
+            Preview = preview;
+        }
 
     }
 }

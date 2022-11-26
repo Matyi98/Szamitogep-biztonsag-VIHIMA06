@@ -19,7 +19,17 @@ namespace CaffDal.Entities
         public int NumberOfFrames { get; set; }
 
         public byte[] RawCaff { get; set; }
+        public ICollection<Image> Images { get; set; } = new List<Image>();
+        public int UserId { get; set; }
+        public User User { get; set; } = null!;
 
-        public virtual ICollection<Image> Images { get; set; }
+        //public virtual ICollection<Image> Images { get; set; }
+
+        public Caff(string creator, byte[] rawCaff)
+        {
+            Creator = creator;
+            RawCaff = rawCaff;
+        }
+
     }
 }
