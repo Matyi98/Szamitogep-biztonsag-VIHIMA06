@@ -9,7 +9,7 @@
         <div class="">
             <div id="animation" data-frames="@Model.Caff.ImageMetas.Count" >
                 @foreach(var item in Model.Caff.ImageMetas) {
-                    <img id="frame_@item.Id" src="@Url.Action("GetImageAsync", "ImageController", new { id = item.Id })" 
+                    <img id="frame_@item.Id" src="/images/@item.Id" 
                     alt="ID: @item.Id" data-delay="@item.Delay" style="display:none;" />                
                 }
             </div>

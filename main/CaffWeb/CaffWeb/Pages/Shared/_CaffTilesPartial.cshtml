@@ -10,7 +10,7 @@
                         <a class="one-row font-weight-bold" asp-page="Caff" asp-route-id="@caff.Id">@caff.Name</a>
                     </div>
                     <div class="card-body">
-                        <img src="@Url.Action("GetImageAsync", "ImageController", new { id = caff.ImageId })" 
+                        <img src="/images/@caff.ImageId" 
                             alt="ImageId: @caff.ImageId" />
                         <p>Creator: @caff.Creator</p>
                         <p>UploadDate: @caff.CreationDate</p>
