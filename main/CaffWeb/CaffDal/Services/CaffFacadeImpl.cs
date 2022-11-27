@@ -89,16 +89,16 @@ namespace CaffDal.Services
              * Execute exe and read manifest
              * */
             await Cli.Wrap("native_parser.exe")
-                .WithArguments(request.CaffName)
+                .WithArguments(request.CaffName + " .")
                 .ExecuteAsync();
             string[] lines = File.ReadLines("manifest").ToArray();
 
             /*
              * Create Caff
              * */
-            Caff caff = new Caff(lines[0].Split(':')[1], request.RawCaff);
-            caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(':')[1]);
-            caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(':')[1]);
+            Caff caff = new Caff(lines[0].Split(": ")[1], request.RawCaff);
+            caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
+            caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
             caff.Id = new Random().Next();
             caff.UserId = request.OwnerId;
             //caff.User = ;
@@ -139,7 +139,7 @@ namespace CaffDal.Services
         {
             string[] uglyDateArray = ciffDate.Split(' ');
             string[] ymd = uglyDateArray[0].Split('.');
-            string[] hs = uglyDateArray[0].Split(':');
+            string[] hs = uglyDateArray[1].Split(':');
             return new DateTime(year: Convert.ToInt32(ymd[0]), month: Convert.ToInt32(ymd[1]), day: Convert.ToInt32(ymd[2]),
                 hour: Convert.ToInt32(hs[0]), minute: Convert.ToInt32(hs[1]), second: 0);
         }
@@ -147,14 +147,14 @@ namespace CaffDal.Services
         private List<Ciff> StringArrayToCiffList(int readFrom, String[] lines)
         {
             List<Ciff> CiffList = new List<Ciff>();
-            for (int i = readFrom; i < lines.Length; i += 6)
+            for (int i = readFrom; i < lines.Length; i += 5)
             {
                 var ciff = new Parser.Ciff(File.ReadAllBytes(lines[i]));
                 ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
                 ciff.Caption = lines[i + 2].Split(':')[1];
                 ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
                 ciff.Width = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[0]);
-                ciff.Height = Convert.ToInt32(lines[i + 5].Split(':')[1].Split('*')[1]);
+                ciff.Height = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[1]);
                 CiffList.Add(ciff);
             }
             return CiffList;

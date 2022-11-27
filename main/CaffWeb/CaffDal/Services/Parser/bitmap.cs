@@ -13,13 +13,12 @@ namespace CaffDal.Services.Parser
     {
         var offset = 0;
         SKBitmap img = new SKBitmap(width: content.Width, height: content.Height);
-         
-        foreach (var j in Enumerable.Range(0, img.Width))
+        for (int j = 0; j< img.Width;j ++)
         {
-            foreach (var i in Enumerable.Range(0, img.Height))
+            for (int i = 0; i<img.Height; i++)
             {
                 var color = read_content(content.RawCiff, offset);
-                    img.SetPixel(i, j, new SKColor(red: color.Item1, green: color.Item2, blue: color.Item3));
+                    img.SetPixel(j, i, new SKColor(red: color.Item1, green: color.Item2, blue: color.Item3));
                 offset += 3;
                 }
             }
