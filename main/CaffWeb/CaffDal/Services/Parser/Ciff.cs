@@ -13,7 +13,11 @@ namespace CaffDal.Services.Parser
         public List<string> Tags { get; set; } = new List<string>();
         public int Width { get; set; }
         public int Height { get; set; }
-        public byte[]? RawCiff { get; set; }
+        public byte[] RawCiff { get; set; }
 
+        public Ciff(byte[] rawCiff)
+        {
+            RawCiff = rawCiff;
+        }
     }
 }

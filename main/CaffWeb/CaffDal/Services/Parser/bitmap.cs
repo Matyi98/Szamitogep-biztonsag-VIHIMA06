@@ -1,6 +1,4 @@
-﻿using CaffDal.Entities;
-using System.Drawing;
-
+﻿using SkiaSharp;
 
 namespace CaffDal.Services.Parser
 {
@@ -11,25 +9,21 @@ namespace CaffDal.Services.Parser
         return Tuple.Create(x[o], x[o + 1], x[o + 2]);
     }
 
-    public static object display(Ciff content, bool show)
+    public static byte[] display(Ciff content)
     {
         var offset = 0;
-            //var img = new Bitmap Image.new("RGB", (content.Width, content.Height), "magenta");
-             ImageMagick.MagickImage = new MagickImage("alma", )
-           
-        var pixels = img.load();
-        foreach (var j in Enumerable.Range(0, img.size[1]))
+        SKBitmap img = new SKBitmap(width: content.Width, height: content.Height);
+         
+        foreach (var j in Enumerable.Range(0, img.Width))
         {
-            foreach (var i in Enumerable.Range(0, img.size[0]))
+            foreach (var i in Enumerable.Range(0, img.Height))
             {
-                pixels[i, j] = read_content(content.RawCiff, offset);
+                var color = read_content(content.RawCiff, offset);
+                    img.SetPixel(i, j, new SKColor(red: color.Item1, green: color.Item2, blue: color.Item3));
                 offset += 3;
+                }
             }
+            return img.Bytes;
         }
-        if (show)
-        {
-            img.show();
-        }
-    }
   }
 }
