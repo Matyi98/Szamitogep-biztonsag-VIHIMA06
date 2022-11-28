@@ -59,7 +59,7 @@ namespace CaffWeb
             services.AddScoped<RoleSeedService>()
                     .AddScoped<UserSeedService>();
 
-            services.AddScoped<ICaffFacade, FacadeMockImpl>();
+            services.AddScoped<ICaffFacade, CaffFacadeImpl>();
 
             services.AddControllers();
             services.AddRazorPages(options => {

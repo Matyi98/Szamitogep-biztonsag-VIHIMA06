@@ -11,16 +11,21 @@ using System.Threading.Tasks;
 using System.Collections;
 using CaffDal.Services.Parser;
 using CaffDal.Entities;
+using System.ComponentModel.Design;
+using CaffDal.ParserWrapper;
+using Microsoft.Extensions.Options;
+using System.IO;
 
 namespace CaffDal.Services
 {
     public class CaffFacadeImpl : ICaffFacade
     {
         private readonly CaffDbContext _context;
-
-        public CaffFacadeImpl(CaffDbContext context)
+        private readonly CaffParserConfig _parserConfig;
+        public CaffFacadeImpl(CaffDbContext context, IOptions<CaffParserConfig> config)
         {
             _context = context;
+            _parserConfig = config.Value;
         }
 
         public Task<DownloadRequest> BuyCaff(int caffId)
@@ -85,25 +90,51 @@ namespace CaffDal.Services
 
         public async Task<UploadResponse> UploadCaff(UploadRequest request)
         {
+
             /*
              * Execute exe and read manifest
              * */
-            await Cli.Wrap("native_parser.exe")
-                .WithArguments(request.CaffName + " .")
+            List<Ciff> CiffList;
+            Caff caff;
+            try
+            { 
+            var tempFileName = Guid.NewGuid().ToString();
+            File.WriteAllBytes(_parserConfig.OutputWorkdir + tempFileName, request.RawCaff);
+
+            await Cli.Wrap(_parserConfig.ParserPath)
+                .WithArguments(_parserConfig.OutputWorkdir + tempFileName + " " + _parserConfig.OutputWorkdir)
                 .ExecuteAsync();
-            string[] lines = File.ReadLines("manifest").ToArray();
+            string[] lines = File.ReadLines(_parserConfig.OutputWorkdir + "manifest").ToArray();
 
             /*
              * Create Caff
              * */
-            Caff caff = new Caff(lines[0].Split(": ")[1], request.RawCaff);
+            caff = new Caff(lines[0].Split(": ")[1], request.RawCaff);
             caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
             caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
-            caff.Id = new Random().Next();
+            //caff.Id = new Random().Next();
             caff.UserId = request.OwnerId;
             //caff.User = ;
             //caff.Creator = ;
-            List<Ciff> CiffList = StringArrayToCiffList(3, lines);
+            CiffList = StringArrayToCiffList(3, lines);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DirectoryInfo di = new DirectoryInfo(_parserConfig.OutputWorkdir);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
 
             /*
              * Add ciff's to caff
@@ -114,25 +145,32 @@ namespace CaffDal.Services
                 image.Caff = caff;
                 image.Duration = ciff.Duration;
                 image.Preview = Parser.Parser.display(ciff);
-                image.CaffId = caff.Id;
+                
                 caff.Images.Add(image);
             }
+            File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
+
             /*
              * Todo save to db
              * */
+            var caffka  = await _context
+                .Caffs
+                .Include(c => caff)
+                .SingleOrDefaultAsync();
 
-            return new UploadResponse{ CaffId = caff.Id };
+            return new UploadResponse{ CaffId = caffka.Id };
 
-            // TODO:
-            // 1. Call C++ exe (with RawCaff, caffName)
-            // 2. Read manifest file
-            // 3. Read Ciff files
-            // 4. Save manifest data and the rawcaff (from the uploadRequest) to the Caff table.
-            // 5. Save changes?
-            // 6. Convert rawCiff to picture? (call python code here maybe)
-            // 7. Save Ciff data to the Image table.
-            // 8. Save changes!
-            // 9. Create and return UploadResponse.
+            /*
+               Halott Pénz: Caffatokra törted a szívem
+               szánd meg hát szomorú szívem,
+               Úgysincs más vigaszom nekem,
+               Jöjj el hát, jöjj el hát,
+               Hogy egy összetört szívet megragassz!
+               Szánd meg, caffatokra összetört szívem
+               Szánd meg hát szomorú szívem,
+               Úgysincs más vigaszom nekem,
+
+            */
         }
 
         private DateTime CiffDateToDateAndTime(string ciffDate)
@@ -149,7 +187,7 @@ namespace CaffDal.Services
             List<Ciff> CiffList = new List<Ciff>();
             for (int i = readFrom; i < lines.Length; i += 5)
             {
-                var ciff = new Parser.Ciff(File.ReadAllBytes(lines[i]));
+                var ciff = new Parser.Ciff(File.ReadAllBytes(_parserConfig.OutputWorkdir + lines[i]));
                 ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
                 ciff.Caption = lines[i + 2].Split(':')[1];
                 ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
