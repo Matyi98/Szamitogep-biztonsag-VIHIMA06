@@ -28,19 +28,38 @@ namespace CaffDal.Services
             _parserConfig = config.Value;
         }
 
-        public Task<DownloadRequest> BuyCaff(int caffId)
+        public async Task<DownloadRequest> BuyCaff(int caffId)
         {
-            throw new NotImplementedException();
+            var caff = await _context
+                .Caffs
+                .SingleOrDefaultAsync(caff => caff.Id == caffId);
+
+            DownloadRequest request = new DownloadRequest()
+            {
+                Bytes = caff.RawCaff,
+                Name = caff.Creator
+            };
+
+            return request;
         }
 
-        public Task DeleteCaff(int caffId)
+        public async Task DeleteCaff(int caffId)
         {
-            throw new NotImplementedException();
+            var caff = await _context
+                .Caffs
+                .SingleOrDefaultAsync(caff => caff.Id == caffId);
+
+            _context.Caffs.Remove(caff);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteComment(int commentId)
+        public async Task DeleteComment(int commentId)
         {
-            throw new NotImplementedException();
+            var comment = await _context
+                .Comments
+                .SingleOrDefaultAsync(comment => comment.Id == commentId);
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<CommentResponse> GetCommentById(int commentId)
@@ -65,12 +84,36 @@ namespace CaffDal.Services
 
         public Task<IReadOnlyCollection<CommentResponse>> GetComments(int caffId)
         {
-            throw new NotImplementedException();
+            var comments = _context
+                .Comments
+                .Include(comment => comment.User)
+                .Where(comment => comment.CaffId == caffId);
+
+            IReadOnlyCollection<CommentResponse> response = new List<CommentResponse>();
+
+            foreach (var comment in comments)
+            {
+                CommentResponse commentResponse = new CommentResponse()
+                {
+                    Id = comment.Id,
+                    CommenterId = comment.UserId,
+                    Commenter = comment.User.CustomName,
+                    CreationDate = comment.CreationDate,
+                    Text = comment.Text
+                };
+                response.Append(commentResponse);
+            }
+
+            return (Task<IReadOnlyCollection<CommentResponse>>)response;
         }
 
-        public Task<byte[]> GetImage(int imageId)
+        public async Task<byte[]> GetImage(int imageId)
         {
-            throw new NotImplementedException();
+            var image = await _context
+                .Images
+                .SingleOrDefaultAsync(image => image.Id == imageId);
+
+            return image.Preview;
         }
 
         public Task<DetailedPreviewResponse> GetPreview(int caffId)
@@ -78,9 +121,15 @@ namespace CaffDal.Services
             throw new NotImplementedException();
         }
 
-        public Task ModifyComment(int commentId, string comment)
+        public async Task ModifyComment(int commentId, string comment)
         {
-            throw new NotImplementedException();
+            var c = await _context
+                .Comments
+                .SingleOrDefaultAsync(comment => comment.Id == commentId);
+            
+            c.Text = comment;
+            await _context.SaveChangesAsync();
+
         }
 
         public Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
