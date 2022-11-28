@@ -9,7 +9,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
-using CaffDal.Services.Parser;
 using CaffDal.Entities;
 using System.ComponentModel.Design;
 using CaffDal.ParserWrapper;
@@ -28,38 +27,19 @@ namespace CaffDal.Services
             _parserConfig = config.Value;
         }
 
-        public async Task<DownloadRequest> BuyCaff(int caffId)
+        public Task<DownloadRequest> BuyCaff(int caffId)
         {
-            var caff = await _context
-                .Caffs
-                .SingleOrDefaultAsync(caff => caff.Id == caffId);
-
-            DownloadRequest request = new DownloadRequest()
-            {
-                Bytes = caff.RawCaff,
-                Name = caff.Creator
-            };
-
-            return request;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteCaff(int caffId)
+        public Task DeleteCaff(int caffId)
         {
-            var caff = await _context
-                .Caffs
-                .SingleOrDefaultAsync(caff => caff.Id == caffId);
-
-            _context.Caffs.Remove(caff);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteComment(int commentId)
+        public Task DeleteComment(int commentId)
         {
-            var comment = await _context
-                .Comments
-                .SingleOrDefaultAsync(comment => comment.Id == commentId);
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
         public async Task<CommentResponse> GetCommentById(int commentId)
@@ -84,36 +64,12 @@ namespace CaffDal.Services
 
         public Task<IReadOnlyCollection<CommentResponse>> GetComments(int caffId)
         {
-            var comments = _context
-                .Comments
-                .Include(comment => comment.User)
-                .Where(comment => comment.CaffId == caffId);
-
-            IReadOnlyCollection<CommentResponse> response = new List<CommentResponse>();
-
-            foreach (var comment in comments)
-            {
-                CommentResponse commentResponse = new CommentResponse()
-                {
-                    Id = comment.Id,
-                    CommenterId = comment.UserId,
-                    Commenter = comment.User.CustomName,
-                    CreationDate = comment.CreationDate,
-                    Text = comment.Text
-                };
-                response.Append(commentResponse);
-            }
-
-            return (Task<IReadOnlyCollection<CommentResponse>>)response;
+            throw new NotImplementedException();
         }
 
-        public async Task<byte[]> GetImage(int imageId)
+        public Task<byte[]> GetImage(int imageId)
         {
-            var image = await _context
-                .Images
-                .SingleOrDefaultAsync(image => image.Id == imageId);
-
-            return image.Preview;
+            throw new NotImplementedException();
         }
 
         public Task<DetailedPreviewResponse> GetPreview(int caffId)
@@ -121,15 +77,9 @@ namespace CaffDal.Services
             throw new NotImplementedException();
         }
 
-        public async Task ModifyComment(int commentId, string comment)
+        public Task ModifyComment(int commentId, string comment)
         {
-            var c = await _context
-                .Comments
-                .SingleOrDefaultAsync(comment => comment.Id == commentId);
-            
-            c.Text = comment;
-            await _context.SaveChangesAsync();
-
+            throw new NotImplementedException();
         }
 
         public Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
@@ -143,7 +93,7 @@ namespace CaffDal.Services
             /*
              * Execute exe and read manifest
              * */
-            List<Ciff> CiffList;
+            List<Image> CiffList;
             Caff caff;
             try
             { 
@@ -158,15 +108,11 @@ namespace CaffDal.Services
             /*
              * Create Caff
              * */
-            caff = new Caff(lines[0].Split(": ")[1], request.RawCaff);
-            //caff.Id = ??
-            //caff.Creator = ??
+            caff = new Caff(creator: lines[0].Split(": ")[1], request.RawCaff);
             caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
             caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
             caff.UserId = request.OwnerId;
-            //caff.User = ;
-            //Images see below
-            //request has CaffName, it is not stored?? 
+            caff.CaffName = request.CaffName;
             CiffList = StringArrayToCiffList(3, lines);
             }
             catch (Exception)
@@ -190,28 +136,20 @@ namespace CaffDal.Services
             /*
              * Add ciff's to caff
              * */
-            foreach (Ciff ciff in CiffList)
+            foreach (Image ciff in CiffList)
             {
-                Image image = new(Parser.Parser.display(ciff));
-                //image.Id = ??
-                image.Duration = ciff.Duration;
-                //image.CaffId = ??
-                image.Caff = caff;
-                image.Preview = Parser.Parser.display(ciff);
-                caff.Images.Add(image);
+                caff.Images.Add(ciff);
             }
             //Just for testing purpose:
             //File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
 
             /*
-             * Todo save to db
+             * Save to db
              * */
-            var caffka  = await _context
-                .Caffs
-                .Include(c => caff)
-                .SingleOrDefaultAsync();
+            _context.Add(caff);
+            await _context.SaveChangesAsync();
 
-            return new UploadResponse{ CaffId = caffka.Id };
+            return new UploadResponse{ CaffId = caff.Id };
 
             /*
                Halott Pénz: Caffatokra törted a szívem
@@ -222,10 +160,9 @@ namespace CaffDal.Services
                Szánd meg, caffatokra összetört szívem
                Szánd meg hát szomorú szívem,
                Úgysincs más vigaszom nekem,
-
             */
         }
-
+ 
         private DateTime CiffDateToDateAndTime(string ciffDate)
         {
             string[] uglyDateArray = ciffDate.Split(' ');
@@ -235,12 +172,12 @@ namespace CaffDal.Services
                 hour: Convert.ToInt32(hs[0]), minute: Convert.ToInt32(hs[1]), second: 0);
         }
 
-        private List<Ciff> StringArrayToCiffList(int readFrom, String[] lines)
+        private List<Image> StringArrayToCiffList(int readFrom, String[] lines)
         {
-            List<Ciff> CiffList = new List<Ciff>();
+            List<Image> CiffList = new List<Image>();
             for (int i = readFrom; i < lines.Length; i += 5)
             {
-                var ciff = new Parser.Ciff(File.ReadAllBytes(_parserConfig.OutputWorkdir + lines[i]));
+                var ciff = new Image(File.ReadAllBytes(_parserConfig.OutputWorkdir + lines[i]));
                 ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
                 ciff.Caption = lines[i + 2].Split(':')[1];
                 ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
