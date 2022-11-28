@@ -81,14 +81,15 @@ namespace CaffDal.Services
             return response;
         }
 
-        public Task<IReadOnlyCollection<CommentResponse>> GetComments(int caffId)
+        public async Task<IReadOnlyCollection<CommentResponse>> GetComments(int caffId)
         {
-            var comments = _context
+            var comments = await _context
                 .Comments
                 .Include(comment => comment.User)
-                .Where(comment => comment.CaffId == caffId);
+                .Where(comment => comment.CaffId == caffId)
+                .ToListAsync();
 
-            IReadOnlyCollection<CommentResponse> response = new List<CommentResponse>();
+            List<CommentResponse> response = new List<CommentResponse>();
 
             foreach (var comment in comments)
             {
@@ -100,10 +101,10 @@ namespace CaffDal.Services
                     CreationDate = comment.CreationDate,
                     Text = comment.Text
                 };
-                response.Append(commentResponse);
+                response.Add(commentResponse);
             }
 
-            return (Task<IReadOnlyCollection<CommentResponse>>)response;
+            return response;
         }
 
         public async Task<byte[]> GetImage(int imageId)
@@ -115,9 +116,29 @@ namespace CaffDal.Services
             return image.Preview;
         }
 
-        public Task<DetailedPreviewResponse> GetPreview(int caffId)
+        public async Task<DetailedPreviewResponse> GetPreview(int caffId)
         {
-            throw new NotImplementedException();
+            var caff = await _context.Caffs
+                    .Include(c => c.Images)
+                    .SingleOrDefaultAsync(c => c.Id == caffId);
+
+            List<ImageMetaResponse> imageMetaList = new List<ImageMetaResponse>();
+            foreach(var image in caff.Images)
+            {
+                imageMetaList.Add(new ImageMetaResponse { Id = image.Id, Delay = image.Duration });
+            }
+
+            var detailedPreviewResponse = new DetailedPreviewResponse
+            {
+                Name = caff.CaffName,
+                Creator = caff.Creator,
+                CreatorDate = caff.CreatorDate,
+                CaffID = caff.Id,
+                CreatorID = caff.UserId,
+                ImageMetas = imageMetaList
+            };
+
+            return detailedPreviewResponse;
         }
 
         public async Task ModifyComment(int commentId, string comment)
@@ -128,7 +149,6 @@ namespace CaffDal.Services
 
             c.Text = comment;
             await _context.SaveChangesAsync();
-
         }
 
         public Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
@@ -197,7 +217,7 @@ namespace CaffDal.Services
             /*
              * Save to db
              * */
-            _context.Add(caff);
+            _context.Caffs.Add(caff);
             await _context.SaveChangesAsync();
 
             return new UploadResponse{ CaffId = caff.Id };
@@ -239,9 +259,17 @@ namespace CaffDal.Services
             return CiffList;
         }
 
-        public Task WriteComment(int caffId, string comment, int uploader)
+        public async Task WriteComment(int caffId, string comment, int uploader)
         {
-            throw new NotImplementedException();
+            var efComment = new Comment(comment)
+            {
+                CaffId = caffId,
+                UserId = uploader,
+                CreationDate = DateTime.Now
+            };
+
+            _context.Comments.Add(efComment);
+            await _context.SaveChangesAsync();
         }
     }
 }
