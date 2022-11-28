@@ -110,12 +110,14 @@ namespace CaffDal.Services
              * Create Caff
              * */
             caff = new Caff(lines[0].Split(": ")[1], request.RawCaff);
+            //caff.Id = ??
+            //caff.Creator = ??
             caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
             caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
-            //caff.Id = new Random().Next();
             caff.UserId = request.OwnerId;
             //caff.User = ;
-            //caff.Creator = ;
+            //Images see below
+            //request has CaffName, it is not stored?? 
             CiffList = StringArrayToCiffList(3, lines);
             }
             catch (Exception)
@@ -124,8 +126,8 @@ namespace CaffDal.Services
             }
             finally
             {
+                //Erase everything from temp directory
                 DirectoryInfo di = new DirectoryInfo(_parserConfig.OutputWorkdir);
-
                 foreach (FileInfo file in di.GetFiles())
                 {
                     file.Delete();
@@ -142,13 +144,15 @@ namespace CaffDal.Services
             foreach (Ciff ciff in CiffList)
             {
                 Image image = new(Parser.Parser.display(ciff));
-                image.Caff = caff;
+                //image.Id = ??
                 image.Duration = ciff.Duration;
+                //image.CaffId = ??
+                image.Caff = caff;
                 image.Preview = Parser.Parser.display(ciff);
-                
                 caff.Images.Add(image);
             }
-            File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
+            //Just for testing purpose:
+            //File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
 
             /*
              * Todo save to db
@@ -197,10 +201,6 @@ namespace CaffDal.Services
             }
             return CiffList;
         }
-
-
-
-
 
         public Task WriteComment(int caffId, string comment, int uploader)
         {
