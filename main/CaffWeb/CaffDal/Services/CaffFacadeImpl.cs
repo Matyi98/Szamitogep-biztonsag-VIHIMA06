@@ -231,7 +231,7 @@ namespace CaffDal.Services
                 var ciff = new Image(File.ReadAllBytes(_parserConfig.OutputWorkdir + lines[i]));
                 ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
                 ciff.Caption = lines[i + 2].Split(':')[1];
-                ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
+                //ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
                 ciff.Width = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[0]);
                 ciff.Height = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[1]);
                 CiffList.Add(ciff);
