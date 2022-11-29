@@ -152,17 +152,23 @@ namespace CaffDal.Services
 
         public async Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
         {
+            if(specification.PageSize <= 0)
+                specification.PageSize = 4;
+
+            if(specification.PageNumber <= 0)
+                specification.PageNumber = 1;
+
             var filteredCaffs = await _context.Caffs
-                .Where(c => (specification.CreationDateStart != null || c.CreatorDate >= specification.CreationDateStart) &&
-                            (specification.CreationDateStart != null || c.CreatorDate <= specification.CreationDateEnd) &&
-                            (specification.Name != null || c.CaffName == specification.Name) &&
-                            (specification.Creator != null || c.Creator == specification.Creator))
+                .Where(c => (specification.CreationDateStart == null || c.CreatorDate >= specification.CreationDateStart) &&
+                            (specification.CreationDateEnd == null || c.CreatorDate <= specification.CreationDateEnd) &&
+                            (specification.Name == null || c.CaffName == specification.Name) &&
+                            (specification.Creator == null || c.Creator == specification.Creator))
                 .Include(c => c.Images) // TODO: Is this necessary? Maybe we can use getimage function for faster response time.
                 .ToListAsync();  // TODO: Do we need any sorting?
 
             List<CompactPreviewResponse> previews = new List<CompactPreviewResponse>();
-            var startIndex = specification.PageNumber * specification.PageSize;
-            foreach(var caff in filteredCaffs.GetRange(startIndex, startIndex + specification.PageSize - 1))
+            var startIndex = (specification.PageNumber - 1) * specification.PageSize;
+            foreach(var caff in filteredCaffs.Skip(startIndex).Take(specification.PageSize))
             {
                 previews.Add(new CompactPreviewResponse
                 {
