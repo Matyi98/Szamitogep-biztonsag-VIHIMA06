@@ -117,22 +117,31 @@ namespace CaffDal.Services
         {
             var caff = await _context.Caffs
                     .Include(c => c.Images)
+                    .Select(c => new
+                    {
+                        ImageObjects = c.Images.Select(i => new { i.Id, i.Duration}),
+                        Id = c.Id,
+                        CreatorDate = c.CreatorDate,
+                        Creator = c.Creator,
+                        Name = c.CaffName,
+                        CreatorID = c.UserId
+                    })
                     .SingleOrDefaultAsync(c => c.Id == caffId)
                     ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
             List<ImageMetaResponse> imageMetaList = new List<ImageMetaResponse>();
-            foreach(var image in caff.Images)
+            foreach(var image in caff.ImageObjects)
             {
                 imageMetaList.Add(new ImageMetaResponse { Id = image.Id, Delay = image.Duration });
             }
 
             var detailedPreviewResponse = new DetailedPreviewResponse
             {
-                Name = caff.CaffName,
+                Name = caff.Name,
                 Creator = caff.Creator,
                 CreatorDate = caff.CreatorDate,
                 CaffID = caff.Id,
-                CreatorID = caff.UserId,
+                CreatorID = caff.CreatorID,
                 ImageMetas = imageMetaList
             };
 
@@ -158,25 +167,36 @@ namespace CaffDal.Services
             if(specification.PageNumber <= 0)
                 specification.PageNumber = 1;
 
+            var startIndex = (specification.PageNumber - 1) * specification.PageSize;
+
             var filteredCaffs = await _context.Caffs
                 .Where(c => (specification.CreationDateStart == null || c.CreatorDate >= specification.CreationDateStart) &&
                             (specification.CreationDateEnd == null || c.CreatorDate <= specification.CreationDateEnd) &&
                             (specification.Name == null || c.CaffName == specification.Name) &&
                             (specification.Creator == null || c.Creator == specification.Creator))
-                .Include(c => c.Images) // TODO: Is this necessary? Maybe we can use getimage function for faster response time.
-                .ToListAsync();  // TODO: Do we need any sorting?
+                .Include(c => c.Images)
+                .Select(c => new
+                {
+
+                    ImageId = c.Images.Select(i => i.Id).First(),
+                    Id = c.Id,
+                    CreatorDate = c.CreatorDate,
+                    Creator = c.Creator,
+                    Name = c.CaffName
+                })
+                .Skip(startIndex).Take(specification.PageSize)
+                .ToListAsync();
 
             List<CompactPreviewResponse> previews = new List<CompactPreviewResponse>();
-            var startIndex = (specification.PageNumber - 1) * specification.PageSize;
-            foreach(var caff in filteredCaffs.Skip(startIndex).Take(specification.PageSize))
+            foreach(var caff in filteredCaffs)
             {
                 previews.Add(new CompactPreviewResponse
                 {
                     Id = caff.Id,
                     CreationDate = caff.CreatorDate,
                     Creator = caff.Creator,
-                    ImageId = caff.Images.First().Id,
-                    Name = caff.CaffName
+                    ImageId = caff.ImageId,
+                    Name = caff.Name
                 });
             }
 
@@ -232,7 +252,7 @@ namespace CaffDal.Services
                 caff.Images.Add(ciff);
             }
             //Just for testing purpose:
-            File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
+            //File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
             _context.Caffs.Add(caff);
             await _context.SaveChangesAsync();
 
