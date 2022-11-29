@@ -3,7 +3,6 @@ using CaffDal.Domain.Pager;
 using Microsoft.EntityFrameworkCore;
 using CliWrap;
 using CaffDal.Entities;
-using CaffDal.ParserWrapper;
 using Microsoft.Extensions.Options;
 using CaffDal.Exceptions;
 

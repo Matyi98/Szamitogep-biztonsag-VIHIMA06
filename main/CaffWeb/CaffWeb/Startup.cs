@@ -1,7 +1,6 @@
 ﻿using CaffDal;
 using CaffDal.Entities;
 using CaffDal.Identity;
-using CaffDal.ParserWrapper;
 using CaffDal.Services;
 using CaffWeb.Email;
 using CaffWeb.Mock;
