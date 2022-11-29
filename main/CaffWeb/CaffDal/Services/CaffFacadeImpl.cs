@@ -2,18 +2,10 @@
 using CaffDal.Domain.Pager;
 using Microsoft.EntityFrameworkCore;
 using CliWrap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 using CaffDal.Entities;
-using System.ComponentModel.Design;
 using CaffDal.ParserWrapper;
 using Microsoft.Extensions.Options;
-using System.IO;
+using CaffDal.Exceptions;
 
 namespace CaffDal.Services
 {
@@ -31,12 +23,13 @@ namespace CaffDal.Services
         {
             var caff = await _context
                 .Caffs
-                .SingleOrDefaultAsync(caff => caff.Id == caffId);
+                .SingleOrDefaultAsync(caff => caff.Id == caffId)
+                ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
             DownloadRequest request = new DownloadRequest()
             {
                 Bytes = caff.RawCaff,
-                Name = caff.Creator
+                Name = caff.CaffName // This was caff.Creator, but I think this should be caff.CaffName
             };
 
             return request;
@@ -46,7 +39,8 @@ namespace CaffDal.Services
         {
             var caff = await _context
                 .Caffs
-                .SingleOrDefaultAsync(caff => caff.Id == caffId);
+                .SingleOrDefaultAsync(caff => caff.Id == caffId)
+                ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
             _context.Caffs.Remove(caff);
             await _context.SaveChangesAsync();
@@ -56,7 +50,9 @@ namespace CaffDal.Services
         {
             var comment = await _context
                 .Comments
-                .SingleOrDefaultAsync(comment => comment.Id == commentId);
+                .SingleOrDefaultAsync(comment => comment.Id == commentId)
+                ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
+
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
         }
@@ -66,7 +62,8 @@ namespace CaffDal.Services
             var comment = await _context
                 .Comments
                 .Include(c => c.User)
-                .SingleOrDefaultAsync(c => c.Id == commentId);
+                .SingleOrDefaultAsync(c => c.Id == commentId)
+                ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
             // TODO: Copy this to the domain objects or use automapper
             CommentResponse response = new CommentResponse()
@@ -87,7 +84,7 @@ namespace CaffDal.Services
                 .Comments
                 .Include(comment => comment.User)
                 .Where(comment => comment.CaffId == caffId)
-                .ToListAsync();
+                .ToListAsync(); // TODO: Sort comments by date?
 
             List<CommentResponse> response = new List<CommentResponse>();
 
@@ -111,7 +108,8 @@ namespace CaffDal.Services
         {
             var image = await _context
                 .Images
-                .SingleOrDefaultAsync(image => image.Id == imageId);
+                .SingleOrDefaultAsync(image => image.Id == imageId)
+                ?? throw new EntityNotFoundException($"Image doesn't exists with id {imageId}!");
 
             return image.Preview;
         }
@@ -120,7 +118,8 @@ namespace CaffDal.Services
         {
             var caff = await _context.Caffs
                     .Include(c => c.Images)
-                    .SingleOrDefaultAsync(c => c.Id == caffId);
+                    .SingleOrDefaultAsync(c => c.Id == caffId)
+                    ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
             List<ImageMetaResponse> imageMetaList = new List<ImageMetaResponse>();
             foreach(var image in caff.Images)
@@ -145,15 +144,45 @@ namespace CaffDal.Services
         {
             var c = await _context
                 .Comments
-                .SingleOrDefaultAsync(comment => comment.Id == commentId);
+                .SingleOrDefaultAsync(comment => comment.Id == commentId)
+                ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
             c.Text = comment;
             await _context.SaveChangesAsync();
         }
 
-        public Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
+        public async Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
         {
-            throw new NotImplementedException();
+            var filteredCaffs = await _context.Caffs
+                .Where(c => (specification.CreationDateStart != null || c.CreatorDate >= specification.CreationDateStart) &&
+                            (specification.CreationDateStart != null || c.CreatorDate <= specification.CreationDateEnd) &&
+                            (specification.Name != null || c.CaffName == specification.Name) &&
+                            (specification.Creator != null || c.Creator == specification.Creator))
+                .Include(c => c.Images) // TODO: Is this necessary? Maybe we can use getimage function for faster response time.
+                .ToListAsync();  // TODO: Do we need any sorting?
+
+            List<CompactPreviewResponse> previews = new List<CompactPreviewResponse>();
+            var startIndex = specification.PageNumber * specification.PageSize;
+            foreach(var caff in filteredCaffs.GetRange(startIndex, startIndex + specification.PageSize - 1))
+            {
+                previews.Add(new CompactPreviewResponse
+                {
+                    Id = caff.Id,
+                    CreationDate = caff.CreatorDate,
+                    Creator = caff.Creator,
+                    ImageId = caff.Images.First().Id,
+                    Name = caff.CaffName
+                });
+            }
+
+            PagedResult<CompactPreviewResponse> result = new PagedResult<CompactPreviewResponse>()
+            {
+                PageNumber = specification.PageNumber,
+                PageSize = specification.PageSize,
+                TotalCount = filteredCaffs.Count,
+                Results = previews
+            };
+            return result;
         }
 
         public async Task<UploadResponse> UploadCaff(UploadRequest request)
