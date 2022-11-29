@@ -1,5 +1,6 @@
 ﻿@page "{id:int}"
 @using CaffDal.Identity
+@using CaffWeb
 @model CaffWeb.Pages.CaffModel
 @{
 }
@@ -8,9 +9,9 @@
     <div class="col-md-8">
         <div class="">
             <div id="animation" data-frames="@Model.Caff.ImageMetas.Count" >
-                @foreach(var item in Model.Caff.ImageMetas) {
-                    <img id="frame_@item.Id" src="/images/@item.Id" 
-                    alt="ID: @item.Id" data-delay="@item.Delay" style="display:none;" />                
+                @foreach(var item in Model.Caff.ImageMetas.Select((v, i) => new {i, v})) {                    
+                    <img style="width:100%;max-width:850px;display:none;" id="frame_@item.i" src="/images/@item.v.Id" 
+                    alt="ID: @item.v.Id" data-delay="@item.v.Delay" />
                 }
             </div>
             <form method="post" id="deleteCaffForm">
