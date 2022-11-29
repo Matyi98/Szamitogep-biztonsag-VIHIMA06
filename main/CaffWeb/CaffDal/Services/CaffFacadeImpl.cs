@@ -186,31 +186,30 @@ namespace CaffDal.Services
 
         public async Task<UploadResponse> UploadCaff(UploadRequest request)
         {
-
-            /*
-             * Execute exe and read manifest
-             * */
+            var tempFileName = "caffFile";
+            var tempFolderName = Guid.NewGuid().ToString();
+            var workDir = _parserConfig.OutputWorkdir + tempFolderName + "/";
+            if (!Directory.Exists(_parserConfig.OutputWorkdir))
+            {
+                Directory.CreateDirectory(_parserConfig.OutputWorkdir);
+            }
+            Directory.CreateDirectory(workDir);
             List<Image> CiffList;
             Caff caff;
             try
             { 
-            var tempFileName = Guid.NewGuid().ToString();
-            File.WriteAllBytes(_parserConfig.OutputWorkdir + tempFileName, request.RawCaff);
+            File.WriteAllBytes(workDir + tempFileName, request.RawCaff);
 
             await Cli.Wrap(_parserConfig.ParserPath)
-                .WithArguments(_parserConfig.OutputWorkdir + tempFileName + " " + _parserConfig.OutputWorkdir)
+                .WithArguments(workDir + tempFileName + " " + workDir)
                 .ExecuteAsync();
-            string[] lines = File.ReadLines(_parserConfig.OutputWorkdir + "manifest").ToArray();
-
-            /*
-             * Create Caff
-             * */
+            string[] lines = File.ReadLines(workDir + "manifest").ToArray();
             caff = new Caff(creator: lines[0].Split(": ")[1], request.RawCaff);
             caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
             caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
             caff.UserId = request.OwnerId;
             caff.CaffName = request.CaffName;
-            CiffList = StringArrayToCiffList(3, lines);
+            CiffList = StringArrayToCiffList(3, lines, workDir);
             }
             catch (Exception)
             {
@@ -218,48 +217,20 @@ namespace CaffDal.Services
             }
             finally
             {
-                /*
-                 * Erase everything from temp directory
-                 */
-                DirectoryInfo di = new DirectoryInfo(_parserConfig.OutputWorkdir);
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
+                DirectoryInfo di = new DirectoryInfo(workDir);
+                di.Delete(true);
             }
-
-            /*
-             * Add ciff's to caff
-             * */
             foreach (Image ciff in CiffList)
             {
+                ciff.Preview = Converter.Convert(ciff);
                 caff.Images.Add(ciff);
             }
             //Just for testing purpose:
             //File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
-
-            /*
-             * Save to db
-             * */
             _context.Caffs.Add(caff);
             await _context.SaveChangesAsync();
 
             return new UploadResponse{ CaffId = caff.Id };
-
-            /*
-               Halott Pénz: Caffatokra törted a szívem
-               szánd meg hát szomorú szívem,
-               Úgysincs más vigaszom nekem,
-               Jöjj el hát, jöjj el hát,
-               Hogy egy összetört szívet megragassz!
-               Szánd meg, caffatokra összetört szívem
-               Szánd meg hát szomorú szívem,
-               Úgysincs más vigaszom nekem,
-            */
         }
  
         private DateTime CiffDateToDateAndTime(string ciffDate)
@@ -271,12 +242,12 @@ namespace CaffDal.Services
                 hour: Convert.ToInt32(hs[0]), minute: Convert.ToInt32(hs[1]), second: 0);
         }
 
-        private List<Image> StringArrayToCiffList(int readFrom, String[] lines)
+        private List<Image> StringArrayToCiffList(int readFrom, String[] lines, string workDir)
         {
             List<Image> CiffList = new List<Image>();
             for (int i = readFrom; i < lines.Length; i += 5)
             {
-                var ciff = new Image(File.ReadAllBytes(_parserConfig.OutputWorkdir + lines[i]));
+                var ciff = new Image(File.ReadAllBytes(workDir + lines[i]));
                 ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
                 ciff.Caption = lines[i + 2].Split(':')[1];
                 //ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
