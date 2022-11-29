@@ -11,7 +11,6 @@ namespace CaffDal.Entities
     { 
         [Key]
         public int Id { get; set; }
-
         [Required]
         public int Duration { get; set; }
 
@@ -21,7 +20,7 @@ namespace CaffDal.Entities
 
         public int Height { get; set; }
 
-        public List<string> Tags { get; set; } = new List<string>();
+        //public List<string> Tags { get; set; } = new List<string>();
 
         [Required]
         public int CaffId { get; set; }

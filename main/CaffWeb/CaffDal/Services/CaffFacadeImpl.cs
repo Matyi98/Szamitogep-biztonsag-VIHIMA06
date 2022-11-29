@@ -65,12 +65,11 @@ namespace CaffDal.Services
                 .SingleOrDefaultAsync(c => c.Id == commentId)
                 ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
-            // TODO: Copy this to the domain objects or use automapper
             CommentResponse response = new CommentResponse()
             {
                 Id = comment.Id,
-                CommenterId = comment.UserId,
-                Commenter = comment.User.CustomName,
+                CommenterId = comment.UserId ?? -1, // TODO: Maybe exclude comments, when its user is deleted, but this shouldn't be possible anyway
+                Commenter = comment.User != null ? comment.User.CustomName : "DeletedUser",
                 CreationDate = comment.CreationDate,
                 Text = comment.Text
             };
@@ -93,8 +92,8 @@ namespace CaffDal.Services
                 CommentResponse commentResponse = new CommentResponse()
                 {
                     Id = comment.Id,
-                    CommenterId = comment.UserId,
-                    Commenter = comment.User.CustomName,
+                    CommenterId = comment.UserId ?? -1,
+                    Commenter = comment.User != null ? comment.User.CustomName : "DeletedUser",
                     CreationDate = comment.CreationDate,
                     Text = comment.Text
                 };
