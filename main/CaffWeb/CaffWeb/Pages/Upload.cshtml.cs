@@ -20,7 +20,7 @@ namespace CaffWeb.Pages
 
         [Required(ErrorMessage = "Caff fájl megadása kötelezõ.")]
         [BindProperty]
-        public IFormFile UploadaedCaff { get; set; }
+        public IFormFile UploadedCaff { get; set; }
 
         [Required(ErrorMessage = "A Caff név megadása kötelezõ.")]
         [BindProperty]
@@ -28,7 +28,7 @@ namespace CaffWeb.Pages
 
         public async Task<IActionResult> OnPost() {
             using var memoryStream = new MemoryStream();
-            await UploadaedCaff.CopyToAsync(memoryStream);
+            await UploadedCaff.CopyToAsync(memoryStream);
             byte[] raw = memoryStream.ToArray();
 
             var result = await caffFacade.UploadCaff(new CaffDal.Domain.UploadRequest {
