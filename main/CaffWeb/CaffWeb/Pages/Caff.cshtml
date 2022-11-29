@@ -27,7 +27,7 @@
             <div class="card-body">
                 <p>Name: @Model.Caff.Name</p>
                 <p>Creator: @Model.Caff.Creator</p>
-                <p>Upload Date: @Model.Caff.CreatorDate</p>
+                <p>Creation Date: @Model.Caff.CreatorDate</p>
                 @if (User.IsInRole(Roles.Admin) || User.GetUserId() == Model.Caff.CreatorID) {
                     <form method="post" id="deleteCaffForm">
                         <button asp-page-handler="DeleteCaff" class="btn btn-danger">Delete CAFF</button>
@@ -60,7 +60,7 @@
                 </div>                
             </form>
             } else {
-                <p>Log in to write comment</p>
+                <p>Kommenteléshez jelentkezz be!</p>
             }
         </div>
     </div>
