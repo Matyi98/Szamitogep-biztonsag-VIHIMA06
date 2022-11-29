@@ -175,37 +175,23 @@ namespace CaffDal.Services
                             (specification.Name == null || c.CaffName == specification.Name) &&
                             (specification.Creator == null || c.Creator == specification.Creator))
                 .Include(c => c.Images)
-                .Select(c => new
-                {
+                .Select(c => new CompactPreviewResponse {
 
                     ImageId = c.Images.Select(i => i.Id).First(),
                     Id = c.Id,
-                    CreatorDate = c.CreatorDate,
+                    CreationDate = c.CreatorDate,
                     Creator = c.Creator,
                     Name = c.CaffName
                 })
                 .Skip(startIndex).Take(specification.PageSize)
                 .ToListAsync();
 
-            List<CompactPreviewResponse> previews = new List<CompactPreviewResponse>();
-            foreach(var caff in filteredCaffs)
-            {
-                previews.Add(new CompactPreviewResponse
-                {
-                    Id = caff.Id,
-                    CreationDate = caff.CreatorDate,
-                    Creator = caff.Creator,
-                    ImageId = caff.ImageId,
-                    Name = caff.Name
-                });
-            }
-
             PagedResult<CompactPreviewResponse> result = new PagedResult<CompactPreviewResponse>()
             {
                 PageNumber = specification.PageNumber,
                 PageSize = specification.PageSize,
-                TotalCount = filteredCaffs.Count,
-                Results = previews
+                TotalCount = await _context.Caffs.CountAsync(),
+                Results = filteredCaffs
             };
             return result;
         }
