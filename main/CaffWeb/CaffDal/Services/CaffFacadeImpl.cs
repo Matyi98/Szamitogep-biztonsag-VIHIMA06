@@ -222,11 +222,11 @@ namespace CaffDal.Services
             }
             foreach (Image ciff in CiffList)
             {
-                ciff.Preview = Converter.Convert(ciff);
+                ciff.Preview = Converter.Convert(ciff, _parserConfig.ImageQuality);
                 caff.Images.Add(ciff);
             }
             //Just for testing purpose:
-            //File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
+            File.WriteAllBytes("Happy.jpg", caff.Images.First().Preview);
             _context.Caffs.Add(caff);
             await _context.SaveChangesAsync();
 

@@ -10,7 +10,7 @@ namespace CaffDal.Services
             return Tuple.Create(x[o], x[o + 1], x[o + 2]);
         }
 
-        public static byte[] Convert(Image content)
+        public static byte[] Convert(Image content, int quality)
         {
             var offset = 0;
             SKBitmap img = new SKBitmap(width: content.Width, height: content.Height);
@@ -25,7 +25,7 @@ namespace CaffDal.Services
             }
             using (MemoryStream stream = new MemoryStream())
             {
-                img.Encode(stream, SKEncodedImageFormat.Jpeg, int.MaxValue);
+                img.Encode(stream, SKEncodedImageFormat.Jpeg, quality);
                 return stream.ToArray();
             }
 
