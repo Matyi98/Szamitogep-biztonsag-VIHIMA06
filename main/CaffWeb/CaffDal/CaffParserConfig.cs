@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace CaffDal
+﻿namespace CaffDal
 {
     public class CaffParserConfig
     {

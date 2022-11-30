@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace CaffWeb.ViewComponents
 {
@@ -14,8 +13,10 @@ namespace CaffWeb.ViewComponents
             public int TotalPages { get; set; }
         }
 
-        public IViewComponentResult Invoke(int pageSize, int pageNumber, int totalCount, int pagesToShow) {
-            return View(new PagerSpecification {
+        public IViewComponentResult Invoke(int pageSize, int pageNumber, int totalCount, int pagesToShow)
+        {
+            return View(new PagerSpecification
+            {
                 TotalCount = totalCount,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
