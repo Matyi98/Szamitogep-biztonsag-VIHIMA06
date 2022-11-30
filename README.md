@@ -8,7 +8,13 @@
 cd main/CaffFrei/Src/CaffParser.Native
 make
 # Test parser
-target/CaffParser ../../../HappyParserPy/samples/2.caff $(pwd)/target/testrun
+target/CaffParser ../HappyParserPy/samples/2.caff $(pwd)/target/testrun
+```
+
+## Windows
+
+```PowerShell
+g++ -static-libstdc++ -static-libgcc -o CaffParser ParserCore.cpp ParserCore.h Common.h Caff.h Caff.cpp Main.cpp Main.h
 ```
 
 ## Start work

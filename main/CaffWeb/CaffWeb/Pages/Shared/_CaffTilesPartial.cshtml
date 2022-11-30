@@ -10,10 +10,10 @@
                         <a class="one-row font-weight-bold" asp-page="Caff" asp-route-id="@caff.Id">@caff.Name</a>
                     </div>
                     <div class="card-body">
-                        <img src="@Url.Action("GetImageAsync", "ImageController", new { id = caff.ImageId })" 
+                        <img style="width:100%;max-width:600px;" src="/images/@caff.ImageId" 
                             alt="ImageId: @caff.ImageId" />
                         <p>Creator: @caff.Creator</p>
-                        <p>UploadDate: @caff.CreationDate</p>
+                        <p>CreationDate: @caff.CreationDate</p>
                     </div>                    
                 </div>
 

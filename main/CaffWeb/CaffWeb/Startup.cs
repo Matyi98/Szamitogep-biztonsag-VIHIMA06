@@ -1,7 +1,6 @@
 ﻿using CaffDal;
 using CaffDal.Entities;
 using CaffDal.Identity;
-using CaffDal.ParserWrapper;
 using CaffDal.Services;
 using CaffWeb.Email;
 using CaffWeb.Mock;
@@ -59,7 +58,7 @@ namespace CaffWeb
             services.AddScoped<RoleSeedService>()
                     .AddScoped<UserSeedService>();
 
-            services.AddScoped<ICaffFacade, FacadeMockImpl>();
+            services.AddScoped<ICaffFacade, CaffFacadeImpl>();
 
             services.AddControllers();
             services.AddRazorPages(options => {

@@ -268,16 +268,26 @@ const LONG64 ByteReader::getRemainingSize()
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
-void CAFF::persist_all(const char* base) {
+#ifdef _WIN32
+    #include <direct.h>
+#elif defined __unix__
+    #include <unistd.h>
+#endif
+
+void CAFF::persist_all(const char *base)
+{
     auto folder = std::string(base);
 
     struct stat st = {0};
 
     if (stat(folder.c_str(), &st) == -1)
     {
+#ifdef _WIN32
+        mkdir(folder.c_str());
+#elif defined __unix__
         mkdir(folder.c_str(), 0700);
+#endif        
     }
 
     std::ofstream outfile;
@@ -303,4 +313,3 @@ void CAFF::persist_all(const char* base) {
     }
     outfile.close();
 }
-
