@@ -2,14 +2,10 @@ from data import parse
 from bitmap import display
 
 def main():
-    with open("samples/1.caff", "rb") as f:
-        caff_1 = f.read()
-    with open("samples/2.caff", "rb") as f:
-        caff_2 = f.read()
-    with open("samples/3.caff", "rb") as f:
-        caff_3 = f.read()
+    with open("samples/out.caff", "rb") as f:
+        caff_bytes = f.read()
 
-    caff = parse(caff_1)
+    caff = parse(caff_bytes)
     for frame in caff.frames:
         display(frame.ciff, True)
 

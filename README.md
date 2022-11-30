@@ -1,16 +1,25 @@
 # Szamitogep-biztonsag-VIHIMA06
 
+## Compile and test native parser
+
+> Works only on Linux! Tested with Ubuntu 20.04
+
+```bash
+cd main/CaffFrei/Src/CaffParser.Native
+make
+# Test parser
+target/CaffParser ../HappyParserPy/samples/2.caff $(pwd)/target/testrun
+```
+
+## Windows
+
+```PowerShell
+g++ -static-libstdc++ -static-libgcc -o CaffParser ParserCore.cpp ParserCore.h Common.h Caff.h Caff.cpp Main.cpp Main.h
+```
+
 ## Start work
 
-The source files for the project can be found at [main/CaffFrei](main/CaffFrei). Open the CaffFrei.sln solution with VisualStudio 22.
-
-In the solution there are 2 solution folders: `Src, Test`.
-
-In the Src solution folder there are 3 projects. The cpp parser, the .NET wrapper for it and the webapp.
-
-Debugging with breakpoints even in the cpp code invoked from C# should work.
-
-In VS `rebuild solution` might help with errors.
+TBD
 
 ## HappyParserPy
 
