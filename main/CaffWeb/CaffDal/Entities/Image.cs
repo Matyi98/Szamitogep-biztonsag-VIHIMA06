@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CaffDal.Entities
 {
     public class Image
-    { 
+    {
         [Key]
         public int Id { get; set; }
         [Required]
@@ -19,8 +14,6 @@ namespace CaffDal.Entities
         public int Width { get; set; }
 
         public int Height { get; set; }
-
-        //public List<string> Tags { get; set; } = new List<string>();
 
         [Required]
         public int CaffId { get; set; }
@@ -35,17 +28,3 @@ namespace CaffDal.Entities
 
     }
 }
-
-/*
-        public int Duration { get; set;}
-        public string? Caption { get; set;}
-        public List<string> Tags { get; set; } = new List<string>();
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public byte[] RawCiff { get; set; }
-
-        public Ciff(byte[] rawCiff)
-        {
-            RawCiff = rawCiff;
-        }
-*/

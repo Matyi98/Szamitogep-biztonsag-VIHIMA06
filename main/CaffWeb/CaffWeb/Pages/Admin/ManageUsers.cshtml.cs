@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CaffDal.Identity;
 using CaffDal.Entities;
+using CaffDal.Identity;
+using CaffDal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace CaffWeb.Pages.Admin
 {
@@ -15,11 +11,13 @@ namespace CaffWeb.Pages.Admin
     {
         private readonly UserManager<User> userManager;
         private readonly ILogger<ManageUsersModel> logger;
+        private readonly ICaffFacade caffFacade;
 
-        public ManageUsersModel(UserManager<User> userManager, ILogger<ManageUsersModel> logger)
+        public ManageUsersModel(UserManager<User> userManager, ILogger<ManageUsersModel> logger, ICaffFacade caffFacade)
         {
             this.userManager = userManager;
             this.logger = logger;
+            this.caffFacade = caffFacade;
         }
 
         public class UserInfo
@@ -30,20 +28,26 @@ namespace CaffWeb.Pages.Admin
             public bool IsAdmin { get; set; }
             public bool IsActivated { get; set; }
 
-            public string Roles { get {
+            public string Roles
+            {
+                get
+                {
                     string ret = "";
-                    if (IsActivated) {
+                    if (IsActivated)
+                    {
                         ret += "User";
                         if (IsAdmin)
                             ret += ", ";
                     }
 
-                    if (IsAdmin) {
+                    if (IsAdmin)
+                    {
                         ret += "Admin";
                     }
 
                     return ret;
-                } }
+                }
+            }
         }
 
         [BindProperty]
@@ -58,7 +62,8 @@ namespace CaffWeb.Pages.Admin
         public async Task LoadModel()
         {
             AllUsers = new List<UserInfo>();
-            foreach (var item in userManager.Users.ToList()) {
+            foreach (var item in userManager.Users.ToList())
+            {
                 var userInfo = new UserInfo();
                 userInfo.IsAdmin = await userManager.IsInRoleAsync(item, Roles.Admin);
                 userInfo.IsActivated = item.EmailConfirmed;
@@ -71,13 +76,17 @@ namespace CaffWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostPromoteAsync()
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 var user = userManager.Users.Single(c => c.Id == EditedId);
-                if (await userManager.IsInRoleAsync(user, Roles.Admin)) {
+                if (await userManager.IsInRoleAsync(user, Roles.Admin))
+                {
                     await userManager.RemoveFromRoleAsync(user, Roles.Admin);
                     logger.LogInformation("An admin has removed Moderator role from: {NominatedId} at {Time}",
                         user.Id, DateTime.UtcNow);
-                } else {
+                }
+                else
+                {
                     await userManager.AddToRoleAsync(user, Roles.Admin);
                     logger.LogInformation("An admin has granted Moderator role to: {NominatedId} at {Time}",
                         user.Id, DateTime.UtcNow);
@@ -88,10 +97,11 @@ namespace CaffWeb.Pages.Admin
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync() {
-            if (ModelState.IsValid) {
-                var user = userManager.Users.Single(c => c.Id == EditedId);
-                await userManager.DeleteAsync(user);
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                await caffFacade.DeleteUser(EditedId);
                 return new RedirectToPageResult("/Admin/ManageUsers");
             }
             await LoadModel();

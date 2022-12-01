@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CaffDal.Domain
+﻿namespace CaffDal.Domain
 {
-    public class ImageMetaResponse {
+    public class ImageMetaResponse
+    {
         public int Id { get; set; }
         public int Delay { get; set; }
     }

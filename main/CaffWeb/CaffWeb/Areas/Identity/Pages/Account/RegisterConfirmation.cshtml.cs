@@ -1,12 +1,9 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using CaffDal.Entities;
+﻿using CaffDal.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace CaffWeb.Areas.Identity.Pages.Account
 {

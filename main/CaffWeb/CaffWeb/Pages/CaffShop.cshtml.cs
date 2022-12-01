@@ -15,7 +15,8 @@ namespace CaffWeb.Pages
 
         private readonly ICaffFacade caffFacade;
 
-        public CaffShopModel(ICaffFacade caffFacade) {
+        public CaffShopModel(ICaffFacade caffFacade)
+        {
             this.caffFacade = caffFacade;
         }
 

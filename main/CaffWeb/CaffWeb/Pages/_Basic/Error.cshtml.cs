@@ -14,11 +14,13 @@ namespace CaffWeb.Pages
 
         private readonly ILogger<ErrorModel> _logger;
 
-        public ErrorModel(ILogger<ErrorModel> logger) {
+        public ErrorModel(ILogger<ErrorModel> logger)
+        {
             _logger = logger;
         }
 
-        public void OnGet() {
+        public void OnGet()
+        {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }

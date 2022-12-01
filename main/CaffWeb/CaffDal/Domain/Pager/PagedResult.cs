@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CaffDal.Domain.Pager
+﻿namespace CaffDal.Domain.Pager
 {
     public class PagedResult<T>
     {

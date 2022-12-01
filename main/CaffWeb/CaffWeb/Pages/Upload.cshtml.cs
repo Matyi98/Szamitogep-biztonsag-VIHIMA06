@@ -9,7 +9,8 @@ namespace CaffWeb.Pages
     {
         private readonly ICaffFacade caffFacade;
 
-        public UploadModel(ICaffFacade caffFacade) {
+        public UploadModel(ICaffFacade caffFacade)
+        {
             this.caffFacade = caffFacade;
         }
 
@@ -26,20 +27,25 @@ namespace CaffWeb.Pages
         [BindProperty]
         public string FileName { get; set; }
 
-        public async Task<IActionResult> OnPost() {
+        public async Task<IActionResult> OnPost()
+        {
             using var memoryStream = new MemoryStream();
             await UploadedCaff.CopyToAsync(memoryStream);
             byte[] raw = memoryStream.ToArray();
 
-            var result = await caffFacade.UploadCaff(new CaffDal.Domain.UploadRequest {
+            var result = await caffFacade.UploadCaff(new CaffDal.Domain.UploadRequest
+            {
                 OwnerId = User.GetUserId(),
                 CaffName = FileName,
                 RawCaff = raw
             });
 
-            if (result != null) {
+            if (result != null)
+            {
                 return RedirectToPage("/Caff", new { id = result.CaffId });
-            } else {
+            }
+            else
+            {
                 return Page();
             }
         }

@@ -349,7 +349,8 @@ namespace CaffDal.Migrations
 
                     b.HasOne("CaffDal.Entities.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Caff");
 
