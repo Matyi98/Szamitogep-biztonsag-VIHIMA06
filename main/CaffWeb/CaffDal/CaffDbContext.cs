@@ -19,6 +19,11 @@ namespace CaffDal
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+                .HasMany(user => user.Comments)
+                .WithOne(comment => comment.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<User>(e =>
             {
                 e.ToTable("Users");

@@ -281,5 +281,13 @@ namespace CaffDal.Services
             _context.Comments.Add(efComment);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteUser(int userId)
+        {
+            var user = await _context.Users.Include(x => x.Comments).SingleOrDefaultAsync(u => u.Id == userId)
+                ?? throw new EntityNotFoundException();
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

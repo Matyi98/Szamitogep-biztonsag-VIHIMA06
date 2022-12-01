@@ -20,5 +20,7 @@ namespace CaffDal.Services
         public Task<IReadOnlyCollection<CommentResponse>> GetComments(int caffId);
         public Task<CommentResponse> GetCommentById(int commentId);
 
+        public Task DeleteUser(int userId);
+
     }
 }

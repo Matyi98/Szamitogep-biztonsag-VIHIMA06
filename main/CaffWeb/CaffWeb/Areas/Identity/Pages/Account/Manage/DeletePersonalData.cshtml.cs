@@ -1,4 +1,5 @@
 ﻿using CaffDal.Entities;
+using CaffDal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +12,18 @@ namespace CaffWeb.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly ICaffFacade _caffFacade;
 
         public DeletePersonalDataModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            ICaffFacade caffFacade)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _caffFacade = caffFacade;
         }
 
         [BindProperty]
@@ -64,12 +68,8 @@ namespace CaffWeb.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            await _caffFacade.DeleteUser(user.Id);
             var userId = await _userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
-            {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
-            }
 
             await _signInManager.SignOutAsync();
 

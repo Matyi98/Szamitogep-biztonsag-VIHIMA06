@@ -1,5 +1,6 @@
 using CaffDal.Entities;
 using CaffDal.Identity;
+using CaffDal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,11 +11,13 @@ namespace CaffWeb.Pages.Admin
     {
         private readonly UserManager<User> userManager;
         private readonly ILogger<ManageUsersModel> logger;
+        private readonly ICaffFacade caffFacade;
 
-        public ManageUsersModel(UserManager<User> userManager, ILogger<ManageUsersModel> logger)
+        public ManageUsersModel(UserManager<User> userManager, ILogger<ManageUsersModel> logger, ICaffFacade caffFacade)
         {
             this.userManager = userManager;
             this.logger = logger;
+            this.caffFacade = caffFacade;
         }
 
         public class UserInfo
@@ -98,8 +101,7 @@ namespace CaffWeb.Pages.Admin
         {
             if (ModelState.IsValid)
             {
-                var user = userManager.Users.Single(c => c.Id == EditedId);
-                await userManager.DeleteAsync(user);
+                await caffFacade.DeleteUser(EditedId);
                 return new RedirectToPageResult("/Admin/ManageUsers");
             }
             await LoadModel();
