@@ -25,7 +25,7 @@ namespace CaffDal.Services
                 .SingleOrDefaultAsync(caff => caff.Id == caffId)
                 ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
-            DownloadRequest request = new DownloadRequest()
+            DownloadRequest request = new()
             {
                 Bytes = caff.RawCaff,
                 Name = caff.CaffName
@@ -64,7 +64,7 @@ namespace CaffDal.Services
                 .SingleOrDefaultAsync(c => c.Id == commentId)
                 ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
-            CommentResponse response = new CommentResponse()
+            CommentResponse response = new()
             {
                 Id = comment.Id,
                 CommenterId = comment.UserId ?? -1,
@@ -84,12 +84,11 @@ namespace CaffDal.Services
                 .Where(comment => comment.CaffId == caffId)
                 .ToListAsync();
 
-            List<CommentResponse> response = new List<CommentResponse>();
+            List<CommentResponse> response = new();
 
             foreach (var comment in comments)
             {
-                CommentResponse commentResponse = new CommentResponse()
-                {
+                CommentResponse commentResponse = new() {
                     Id = comment.Id,
                     CommenterId = comment.UserId ?? -1,
                     Commenter = comment.User != null ? comment.User.CustomName : "DeletedUser",
@@ -128,7 +127,7 @@ namespace CaffDal.Services
                     .SingleOrDefaultAsync(c => c.Id == caffId)
                     ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
-            List<ImageMetaResponse> imageMetaList = new List<ImageMetaResponse>();
+            List<ImageMetaResponse> imageMetaList = new();
             foreach (var image in caff.ImageObjects)
             {
                 imageMetaList.Add(new ImageMetaResponse { Id = image.Id, Delay = image.Duration });
@@ -187,7 +186,7 @@ namespace CaffDal.Services
 
             var pageFilteredCaffs = filteredCaffs.Skip(startIndex).Take(specification.PageSize).ToList();
 
-            PagedResult<CompactPreviewResponse> result = new PagedResult<CompactPreviewResponse>()
+            PagedResult<CompactPreviewResponse> result = new()
             {
                 PageNumber = specification.PageNumber,
                 PageSize = specification.PageSize,
@@ -217,11 +216,12 @@ namespace CaffDal.Services
                     .WithArguments(workDir + tempFileName + " " + workDir)
                     .ExecuteAsync();
                 string[] lines = File.ReadLines(workDir + "manifest").ToArray();
-                caff = new Caff(creator: lines[0].Split(": ")[1], request.RawCaff);
-                caff.CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]);
-                caff.NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]);
-                caff.UserId = request.OwnerId;
-                caff.CaffName = request.CaffName;
+                caff = new Caff(creator: lines[0].Split(": ")[1], request.RawCaff) {
+                    CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]),
+                    NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]),
+                    UserId = request.OwnerId,
+                    CaffName = request.CaffName
+                };
                 CiffList = StringArrayToCiffList(3, lines, workDir);
             }
             catch (Exception)
@@ -230,7 +230,7 @@ namespace CaffDal.Services
             }
             finally
             {
-                DirectoryInfo di = new DirectoryInfo(workDir);
+                DirectoryInfo di = new(workDir);
                 di.Delete(true);
             }
             foreach (Image ciff in CiffList)
@@ -244,7 +244,7 @@ namespace CaffDal.Services
             return new UploadResponse { CaffId = caff.Id };
         }
 
-        private DateTime CiffDateToDateAndTime(string ciffDate)
+        private static DateTime CiffDateToDateAndTime(string ciffDate)
         {
             string[] uglyDateArray = ciffDate.Split(' ');
             string[] ymd = uglyDateArray[0].Split('.');
@@ -253,17 +253,17 @@ namespace CaffDal.Services
                 hour: Convert.ToInt32(hs[0]), minute: Convert.ToInt32(hs[1]), second: 0);
         }
 
-        private List<Image> StringArrayToCiffList(int readFrom, String[] lines, string workDir)
+        private static List<Image> StringArrayToCiffList(int readFrom, String[] lines, string workDir)
         {
-            List<Image> CiffList = new List<Image>();
+            List<Image> CiffList = new();
             for (int i = readFrom; i < lines.Length; i += 5)
             {
-                var ciff = new Image(File.ReadAllBytes(workDir + lines[i]));
-                ciff.Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]);
-                ciff.Caption = lines[i + 2].Split(':')[1];
-                //ciff.Tags = lines[i + 3].Split(':')[1].Split(';').ToList<string>();
-                ciff.Width = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[0]);
-                ciff.Height = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[1]);
+                var ciff = new Image(File.ReadAllBytes(workDir + lines[i])) {
+                    Duration = Convert.ToInt32(lines[i + 1].Split(':')[1]),
+                    Caption = lines[i + 2].Split(':')[1],
+                    Width = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[0]),
+                    Height = Convert.ToInt32(lines[i + 4].Split(':')[1].Split('*')[1])
+                };
                 CiffList.Add(ciff);
             }
             return CiffList;
