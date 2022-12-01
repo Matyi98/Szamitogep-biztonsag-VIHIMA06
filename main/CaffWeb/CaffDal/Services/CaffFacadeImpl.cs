@@ -4,6 +4,7 @@ using CaffDal.Entities;
 using CaffDal.Exceptions;
 using CliWrap;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace CaffDal.Services
@@ -12,24 +13,31 @@ namespace CaffDal.Services
     {
         private readonly CaffDbContext _context;
         private readonly CaffParserConfig _parserConfig;
-        public CaffFacadeImpl(CaffDbContext context, IOptions<CaffParserConfig> config)
+        private readonly ILogger _logger;
+        public CaffFacadeImpl(CaffDbContext context, IOptions<CaffParserConfig> config, ILogger<CaffFacadeImpl> logger)
         {
             _context = context;
             _parserConfig = config.Value;
+            _logger = logger;
         }
 
         public async Task<DownloadRequest> BuyCaff(int caffId)
         {
+
             var caff = await _context
                 .Caffs
                 .SingleOrDefaultAsync(caff => caff.Id == caffId)
                 ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
+
+            _logger.Log(LogLevel.Information, $"Found Caff with id: {caff.Id}.");
 
             DownloadRequest request = new()
             {
                 Bytes = caff.RawCaff,
                 Name = caff.CaffName
             };
+
+            _logger.Log(LogLevel.Information, $"Download request created for Caff with id: {caff.Id}");
 
             return request;
         }
@@ -43,6 +51,8 @@ namespace CaffDal.Services
 
             _context.Caffs.Remove(caff);
             await _context.SaveChangesAsync();
+
+            _logger.Log(LogLevel.Information, $"Caff with id: {caff.Id} has been deleted.");
         }
 
         public async Task DeleteComment(int commentId)
@@ -54,6 +64,7 @@ namespace CaffDal.Services
 
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
+            _logger.Log(LogLevel.Information, $"Comment with id: {comment.Id} has been deleted.");
         }
 
         public async Task<CommentResponse> GetCommentById(int commentId)
@@ -64,6 +75,8 @@ namespace CaffDal.Services
                 .SingleOrDefaultAsync(c => c.Id == commentId)
                 ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
+            _logger.Log(LogLevel.Information, $"Found comment with id: {comment.Id}");
+
             CommentResponse response = new()
             {
                 Id = comment.Id,
@@ -72,6 +85,8 @@ namespace CaffDal.Services
                 CreationDate = comment.CreationDate,
                 Text = comment.Text
             };
+
+            _logger.Log(LogLevel.Information, $"CommentResponse created for comment with id: {comment.Id}");
 
             return response;
         }
@@ -83,6 +98,8 @@ namespace CaffDal.Services
                 .Include(comment => comment.User)
                 .Where(comment => comment.CaffId == caffId)
                 .ToListAsync();
+
+            _logger.Log(LogLevel.Information, $"Found comments for Caff with id: {caffId}.");
 
             List<CommentResponse> response = new();
 
@@ -98,6 +115,8 @@ namespace CaffDal.Services
                 response.Add(commentResponse);
             }
 
+            _logger.Log(LogLevel.Information, $"Created CommentResponses for all comments belonging to Caff with id: {caffId}");
+
             return response;
         }
 
@@ -107,6 +126,8 @@ namespace CaffDal.Services
                 .Images
                 .SingleOrDefaultAsync(image => image.Id == imageId)
                 ?? throw new EntityNotFoundException($"Image doesn't exists with id {imageId}!");
+
+            _logger.Log(LogLevel.Information, $"Found Image with id: {image.Id}.");
 
             return image.Preview;
         }
@@ -127,6 +148,8 @@ namespace CaffDal.Services
                     .SingleOrDefaultAsync(c => c.Id == caffId)
                     ?? throw new EntityNotFoundException($"Caff doesn't exists with id {caffId}!");
 
+            _logger.Log(LogLevel.Information, $"Found Caff with id: {caff.Id}.");
+
             List<ImageMetaResponse> imageMetaList = new();
             foreach (var image in caff.ImageObjects)
             {
@@ -143,6 +166,8 @@ namespace CaffDal.Services
                 ImageMetas = imageMetaList
             };
 
+            _logger.Log(LogLevel.Information, $"Created DetailedPreviewResponse for Caff with id: {caff.Id}.");
+
             return detailedPreviewResponse;
         }
 
@@ -153,8 +178,12 @@ namespace CaffDal.Services
                 .SingleOrDefaultAsync(comment => comment.Id == commentId)
                 ?? throw new EntityNotFoundException($"Comment doesn't exists with id {commentId}!");
 
+            _logger.Log(LogLevel.Information, $"Found comment with id: {c.Id} and content: {c.Text}");
+
             c.Text = comment;
             await _context.SaveChangesAsync();
+
+            _logger.Log(LogLevel.Information, $"Modified comment with id: {c.Id}, new content: {c.Text}");
         }
 
         public async Task<PagedResult<CompactPreviewResponse>> PagedSearch(PagedSearchSpecification specification)
@@ -193,6 +222,9 @@ namespace CaffDal.Services
                 TotalCount = filteredCaffs.Count,
                 Results = pageFilteredCaffs
             };
+
+            _logger.Log(LogLevel.Information, "Created PagedResult.");
+
             return result;
         }
 
@@ -204,24 +236,31 @@ namespace CaffDal.Services
             if (!Directory.Exists(_parserConfig.OutputWorkdir))
             {
                 Directory.CreateDirectory(_parserConfig.OutputWorkdir);
+                _logger.Log(LogLevel.Information, $"Created directory: {_parserConfig.OutputWorkdir}");
             }
             Directory.CreateDirectory(workDir);
+            _logger.Log(LogLevel.Information, $"Created directory: {workDir}");
             List<Image> CiffList;
             Caff caff;
             try
             {
                 File.WriteAllBytes(workDir + tempFileName, request.RawCaff);
 
+                _logger.Log(LogLevel.Information, $"Writing Caff bytes to {workDir + tempFileName}");
+
                 await Cli.Wrap(_parserConfig.ParserPath)
                     .WithArguments(workDir + tempFileName + " " + workDir)
                     .ExecuteAsync();
+                _logger.Log(LogLevel.Information, "Executeing Caff parser.");
                 string[] lines = File.ReadLines(workDir + "manifest").ToArray();
+                _logger.Log(LogLevel.Information, $"Reading lines from {workDir + "manifest"}");
                 caff = new Caff(creator: lines[0].Split(": ")[1], request.RawCaff) {
                     CreatorDate = CiffDateToDateAndTime(lines[1].Split(": ")[1]),
                     NumberOfFrames = Convert.ToInt32(lines[2].Split(": ")[1]),
                     UserId = request.OwnerId,
                     CaffName = request.CaffName
                 };
+                _logger.Log(LogLevel.Information, "Created Caff object");
                 CiffList = StringArrayToCiffList(3, lines, workDir);
             }
             catch (Exception)
@@ -232,6 +271,7 @@ namespace CaffDal.Services
             {
                 DirectoryInfo di = new(workDir);
                 di.Delete(true);
+                _logger.Log(LogLevel.Information, $"Delted directory: {workDir}");
             }
             foreach (Image ciff in CiffList)
             {
@@ -240,6 +280,8 @@ namespace CaffDal.Services
             }
             _context.Caffs.Add(caff);
             await _context.SaveChangesAsync();
+            _logger.Log(LogLevel.Information, $"Caff uploaded successfully by user with id: {request.OwnerId}.");
+            _logger.Log(LogLevel.Information, "UploadResponse created.");
 
             return new UploadResponse { CaffId = caff.Id };
         }
