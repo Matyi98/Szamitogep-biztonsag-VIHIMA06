@@ -52,7 +52,7 @@ namespace CaffDal.Services
             _context.Caffs.Remove(caff);
             await _context.SaveChangesAsync();
 
-            _logger.Log(LogLevel.Information, $"Caff with id: {caff.Id} has been deleted.");
+            _logger.Log(LogLevel.Information, $"Caff with id: {caffId} has been deleted.");
         }
 
         public async Task DeleteComment(int commentId)
@@ -64,7 +64,7 @@ namespace CaffDal.Services
 
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            _logger.Log(LogLevel.Information, $"Comment with id: {comment.Id} has been deleted.");
+            _logger.Log(LogLevel.Information, $"Comment with id: {commentId} has been deleted.");
         }
 
         public async Task<CommentResponse> GetCommentById(int commentId)
@@ -322,6 +322,8 @@ namespace CaffDal.Services
 
             _context.Comments.Add(efComment);
             await _context.SaveChangesAsync();
+
+            _logger.Log(LogLevel.Information, $"Saved comment for Caff with id: {caffId}");
         }
 
         public async Task DeleteUser(int userId)
@@ -330,6 +332,8 @@ namespace CaffDal.Services
                 ?? throw new EntityNotFoundException();
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
+
+            _logger.Log(LogLevel.Information, $"Deleted user with id: {userId}");
         }
     }
 }
