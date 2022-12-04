@@ -17,10 +17,6 @@ target/CaffParser ../HappyParserPy/samples/2.caff $(pwd)/target/testrun
 g++ -static-libstdc++ -static-libgcc -o CaffParser ParserCore.cpp ParserCore.h Common.h Caff.h Caff.cpp Main.cpp Main.h
 ```
 
-## Start work
-
-TBD
-
 ## HappyParserPy
 
 HappyParserPy is a CAFF parser prototype written in python. It does not handle errors, nor validates the CAFF file. It is useful to view CAFF files, and to better understand the underspecified CAFF format. It can be used as a guide for the cpp implementation.
