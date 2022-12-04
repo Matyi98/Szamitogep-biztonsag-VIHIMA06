@@ -2,7 +2,7 @@ from data import parse
 from bitmap import display
 
 def main():
-    with open("samples/out.caff", "rb") as f:
+    with open("samples/1.caff", "rb") as f:
         caff_bytes = f.read()
 
     caff = parse(caff_bytes)
