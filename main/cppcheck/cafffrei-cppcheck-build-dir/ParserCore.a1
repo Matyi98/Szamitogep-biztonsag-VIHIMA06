@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="11287762385466553109">
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="75" column="5"/>
+            <symbol>Ciff</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="83" column="5"/>
+            <symbol>CaffFrame</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="97" column="5"/>
+            <symbol>CaffCredits</symbol>
+        </error>
+  <FileInfo check="ctu">
+<function-call call-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.h:10:7" call-funcname="readBlock" call-argnr="1" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp" line="14" col="32" call-argexpr="&amp;byteReader" call-argvaluetype="7" call-argvalue="0"/><function-call call-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Caff.h:35:5" call-funcname="ByteReader" call-argnr="1" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp" line="8" col="29" my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.h:8:6" my-argnr="1"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.h:10:7" my-argnr="1" my-argname="byteReader" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp" line="40" col="22" value="0"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.h:10:7" my-argnr="1" my-argname="byteReader" file="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/ParserCore.cpp" line="40" col="22" value="0"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="parse" lineNumber="4"/>
+    <functiondecl functionName="readBlock" lineNumber="38"/>
+    <functiondecl functionName="parseHeader" lineNumber="49"/>
+    <functioncall functionName="Block"/>
+    <functioncall functionName="ByteReader"/>
+    <functioncall functionName="CAFF"/>
+    <functioncall functionName="CaffCredits"/>
+    <functioncall functionName="CaffFrame"/>
+    <functioncall functionName="Ciff"/>
+    <functioncall functionName="blockReader"/>
+    <functioncall functionName="byteReader"/>
+    <functioncall functionName="caff"/>
+    <functioncall functionName="char"/>
+    <functioncall functionName="compare"/>
+    <functioncall functionName="credits"/>
+    <functioncall functionName="data"/>
+    <functioncall functionName="frames"/>
+    <functioncall functionName="getStringFromBytes"/>
+    <functioncall functionName="id"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="invalid_argument"/>
+    <functioncall functionName="isFileEnd"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="long"/>
+    <functioncall functionName="magic"/>
+    <functioncall functionName="magicString"/>
+    <functioncall functionName="next"/>
+    <functioncall functionName="parseHeader"/>
+    <functioncall functionName="popAsByteReader"/>
+    <functioncall functionName="popAsSpan"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="raw"/>
+    <functioncall functionName="readBlock"/>
+    <functioncall functionName="readLittleEndian"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="string"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

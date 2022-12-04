@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="1127398951350170670">
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;Ciff&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="75" column="5"/>
+            <symbol>Ciff</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffFrame&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="83" column="5"/>
+            <symbol>CaffFrame</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;CaffCredits&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h" line="97" column="5"/>
+            <symbol>CaffCredits</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: in_file" verbose="Resource leak: in_file" cwe="775" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp" line="29" column="9"/>
+            <symbol>in_file</symbol>
+        </error>
+        <error id="resourceLeak" severity="error" msg="Resource leak: in_file" verbose="Resource leak: in_file" cwe="775" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp" line="39" column="5"/>
+            <symbol>in_file</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;caff&apos; is assigned a value that is never used." verbose="Variable &apos;caff&apos; is assigned a value that is never used." cwe="563" file0="C:/BME/MSc/2.felev/szamitogep-bizt/Szamitogep-biztonsag-VIHIMA06/main/CaffFrei/Src/CaffParser.Native/Main.cpp">
+            <location file="C:\BME\MSc\2.felev\szamitogep-bizt\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp" line="36" column="15"/>
+            <symbol>caff</symbol>
+        </error>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="main" lineNumber="7"/>
+    <functioncall functionName="Block"/>
+    <functioncall functionName="ByteReader"/>
+    <functioncall functionName="CAFF"/>
+    <functioncall functionName="CaffCredits"/>
+    <functioncall functionName="CaffFrame"/>
+    <functioncall functionName="Ciff"/>
+    <functioncall functionName="char"/>
+    <functioncall functionName="file_contents"/>
+    <functioncall functionName="filename"/>
+    <functioncall functionName="fopen"/>
+    <functioncall functionName="fread"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="in_file"/>
+    <functioncall functionName="long"/>
+    <functioncall functionName="parse"/>
+    <functioncall functionName="sb"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="st_size"/>
+    <functioncall functionName="stat"/>
+    <functioncall functionName="string"/>
+  </FileInfo>
+</analyzerinfo>

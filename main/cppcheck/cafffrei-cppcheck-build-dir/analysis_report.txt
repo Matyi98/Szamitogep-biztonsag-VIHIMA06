@@ -1,0 +1,12 @@
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h:75]: (style) Struct 'Ciff' has a constructor with 1 argument that is not explicit.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h:83]: (style) Struct 'CaffFrame' has a constructor with 1 argument that is not explicit.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.h:97]: (style) Struct 'CaffCredits' has a constructor with 1 argument that is not explicit.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\CaffParserFacade.cpp:12]: (style) Variable 'ret' is assigned a value that is never used.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp:131]: (performance) Variable 'Creator' is assigned in constructor body. Consider performing initialization in initialization list.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp:31]: (performance) Function parameter 'credits' should be passed by const reference.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp:31]: (performance) Function parameter 'frames' should be passed by const reference.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp:134]: (performance) Function parameter 'data' should be passed by const reference.
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Caff.cpp:75]: (style) Unused variable: delimIndexes
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp:29]: (error) Resource leak: in_file
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp:39]: (error) Resource leak: in_file
+[..\Szamitogep-biztonsag-VIHIMA06\main\CaffFrei\Src\CaffParser.Native\Main.cpp:36]: (style) Variable 'caff' is assigned a value that is never used.
