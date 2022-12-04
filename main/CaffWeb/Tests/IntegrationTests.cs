@@ -2,7 +2,9 @@ using CaffDal;
 using CaffDal.Domain;
 using CaffDal.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 
 namespace Tests
 {
@@ -35,7 +37,8 @@ namespace Tests
             config.OutputWorkdir = baseDir + "CaffWeb/out/";
 
             var options = Options.Create(config);
-            return new CaffFacadeImpl(context, options);
+            var logger = Mock.Of<ILogger<CaffFacadeImpl>>();
+            return new CaffFacadeImpl(context, options, logger);
         }
 
         private UploadRequest generateRequest()
