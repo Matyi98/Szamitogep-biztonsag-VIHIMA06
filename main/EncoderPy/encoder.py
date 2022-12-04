@@ -1,4 +1,5 @@
 from PIL import Image
+from datetime import datetime
 
 def _ciff_encode(fname: str) -> bytes:
     image = Image.open(fname, mode='r')
@@ -39,14 +40,15 @@ def _caff_header(num_anim: int) -> bytes:
     num_anim = int.to_bytes(num_anim, 8, 'little')
     return magic+header_size+num_anim
 
-def _caff_credits() -> bytes:
-    YY = int.to_bytes(2022, 2, 'little')
-    M = int.to_bytes(11, 1, 'little')
-    D = int.to_bytes(29, 1, 'little')
-    h = int.to_bytes(23, 1, 'little')
-    m = int.to_bytes(59, 1, 'little')
-    creator_length = int.to_bytes(len('EncoderPy'), 8, 'little')
-    creator = 'EncoderPy'.encode('ASCII')
+def _caff_credits(creator: str) -> bytes:
+    now = datetime.now()    
+    YY = int.to_bytes(now.year, 2, 'little')
+    M = int.to_bytes(now.month, 1, 'little')
+    D = int.to_bytes(now.day, 1, 'little')
+    h = int.to_bytes(now.hour, 1, 'little')
+    m = int.to_bytes(now.minute, 1, 'little')
+    creator_length = int.to_bytes(len(creator), 8, 'little')
+    creator = creator.encode('ASCII')
     return YY+M+D+h+m+creator_length+creator
 
 
@@ -55,15 +57,17 @@ def _block(type: int, data: bytes) -> bytes:
     length = int.to_bytes(len(data), 8, 'little')
     return id+length+data
 
-def _caff(ciffs: list[bytes]):
+
+def _caff(ciffs: list[bytes], creator: str):
     ret = _block(1, _caff_header(len(ciffs)))
-    ret += _block(2, _caff_credits())
+    ret += _block(2, _caff_credits(creator))
     for ciff in ciffs:
         ret += _block(3, ciff)
     return ret
     
-def caff(ins: list[str]) -> bytes:
+
+def caff(ins: list[str], creator: str) -> bytes:
     ciffs = []
     for i in ins:
         ciffs.append(_ciff_encode(i))
-    return _caff(ciffs)
+    return _caff(ciffs, creator)
