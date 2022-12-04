@@ -11,7 +11,8 @@ namespace CaffWeb.Pages
     {
         private readonly ICaffFacade caffFacade;
 
-        public CommentsEditorModel(ICaffFacade caffFacade) {
+        public CommentsEditorModel(ICaffFacade caffFacade)
+        {
             this.caffFacade = caffFacade;
         }
 
@@ -31,10 +32,13 @@ namespace CaffWeb.Pages
         public async Task<ActionResult> OnGetAsync()
         {
             CommentResponse comment;
-            try {
+            try
+            {
                 comment = await caffFacade.GetCommentById(Id);
                 Edited = comment.Text;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return NotFound($"Nem található Comment a megadott Id-val: '{Id}'.");
             }
 
@@ -44,12 +48,16 @@ namespace CaffWeb.Pages
             return Page();
         }
 
-        public async Task<ActionResult> OnPostDeleteAsync() {
+        public async Task<ActionResult> OnPostDeleteAsync()
+        {
             CommentResponse comment;
-            try {
+            try
+            {
                 comment = await caffFacade.GetCommentById(Id);
                 Edited = comment.Text;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return NotFound($"Nem található Comment a megadott Id-val: '{Id}'.");
             }
 
@@ -62,11 +70,15 @@ namespace CaffWeb.Pages
             return RedirectToPage("/Caff", new { id = CaffId });
         }
 
-        public async Task<ActionResult> OnPostEditAsync() {
+        public async Task<ActionResult> OnPostEditAsync()
+        {
             CommentResponse comment;
-            try {
+            try
+            {
                 comment = await caffFacade.GetCommentById(Id);
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return NotFound($"Nem található Comment a megadott Id-val: '{Id}'.");
             }
 

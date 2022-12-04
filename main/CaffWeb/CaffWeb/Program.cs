@@ -1,9 +1,6 @@
-using System.Threading.Tasks;
 using CaffDal;
 using CaffDal.Identity;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace CaffWeb
 {
@@ -23,7 +20,8 @@ namespace CaffWeb
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => {
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
                     webBuilder.UseStartup<Startup>();
                 });
     }
@@ -31,8 +29,10 @@ namespace CaffWeb
     public static class HostDataExtensions
     {
         public static async Task<IHost> MigrateDataBaseAsync<TContext>(this IHost host)
-            where TContext : DbContext {
-            using (var scope = host.Services.CreateScope()) {
+            where TContext : DbContext
+        {
+            using (var scope = host.Services.CreateScope())
+            {
                 var serviceProvider = scope.ServiceProvider;
                 var context = serviceProvider.GetRequiredService<TContext>();
                 context.Database.Migrate();

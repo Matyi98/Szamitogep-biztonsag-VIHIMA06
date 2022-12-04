@@ -11,7 +11,8 @@ namespace CaffWeb.Pages
     {
         private readonly ICaffFacade caffFacade;
 
-        public CaffModel(ICaffFacade caffFacade) {
+        public CaffModel(ICaffFacade caffFacade)
+        {
             this.caffFacade = caffFacade;
         }
 
@@ -24,29 +25,35 @@ namespace CaffWeb.Pages
         [Required(ErrorMessage = "Üres komment nem írható!")]
         [MinLength(1)]
         public string Comment { get; set; }
-        
+
         public IReadOnlyCollection<CommentResponse> Comments { get; set; }
         public DetailedPreviewResponse Caff { get; set; }
-        public async Task<IActionResult> OnGetAsync() {
-            try {
+        public async Task<IActionResult> OnGetAsync()
+        {
+            try
+            {
                 Caff = await caffFacade.GetPreview(Id);
                 Comments = await caffFacade.GetComments(Id);
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return NotFound($"Nem található CAFF a megadott Id-val: '{Id}'.");
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteCaffAsync() {
-            if (!User.IsInRole(Roles.Admin) && User.GetUserId() != Caff.CreatorID) 
-                return Redirect("/Identity/Account/AccessDenied");            
+        public async Task<IActionResult> OnPostDeleteCaffAsync()
+        {
+            if (!User.IsInRole(Roles.Admin) && User.GetUserId() != Caff.CreatorID)
+                return Redirect("/Identity/Account/AccessDenied");
 
             await caffFacade.DeleteCaff(Id);
             return RedirectToPage("/Index");
         }
 
 
-        public async Task<IActionResult> OnPostWriteCommentAsync() {
+        public async Task<IActionResult> OnPostWriteCommentAsync()
+        {
             if (!User.Identity.IsAuthenticated)
                 return Redirect("/Identity/Account/AccessDenied");
 
@@ -54,7 +61,8 @@ namespace CaffWeb.Pages
             return RedirectToPage("/Caff", new { id = Id });
         }
 
-        public async Task<IActionResult> OnPostPurchaseAsync() {
+        public async Task<IActionResult> OnPostPurchaseAsync()
+        {
             var caff = await caffFacade.BuyCaff(Id);
             return File(caff.Bytes, "application/octet-stream", $"{caff.Name}.caff");
         }
